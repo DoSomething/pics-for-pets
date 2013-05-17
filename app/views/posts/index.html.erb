@@ -1,27 +1,13 @@
-<h1>Listing posts</h1>
-
+<div class="post-list">
 <% @posts.each do |post| %>
-  <tr>
-    <td><%= post.image %></td>
-    <td><%= post.name %></td>
-    <td><%= post.type %></td>
-    <td><%= post.state %></td>
-    <td><%= post.shelter %></td>
-    <td><%= post.flagged %></td>
-    <td><%= post.promoted %></td>
-    <td><%= post.share_count %></td>
-    <td><%= post.story %></td>
-    <td><%= post.creation_time %></td>
-    <td><%= post.update_time %></td>
-    <td><%= post.adopted %></td>
-    <td><%= post.top_text %></td>
-    <td><%= post.bottom_text %></td>
-    <td><%= link_to 'Show', post %></td>
-    <td><%= link_to 'Edit', edit_post_path(post) %></td>
-    <td><%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
+  <div class="post id-<%= post.id %>">
+    <div class="name-loc"><%= post.name %>, <%= post.state %></div>
+    <div class="share">Facebook coming...</div>
+    <div class="image"><%= image_tag post.image(:gallery) %></div>
+    <div class="adopt-me">Adopt Bunny at <%= link_to post.name + ', ' + post.state, 'blah' %></div>
+  </div>
 <% end %>
-</table>
+</div>
 
 <br />
 

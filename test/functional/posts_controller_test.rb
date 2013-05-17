@@ -18,7 +18,7 @@ class PostsControllerTest < ActionController::TestCase
 
   test "should create post" do
     assert_difference('Post.count') do
-      post :create, post: { adopted: @post.adopted, bottom_text: @post.bottom_text, creation_time: @post.creation_time, flagged: @post.flagged, image: @post.image, name: @post.name, promoted: @post.promoted, share_count: @post.share_count, shelter: @post.shelter, state: @post.state, story: @post.story, top_text: @post.top_text, type: @post.type, update_time: @post.update_time }
+      post :create, post: { adopted: @post.adopted, bottom_text: @post.bottom_text, creation_time: @post.creation_time, flagged: @post.flagged, image: @post.image, name: @post.name, promoted: @post.promoted, share_count: @post.share_count, shelter: @post.shelter, state: @post.state, story: @post.story, top_text: @post.top_text, animal_type: @post.type, update_time: @post.update_time }
     end
 
     assert_redirected_to post_path(assigns(:post))
@@ -35,7 +35,7 @@ class PostsControllerTest < ActionController::TestCase
   end
 
   test "should update post" do
-    put :update, id: @post, post: { adopted: @post.adopted, bottom_text: @post.bottom_text, creation_time: @post.creation_time, flagged: @post.flagged, image: @post.image, name: @post.name, promoted: @post.promoted, share_count: @post.share_count, shelter: @post.shelter, state: @post.state, story: @post.story, top_text: @post.top_text, type: @post.type, update_time: @post.update_time }
+    put :update, id: @post, post: { adopted: @post.adopted, bottom_text: @post.bottom_text, creation_time: @post.creation_time, flagged: @post.flagged, image: @post.image, name: @post.name, promoted: @post.promoted, share_count: @post.share_count, shelter: @post.shelter, state: @post.state, story: @post.story, top_text: @post.top_text, animal_type: @post.type, update_time: @post.update_time }
     assert_redirected_to post_path(assigns(:post))
   end
 

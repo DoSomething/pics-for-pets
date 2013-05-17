@@ -2,6 +2,8 @@ CreateAndShare::Application.routes.draw do
   resources :posts
 
   root :to => "posts#index"
+  match 'submit' => 'posts#new'
+  match '/show/:id' => 'posts#show'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
