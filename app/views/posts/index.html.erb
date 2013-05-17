@@ -1,0 +1,49 @@
+<h1>Listing posts</h1>
+
+<table>
+  <tr>
+    <th>Image</th>
+    <th>Name</th>
+    <th>Type</th>
+    <th>State</th>
+    <th>Shelter</th>
+    <th>Flagged</th>
+    <th>Promoted</th>
+    <th>Share count</th>
+    <th>Story</th>
+    <th>Creation time</th>
+    <th>Update time</th>
+    <th>Adopted</th>
+    <th>Top text</th>
+    <th>Bottom text</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @posts.each do |post| %>
+  <tr>
+    <td><%= post.image %></td>
+    <td><%= post.name %></td>
+    <td><%= post.type %></td>
+    <td><%= post.state %></td>
+    <td><%= post.shelter %></td>
+    <td><%= post.flagged %></td>
+    <td><%= post.promoted %></td>
+    <td><%= post.share_count %></td>
+    <td><%= post.story %></td>
+    <td><%= post.creation_time %></td>
+    <td><%= post.update_time %></td>
+    <td><%= post.adopted %></td>
+    <td><%= post.top_text %></td>
+    <td><%= post.bottom_text %></td>
+    <td><%= link_to 'Show', post %></td>
+    <td><%= link_to 'Edit', edit_post_path(post) %></td>
+    <td><%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Post', new_post_path %>

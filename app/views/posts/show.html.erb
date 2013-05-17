@@ -1,0 +1,75 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Image:</b>
+  <%= @post.image %>
+</p>
+
+<p>
+  <b>Name:</b>
+  <%= @post.name %>
+</p>
+
+<p>
+  <b>Type:</b>
+  <%= @post.type %>
+</p>
+
+<p>
+  <b>State:</b>
+  <%= @post.state %>
+</p>
+
+<p>
+  <b>Shelter:</b>
+  <%= @post.shelter %>
+</p>
+
+<p>
+  <b>Flagged:</b>
+  <%= @post.flagged %>
+</p>
+
+<p>
+  <b>Promoted:</b>
+  <%= @post.promoted %>
+</p>
+
+<p>
+  <b>Share count:</b>
+  <%= @post.share_count %>
+</p>
+
+<p>
+  <b>Story:</b>
+  <%= @post.story %>
+</p>
+
+<p>
+  <b>Creation time:</b>
+  <%= @post.creation_time %>
+</p>
+
+<p>
+  <b>Update time:</b>
+  <%= @post.update_time %>
+</p>
+
+<p>
+  <b>Adopted:</b>
+  <%= @post.adopted %>
+</p>
+
+<p>
+  <b>Top text:</b>
+  <%= @post.top_text %>
+</p>
+
+<p>
+  <b>Bottom text:</b>
+  <%= @post.bottom_text %>
+</p>
+
+
+<%= link_to 'Edit', edit_post_path(@post) %> |
+<%= link_to 'Back', posts_path %>
