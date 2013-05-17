@@ -1,0 +1,62 @@
+// VARIABLES
+// ---------
+
+// colors
+$off-black: #1E1D1C
+$bg-light: #FFF
+$bg-alt: #EEE
+$ds-blue: #18408B
+
+$subtle-border: 1px solid #eee
+
+// fonts
+$font-grey: #CCC
+$font-light: #FFF
+$din: din-web-reg,"Helvetica","Trebuchet MS",sans-serif
+
+// layout
+$base-width: 960px
+
+// MIXINS
+// -----
+
+@mixin border-bottom-subtle
+  border-bottom: $subtle-border
+
+@function em-calc($target)
+  @return ($target/16)*1em
+
+// TYPOGRAPHY
+// ----------
+
+h1, h2, h3, h4, p, b, a, label, .divider, .disclaimer
+  font-weight: 400
+  font-family: $din
+  text-align: left
+  color: $off-black
+  line-height: em-calc(28)
+
+p
+  color: $off-black
+  font-weight: 400
+  line-height: 1.5em
+  font-size: 18px
+
+h1
+  text-transform: uppercase
+  font-size: em-calc(32)
+  font-weight: 500
+
+h2
+  font-size: em-calc(24)
+  font-weight: 500
+
+h3
+  font-size: em-calc(18)
+
+h4
+  font-size: em-calc(16)
+
+strong
+  font-weight: 800
+
