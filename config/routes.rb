@@ -2,12 +2,12 @@ CreateAndShare::Application.routes.draw do
   resources :posts
 
   root :to => "posts#index"
-  match 'submit' => 'posts#new'
+  match 'submit' => 'posts#new', :as => :real_submit_path
   match '/show/:id' => 'posts#show', :constraints => { :id => /\d+/ }
   match '/show/:filter' => 'posts#filter', :constraints => { :filter => /(cat|dog|other)s?/ }, :run => 'animal'
   match '/show/:filter' => 'posts#filter', :constraints => { :filter => /[A-Z]{2}/ }, :run => 'state'
   match '/show/:atype-:state' => 'posts#filter', :constraints => { :atype => /(cat|dog|other)s?/, :filter => /[A-Z]{2}/ }, :run => 'both'
-
+  match '/autoimg' => 'posts#autoimg'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
