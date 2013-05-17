@@ -3,7 +3,7 @@
 one:
   image: MyString
   name: MyString
-  type: 
+  animal_type: 
   state: MyString
   shelter: MyString
   flagged: false
@@ -19,7 +19,7 @@ one:
 two:
   image: MyString
   name: MyString
-  type: 
+  animal_type: 
   state: MyString
   shelter: MyString
   flagged: false

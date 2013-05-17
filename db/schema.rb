@@ -11,12 +11,12 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130517155407) do
+ActiveRecord::Schema.define(:version => 20130517170003) do
 
   create_table "posts", :force => true do |t|
     t.string   "image"
     t.string   "name"
-    t.string   "type"
+    t.string   "animal_ype"
     t.string   "state"
     t.string   "shelter"
     t.boolean  "flagged"

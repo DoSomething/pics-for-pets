@@ -1,10 +1,31 @@
 <h1>Listing posts</h1>
 
+<table>
+  <tr>
+    <th>Image</th>
+    <th>Name</th>
+    <th>Animal Type</th>
+    <th>State</th>
+    <th>Shelter</th>
+    <th>Flagged</th>
+    <th>Promoted</th>
+    <th>Share count</th>
+    <th>Story</th>
+    <th>Creation time</th>
+    <th>Update time</th>
+    <th>Adopted</th>
+    <th>Top text</th>
+    <th>Bottom text</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
 <% @posts.each do |post| %>
   <tr>
     <td><%= post.image %></td>
     <td><%= post.name %></td>
-    <td><%= post.type %></td>
+    <td><%= post.animal_type %></td>
     <td><%= post.state %></td>
     <td><%= post.shelter %></td>
     <td><%= post.flagged %></td>
