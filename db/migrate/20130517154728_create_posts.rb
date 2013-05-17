@@ -12,7 +12,7 @@ class CreatePosts < ActiveRecord::Migration
       t.text :story
       t.datetime :creation_time
       t.datetime :update_time
-      t.bool :adopted
+      t.boolean :adopted
       t.string :top_text
       t.string :bottom_text
 
