@@ -16,6 +16,19 @@
     <%= f.file_field :image %>
   </div>
   <div class="field">
+    <%= f.label :top_text %><br />
+    <%= f.text_field :top_text %>
+  </div>
+  <div class="field">
+    <%= f.label :bottom_text %><br />
+    <%= f.text_field :bottom_text %>
+  </div>
+  <div style="position: relative; display: block; width: 450px; height: 450px; border: 1px solid #000" id="upload-box">
+    <div id="top_text" style="visibility: hidden; position: absolute; z-index: 1; padding: 5px; background: rgba(0,0,0,0.25); display: block;width: 100%; box-sizing: border-box;"></div>
+    <span>Upload an image and it will appear here.</span>
+    <div id="bottom_text" style="visibility: hidden; position: absolute; z-index: 1; padding: 5px; background: rgba(0,0,0,0.25); display: block;width: 100%; box-sizing: border-box;"></div>
+  </div>
+  <div class="field">
     <%= f.label :name %><br />
     <%= f.text_field :name %>
   </div>
@@ -59,15 +72,66 @@
     <%= f.label :adopted %><br />
     <%= f.check_box :adopted %>
   </div>
-  <div class="field">
-    <%= f.label :top_text %><br />
-    <%= f.text_field :top_text %>
-  </div>
-  <div class="field">
-    <%= f.label :bottom_text %><br />
-    <%= f.text_field :bottom_text %>
-  </div>
   <div class="actions">
     <%= f.submit %>
   </div>
 <% end %>
+
+<script type="text/javascript">
+<!-- 
+  function handle_text_change(field, elm) {
+    $('#' + field).data('val',  $('#' + field).val() ); // save value
+    $('#' + field).change(function() { // works when input will be blured and the value was changed
+      $('#' + elm).text($(this).val());
+    });
+    $('#' + field).keyup(function() { // works immediately when user press button inside of the input
+      if( $('#' + field).val() != $('#' + field).data('val') ){ // check if value changed
+        $('#' + field).data('val',  $('#' + field).val() ); // save new value
+        if ($('#' + field).val() != "") {
+          if ($('#' + elm).css('visibility') != "visible") {
+            $('#' + elm).css('visibility', 'visible');
+          }
+        }
+        else {
+          $('#' + elm).css('visibility', 'hidden');
+        }
+
+        $(this).change(); // simulate "change" event
+      }
+    });
+  }
+
+  $('#post_image').change(function() {
+    var file_data = $("#post_image").prop("files")[0];   // Getting the properties of file from file field
+    var form_data = new FormData();                  // Creating object of FormData class
+    form_data.append("file", file_data)              // Appending parameter named file with properties of file_field to form_data
+    $.ajax({
+        url: "/autoimg",
+        dataType: 'script',
+        cache: false,
+        contentType: false,
+        processData: false,
+        data: form_data,                         // Setting the data attribute of ajax with file_data
+        type: 'post',
+        complete: function(response) {
+          res = $.parseJSON(response.responseText);
+          if (res.success === true) {
+            change_upload(res.filename);
+          }
+        }
+
+    });
+  })
+
+  function change_upload(filename) {
+    $('#upload-box').find('span').hide();
+    var img = $('<img />');
+    img.attr('src', '/system/tmp/' + filename);
+    img.css({ 'width': '450px', 'height': '450px', 'position': 'absolute', 'z-index': 0 });
+    img.appendTo('#upload-box');
+
+    handle_text_change('post_top_text', 'top_text');
+    handle_text_change('post_bottom_text', 'bottom_text');
+  }
+-->
+</script>
