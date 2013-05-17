@@ -6,7 +6,7 @@
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 </head>
-<body>
+<body class="wrapper">
 
 <nav>
   <label for="animal_filter">Type of Pet:</label>
@@ -18,12 +18,10 @@
   <label for="state_filter">Location:</label>
   <select class="state_filter filter" id="state_filter">
   </select>
-  <a href="#" id="submit_filter">go</a>
+  <a href="#" class="filter btn" id="submit_filter">go</a>
 </nav>
 
-<section class="wrapper">
-  <%= yield %>
-</section>
+<%= yield %>
 
 </body>
 </html>

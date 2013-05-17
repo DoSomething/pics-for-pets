@@ -6,3 +6,42 @@ body
   margin: 1em auto 0
   @media screen and (max-width: 960px)
     width: 100%
+
+nav
+  background: #eee
+  height: 4em
+  line-height: 4em
+  text-align: center
+  clear: both
+  label
+    display: inline-block
+    padding: 0 1em
+    text-transform: uppercase
+    font-weight: 500
+    color: #666
+
+.btn
+  background: lightblue
+  margin: 0 auto
+  padding: 0.25em 0
+  clear: both
+  position: static
+  height: 2em
+  display: block
+  border: 1px solid darken(lightblue, 5)
+  cursor: pointer
+  color: #444
+  font-family: din-web-reg
+  font-weight: 600
+  text-align: center
+  text-decoration: none !important
+  text-transform: uppercase
+  &:hover
+    background: darken(lightblue, 2)
+    color: #444
+
+.filter.btn
+  width: 3em
+  float: right
+  margin: 0.7em 1em 0 0
+  border-radius: 3px

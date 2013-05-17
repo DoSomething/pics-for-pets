@@ -3,7 +3,7 @@ $(function() {
 
   // Populate the state filter
    var states = [
-                  'ALL',
+                  'ALL', 'AL',
                   'AK', 'AS', 'AZ', 'AR', 'CA',
                   'CO', 'CT', 'DE', 'DC', 'FM',
                   'FL', 'GA', 'GU', 'HI', 'ID',
