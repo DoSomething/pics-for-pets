@@ -3,7 +3,11 @@ CreateAndShare::Application.routes.draw do
 
   root :to => "posts#index"
   match 'submit' => 'posts#new'
-  match '/show/:id' => 'posts#show'
+  match '/show/:id' => 'posts#show', :constraints => { :id => /\d+/ }
+  match '/show/:filter' => 'posts#filter', :constraints => { :filter => /(cat|dog|other)s?/ }, :run => 'animal'
+  match '/show/:filter' => 'posts#filter', :constraints => { :filter => /[A-Z]{2}/ }, :run => 'state'
+  match '/show/:atype-:state' => 'posts#filter', :constraints => { :atype => /(cat|dog|other)s?/, :filter => /[A-Z]{2}/ }, :run => 'both'
+
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

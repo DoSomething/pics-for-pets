@@ -10,6 +10,29 @@ class PostsController < ApplicationController
     end
   end
 
+  # GET /show/(cat|dog|other)s?
+  def filter
+    if !params[:filter].nil?
+      filter = params[:filter]
+    elsif !params[:atype].nil?
+      filter = params[:atype]
+    end
+
+    # Cats isn't a valid filter, but cat is.  Let's chop off
+    # the "s" if it exists.
+    filter = filter[0..-2] if filter[-1,1] == 's'
+
+    if params[:run] == 'animal'
+      @posts = Post.where(:animal_type => filter)
+    elsif params[:run] == 'state'
+      @posts = Post.where(:state => filter)
+    elsif params[:run] == 'both'
+      @posts = Post.where(:animal_type => filter, :state => params[:state])
+    end
+
+    render :index
+  end
+
   # GET /posts/1
   # GET /posts/1.json
   def show
