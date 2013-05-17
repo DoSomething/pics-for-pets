@@ -12,9 +12,4 @@ class Post < ActiveRecord::Base
   validates :shelter, :presence => true
 
   has_attached_file :image, :styles => { :gallery => '450x450!' }, :default_url => '/images/:style/default.png'
-
-  # Fixes bug from changed column name.
-  def animal_type
-  	
-  end
 end

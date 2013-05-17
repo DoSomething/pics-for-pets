@@ -1,8 +1,8 @@
 class ChangeTypeToAnimalType < ActiveRecord::Migration
-  def self.up
-  	rename_column :posts, :type, :animal_ype
+  def up
+  	rename_column :posts, :type, :animal_type
   end
 
-  def self.down
+  def down
   end
 end
