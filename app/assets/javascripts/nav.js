@@ -2,7 +2,8 @@
 $(function() {
 
   // Populate the state filter
-   var states = [
+  // TODO - ADD FULL STATE NAMES
+  var states = [
                   'ALL', 'AL',
                   'AK', 'AS', 'AZ', 'AR', 'CA',
                   'CO', 'CT', 'DE', 'DC', 'FM',
