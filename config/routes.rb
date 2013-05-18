@@ -1,11 +1,13 @@
 CreateAndShare::Application.routes.draw do
-  get "user/login"
 
-  get "user/register"
+  get 'user/login'
+  get 'user/register'
+  match '/login' => 'user#login'
+  match '/register' => 'user#register'
 
   resources :posts
 
-  root :to => "posts#index"
+  root :to => 'posts#index'
   match 'submit' => 'posts#new', :as => :real_submit_path
   match '/show/:id' => 'posts#show', :constraints => { :id => /\d+/ }
   match '/show/:filter' => 'posts#filter', :constraints => { :filter => /(cat|dog|other)s?/ }, :run => 'animal'
