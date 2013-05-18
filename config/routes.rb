@@ -1,4 +1,8 @@
 CreateAndShare::Application.routes.draw do
+  get "user/login"
+
+  get "user/register"
+
   resources :posts
 
   root :to => "posts#index"
