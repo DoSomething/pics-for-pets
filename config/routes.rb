@@ -1,11 +1,13 @@
 CreateAndShare::Application.routes.draw do
 
-  get 'user/login'
-  get 'user/register'
-  match '/login' => 'user#login'
-  match '/register' => 'user#register'
+  resources :users
 
-  resources :posts
+  # get '/login' => 'user#login'
+  # post '/login' => 'user#login'
+
+  # get '/register' => 'user#register'
+  # post '/register' => 'user#register'
+
 
   root :to => 'posts#index'
   match 'submit' => 'posts#new', :as => :real_submit_path
