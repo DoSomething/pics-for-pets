@@ -8,6 +8,13 @@
 </head>
 <body class="wrapper">
 
+<p>session id:</p><small><%= session[:drupal_session_id]  %></small>
+<p>session name:</p><small><%= session[:drupal_session_name]  %></small>
+
+<% if flash[:message] %>
+  <div class="message"><%= h flash[:message] %></div>
+<% end %>
+
 <%= yield %>
 
 </body>
