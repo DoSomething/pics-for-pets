@@ -28,9 +28,12 @@ class UsersController < ApplicationController
 
     login_response = Services.login(@user.username, @user.password)
 
-    puts login_response
+    session[:drupal_session_id]   = login_response['sessid']
+    session[:drupal_session_name] = login_response['session_name']
 
-    #redirect_to :root
+    flash[:message] = 'Login successful'
+    # TODO - ADD FLASH MESSAGE VERIFYING LOGIN SUCCESS
+    redirect_to :root
   end
 
   def register
