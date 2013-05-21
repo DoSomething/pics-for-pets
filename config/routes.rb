@@ -12,8 +12,8 @@ CreateAndShare::Application.routes.draw do
   # TODO - GATE THESE PAGES BY NESTING THE ROUTES
   match 'submit' => 'posts#new', :as => :real_submit_path
   match '/show/:id' => 'posts#show', :constraints => { :id => /\d+/ }
-  match '/show/:filter' => 'posts#filter', :constraints => { :filter => /(cat|dog|other)s?/ }, :run => 'animal'
-  match '/show/:filter' => 'posts#filter', :constraints => { :filter => /[A-Z]{2}/ }, :run => 'state'
+  match '/show/:atype' => 'posts#filter', :constraints => { :atype => /(cat|dog|other)s?/ }, :run => 'animal'
+  match '/show/:state' => 'posts#filter', :constraints => { :state => /[A-Z]{2}/ }, :run => 'state'
   match '/show/:atype-:state' => 'posts#filter', :constraints => { :atype => /(cat|dog|other)s?/, :filter => /[A-Z]{2}/ }, :run => 'both'
   match '/autoimg' => 'posts#autoimg'
   match '/alterimg/:id' => 'posts#alterimg', :as => :alter_image

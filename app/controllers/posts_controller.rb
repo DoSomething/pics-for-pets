@@ -16,8 +16,8 @@ class PostsController < ApplicationController
 
   # GET /show/(cat|dog|other)s?
   def filter
-    if !params[:filter].nil?
-      filter = params[:filter]
+    if !params[:state].nil?
+      filter = params[:state]
     elsif !params[:atype].nil?
       filter = params[:atype]
     end
