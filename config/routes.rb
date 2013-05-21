@@ -1,7 +1,15 @@
 CreateAndShare::Application.routes.draw do
+
+  root :to => 'logs#new', :as => :login
+
+  match '/logout' => 'logs#out', :as => :logout
+  match '/login' => redirect('/')
+
+  resources :logs, :only => [:new, :create]
+  resources :users
   resources :posts
 
-  root :to => "posts#index"
+  # TODO - GATE THESE PAGES BY NESTING THE ROUTES
   match 'submit' => 'posts#new', :as => :real_submit_path
   match '/show/:id' => 'posts#show', :constraints => { :id => /\d+/ }
   match '/show/:filter' => 'posts#filter', :constraints => { :filter => /(cat|dog|other)s?/ }, :run => 'animal'
