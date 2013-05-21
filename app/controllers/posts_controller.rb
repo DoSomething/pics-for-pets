@@ -22,9 +22,11 @@ class PostsController < ApplicationController
       filter = params[:atype]
     end
 
-    # Cats isn't a valid filter, but cat is.  Let's chop off
-    # the "s" if it exists.
-    filter = filter[0..-2] if filter[-1,1] == 's'
+    if filter.is_a? String
+      # Cats isn't a valid filter, but cat is.  Let's chop off
+      # the "s" if it exists.
+      filter = filter[0..-2] if filter[-1,1] == 's'
+    end
 
     if params[:run] == 'animal'
       @posts = Post.where(:animal_type => filter)
@@ -32,6 +34,8 @@ class PostsController < ApplicationController
       @posts = Post.where(:state => filter)
     elsif params[:run] == 'both'
       @posts = Post.where(:animal_type => filter, :state => params[:state])
+    elsif params[:run] == 'featured'
+      @posts = Post.where(:promoted => true)
     end
 
     render :index

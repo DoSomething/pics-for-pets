@@ -61,17 +61,11 @@
     <%= f.text_area :story %>
   </div>
   <div class="field">
-    <%= f.label :creation_time %><br />
-    <%= f.datetime_select :creation_time %>
-  </div>
-  <div class="field">
-    <%= f.label :update_time %><br />
-    <%= f.datetime_select :update_time %>
-  </div>
-  <div class="field">
     <%= f.label :adopted %><br />
     <%= f.check_box :adopted %>
   </div>
+  <%= f.hidden_field :creation_time, :value => Time.now %>
+  <%= f.hidden_field :update_time, :value => Time.now %>
   <div class="actions">
     <%= f.submit %>
   </div>
