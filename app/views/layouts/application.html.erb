@@ -10,10 +10,10 @@
 
 <p>session id:</p><small><%= session[:drupal_session_id]  %></small>
 <p>session name:</p><small><%= session[:drupal_session_name]  %></small>
-<%= link_to 'logout', :logout %>
+<%= link_to 'logout', :logout, { :class => 'logout' } %>
 
 <% if flash[:message] %>
-  <div class="message"><%= h flash[:message] %></div>
+  <div><p class="message"><%= h flash[:message] %></p></div>
 <% end %>
 
 <%= yield %>

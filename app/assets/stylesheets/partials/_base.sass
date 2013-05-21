@@ -7,6 +7,25 @@ body
   @media screen and (max-width: 960px)
     width: 100%
 
+$link: #e77
+$msg: #53E68B
+
+.logout
+  color: $link
+  &:hover
+    color: darken($link, 5)
+
+.message
+  color: #fff
+  background: $msg
+  font-weight: 600
+  letter-spacing: 1px
+  display: inline-block
+  text-transform: uppercase
+  padding: 5px
+  margin: 0.5em 0
+  +border-radius(3px)
+
 nav
   background: #eee
   height: 4em
