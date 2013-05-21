@@ -2,13 +2,8 @@
 
 <div class="post-list">
 <% @posts.each do |post| %>
-  <div class="post id-<%= post.id %>">
-  	<div class="flag"><%= link_to 'Flag', flag_path(post) %></div>
-    <div class="name-loc"><%= post.name %>, <%= post.state %></div>
-    <div class="share">Facebook coming...</div>
-    <div class="image"><%= image_tag post.image(:gallery) %></div>
-    <div class="adopt-me">Adopt Bunny at <%= link_to post.name + ', ' + post.state, 'blah' %></div>
-  </div>
+  <% @post = post %>
+  <%= render 'post' %>
 <% end %>
 </div>
 
