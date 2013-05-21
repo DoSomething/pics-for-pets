@@ -8,20 +8,12 @@
 </head>
 <body class="wrapper">
 
-<nav>
-  <label for="animal_filter">Type of Pet:</label>
-  <select class="animal_filter filter" id="animal_filter">
-    <option value="all">all</option>
-    <option value="cat">cat</option>
-    <option value="dog">dog</option>
-    <option value="other">other</option>
-    <option value="featured">featured</option>
-  </select>
-  <label for="state_filter">Location:</label>
-  <select class="state_filter filter" id="state_filter">
-  </select>
-  <a href="#" class="filter btn" id="submit_filter">go</a>
-</nav>
+<p>session id:</p><small><%= session[:drupal_session_id]  %></small>
+<p>session name:</p><small><%= session[:drupal_session_name]  %></small>
+
+<% if flash[:message] %>
+  <div class="message"><%= h flash[:message] %></div>
+<% end %>
 
 <%= yield %>
 

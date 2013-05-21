@@ -1,5 +1,8 @@
 require 'fileutils'
+
 class PostsController < ApplicationController
+  include Services
+
   # GET /posts
   # GET /posts.json
   def index
