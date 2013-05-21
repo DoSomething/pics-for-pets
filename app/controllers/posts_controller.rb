@@ -51,6 +51,22 @@ class PostsController < ApplicationController
     render json: { 'success' => true, 'filename' => name }
   end
 
+  # GET /alterimg/1
+  # Alters image by adding top and bottom text, within semi-transparent block.
+  def alterimg
+    @post = Post.find(params[:id])
+    image = @post.image.url(:gallery)
+    image = '/public' + image.gsub(/\?.*/, '')
+
+    if File.exists? Rails.root.to_s + image
+      PostsHelper.image_writer(image, @post.top_text, @post.bottom_text)
+    end
+    
+    respond_to do |format|
+      format.html { redirect_to @post }
+    end
+  end
+
   # GET /posts/1
   # GET /posts/1.json
   def show
@@ -85,7 +101,7 @@ class PostsController < ApplicationController
 
     respond_to do |format|
       if @post.save
-        format.html { redirect_to @post, notice: 'Post was successfully created.' }
+        format.html { redirect_to alter_image_path(@post) }
         format.json { render json: @post, status: :created, location: @post }
       else
         format.html { render action: "new" }

@@ -32,6 +32,7 @@ bottom_joined = bottom_text.split('||').map(&:upcase)
 bottom_text = bottom_joined.join("\n")
 bottom_height = (bottom_joined.count * 25) + 10
 
+# Top text box
 system '''
   convert ''' + path + ''' \
     -strokewidth 0 \
@@ -39,6 +40,8 @@ system '''
     -draw "rectangle 0,0 450,''' + top_height.to_s + ''' " \
   ''' + path + '''
 '''
+
+# Top text
 system '''
   convert ''' + path + ''' \
     -gravity North \
@@ -55,6 +58,8 @@ system '''
       -annotate +0-0 "''' + top_text + '''" \
   ''' + path + '''
 '''
+
+# Bottom text box
 system '''
   convert ''' + path + ''' \
     -strokewidth 0 \
@@ -62,6 +67,8 @@ system '''
     -draw "rectangle 450,450 0,''' + (450 - (bottom_height + 6)).to_s + '''" \
   ''' + path + '''
 '''
+
+# Bottom text
 system '''
   convert ''' + path + ''' \
     -gravity South \

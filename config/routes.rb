@@ -8,6 +8,7 @@ CreateAndShare::Application.routes.draw do
   match '/show/:filter' => 'posts#filter', :constraints => { :filter => /[A-Z]{2}/ }, :run => 'state'
   match '/show/:atype-:state' => 'posts#filter', :constraints => { :atype => /(cat|dog|other)s?/, :filter => /[A-Z]{2}/ }, :run => 'both'
   match '/autoimg' => 'posts#autoimg'
+  match '/alterimg/:id' => 'posts#alterimg', :as => :alter_image
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
