@@ -6,7 +6,7 @@ class PostsController < ApplicationController
   # GET /posts
   # GET /posts.json
   def index
-    @posts = Post.all
+    @posts = Post.where(:flagged => false)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -29,13 +29,13 @@ class PostsController < ApplicationController
     end
 
     if params[:run] == 'animal'
-      @posts = Post.where(:animal_type => filter)
+      @posts = Post.where(:animal_type => filter, :flagged => false)
     elsif params[:run] == 'state'
-      @posts = Post.where(:state => filter)
+      @posts = Post.where(:state => filter, :flagged => false)
     elsif params[:run] == 'both'
-      @posts = Post.where(:animal_type => filter, :state => params[:state])
+      @posts = Post.where(:animal_type => filter, :state => params[:state], :flagged => false)
     elsif params[:run] == 'featured'
-      @posts = Post.where(:promoted => true)
+      @posts = Post.where(:promoted => true, :flagged => false)
     end
 
     render :index
@@ -77,7 +77,7 @@ class PostsController < ApplicationController
   # GET /posts/1
   # GET /posts/1.json
   def show
-    @post = Post.find(params[:id])
+    @post = Post.where(:id => params[:id], :flagged => false).first
 
     respond_to do |format|
       format.html # show.html.erb
@@ -142,6 +142,17 @@ class PostsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to posts_url }
       format.json { head :no_content }
+    end
+  end
+
+
+  def flag
+    @post = Post.find(params[:id])
+    @post.flagged = true
+    @post.save
+
+    respond_to do |format|
+      format.html { redirect_to posts_url }
     end
   end
 end

@@ -4,6 +4,7 @@
 
 <div class="post-list">
   <div class="post id-<%= @post.id %>">
+  	<div class="flag"><%= link_to 'Flag', flag_path(@post) %></div>
     <div class="name-loc"><%= @post.name %>, <%= @post.state %></div>
     <div class="share">Facebook coming...</div>
     <div class="image"><%= image_tag @post.image(:gallery) %></div>
@@ -12,4 +13,4 @@
 </div>
 
 <%= link_to 'Edit', edit_post_path(@post) %> |
-<%= link_to 'Back', posts_path %>
+<%= link_to 'Delete', @post, :confirm => 'Delete?', :method => :delete %>

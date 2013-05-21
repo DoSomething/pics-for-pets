@@ -18,6 +18,7 @@ CreateAndShare::Application.routes.draw do
   match '/show/featured' => 'posts#filter', :run => 'featured'
   match '/autoimg' => 'posts#autoimg'
   match '/alterimg/:id' => 'posts#alterimg', :as => :alter_image
+  match '/flag/:id' => 'posts#flag', :as => :flag
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
