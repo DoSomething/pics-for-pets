@@ -15,7 +15,7 @@ class UsersController < ApplicationController
 
     flash[:message] = 'Login successful'
     # TODO - ADD FLASH MESSAGE VERIFYING LOGIN SUCCESS
-    redirect_to :root
+    redirect_to :controller => 'posts', :action => 'show'
   end
 
   def register
