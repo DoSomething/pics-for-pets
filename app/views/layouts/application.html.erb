@@ -10,6 +10,7 @@
 
 <p>session id:</p><small><%= session[:drupal_session_id]  %></small>
 <p>session name:</p><small><%= session[:drupal_session_name]  %></small>
+<%= link_to 'logout', :logout %>
 
 <% if flash[:message] %>
   <div class="message"><%= h flash[:message] %></div>

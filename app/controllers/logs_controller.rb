@@ -5,6 +5,7 @@ class LogsController < ApplicationController
     @user = User.new
   end
 
+  # /login
   def create
     @user = User.new(params[:user])
 
@@ -13,9 +14,20 @@ class LogsController < ApplicationController
     session[:drupal_session_id]   = login_response['sessid']
     session[:drupal_session_name] = login_response['session_name']
 
-    flash[:message] = 'Login successful'
-    # TODO - ADD FLASH MESSAGE VERIFYING LOGIN SUCCESS
-    redirect_to :root
+    # TODO - CHECK SESSION STATE FIRST
+    redirect_to :root, :flash => { :message => 'login successful' }
+  end
+
+  def show
+  end
+
+  # /logout
+  def out
+    session[:drupal_session_id] = nil
+    session[:drupal_session_name] = nil
+
+    # TODO - CHECK SESSION STATE FIRST
+    redirect_to :login, :flash => { :message => 'logout successful'}
   end
 
 end
