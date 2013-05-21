@@ -1,6 +1,6 @@
 CreateAndShare::Application.routes.draw do
-  get "logs/in"
 
+  resources :logs, :only => [:new, :create]
   resources :users
   resources :posts
 
