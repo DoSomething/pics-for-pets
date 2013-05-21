@@ -1,4 +1,6 @@
 CreateAndShare::Application.routes.draw do
+  get "logs/in"
+
   resources :posts
 
   root :to => "posts#index"
