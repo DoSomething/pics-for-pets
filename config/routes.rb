@@ -11,15 +11,14 @@ CreateAndShare::Application.routes.draw do
 
   # TODO - GATE THESE PAGES BY NESTING THE ROUTES
   match 'submit' => 'posts#new', :as => :real_submit_path
-  match '/show/:id' => 'posts#show', :constraints => { :id => /\d+/ }
-  match '/show/:atype' => 'posts#filter', :constraints => { :atype => /(cat|dog|other)s?/ }, :run => 'animal'
-  match '/show/:state' => 'posts#filter', :constraints => { :state => /[A-Z]{2}/ }, :run => 'state'
-  match '/show/:atype-:state' => 'posts#filter', :constraints => { :atype => /(cat|dog|other)s?/, :filter => /[A-Z]{2}/ }, :run => 'both'
-  match '/show/featured' => 'posts#filter', :run => 'featured'
-  match '/show' => redirect('/')
-  match '/autoimg' => 'posts#autoimg'
-  match '/alterimg/:id' => 'posts#alterimg', :as => :alter_image
-  match '/flag/:id' => 'posts#flag', :as => :flag
+  match ':id' => 'posts#show', :constraints => { :id => /\d+/ }, :as => :show_post
+  match ':atype' => 'posts#filter', :constraints => { :atype => /(cat|dog|other)s?/ }, :run => 'animal'
+  match ':state' => 'posts#filter', :constraints => { :state => /[A-Z]{2}/ }, :run => 'state'
+  match ':atype-:state' => 'posts#filter', :constraints => { :atype => /(cat|dog|other)s?/, :state => /[A-Z]{2}/ }, :run => 'both'
+  match 'featured' => 'posts#filter', :run => 'featured'
+  match 'autoimg' => 'posts#autoimg'
+  match 'alterimg/:id' => 'posts#alterimg', :as => :alter_image
+  match 'flag/:id' => 'posts#flag', :as => :flag
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

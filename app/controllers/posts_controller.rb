@@ -16,24 +16,18 @@ class PostsController < ApplicationController
 
   # GET /show/(cat|dog|other)s?
   def filter
-    if !params[:state].nil?
-      filter = params[:state]
-    elsif !params[:atype].nil?
-      filter = params[:atype]
-    end
-
-    if filter.is_a? String
+    if params[:atype].is_a? String
       # Cats isn't a valid filter, but cat is.  Let's chop off
       # the "s" if it exists.
-      filter = filter[0..-2] if filter[-1,1] == 's'
+      params[:atype] = params[:atype][0..-2] if params[:atype][-1,1] == 's'
     end
 
     if params[:run] == 'animal'
-      @posts = Post.where(:animal_type => filter, :flagged => false)
+      @posts = Post.where(:animal_type => params[:atype], :flagged => false)
     elsif params[:run] == 'state'
-      @posts = Post.where(:state => filter, :flagged => false)
+      @posts = Post.where(:state => params[:state], :flagged => false)
     elsif params[:run] == 'both'
-      @posts = Post.where(:animal_type => filter, :state => params[:state], :flagged => false)
+      @posts = Post.where(:animal_type => params[:atype], :state => params[:state], :flagged => false)
     elsif params[:run] == 'featured'
       @posts = Post.where(:promoted => true, :flagged => false)
     end
@@ -70,7 +64,7 @@ class PostsController < ApplicationController
     end
     
     respond_to do |format|
-      format.html { redirect_to @post }
+      format.html { redirect_to show_post_path(@post) }
     end
   end
 
@@ -124,7 +118,7 @@ class PostsController < ApplicationController
 
     respond_to do |format|
       if @post.update_attributes(params[:post])
-        format.html { redirect_to @post, notice: 'Post was successfully updated.' }
+        format.html { redirect_to show_post_path(@post), notice: 'Post was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

@@ -9,7 +9,7 @@ $(function() {
     // The destination parameter is unbiased.  We need to tell it where to go here.
     var dest = (type != 'all') ? type + ((state != '') ? '-' + state : '') : ((state != '') ? state : '');
 
-    document.location.href = (dest != '' ? '/show/' + dest : '/');
+    document.location.href = (dest != '' ? '/' + dest : '/');
     return false;
   });
 });
