@@ -1,6 +1,6 @@
 <h1>user login/registration gate</h1>
-<%= form_for(:session, :url => sessions_path, :html => { :class => "form login-form" }) do |f| %>
 
+<%= form_for(:session, :url => sessions_path, :html => { :class => "form form-login" }) do |f| %>
   <%= f.label :username %>
   <%= f.text_field :username %>
   <%= f.label :password %>
@@ -8,3 +8,20 @@
   <%= f.submit "submit" %>
 <% end %>
 
+<%= form_for(:session, :url => sessions_path, :html => { :class => "form form-registration" }) do |f| %>
+  <%= f.label :first %>
+  <%= f.text_field :first %>
+  <%= f.label :last %>
+  <%= f.text_field :last %>
+  <%= f.label :email %>
+  <%= f.text_field :email %>
+  <%= f.label :password %>
+  <%= f.password_field :password %>
+  <%= f.label :cell %>
+  <%= f.text_field :cell %>
+  <%= f.label :birthday %>
+  <%= f.text_field :month %>
+  <%= f.text_field :day %>
+  <%= f.text_field :year %>
+  <%= f.submit "submit" %>
+<% end %>
