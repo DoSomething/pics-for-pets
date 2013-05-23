@@ -2,7 +2,6 @@ connection: &connection
   adapter: postgresql
   encoding: unicode
   pool: 5
-  host: localhost
   database: create_and_share
 
 development:
@@ -12,4 +11,8 @@ test:
   <<: *connection
 
 production:
-  <<: *connection
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+  database: create_and_share
+
