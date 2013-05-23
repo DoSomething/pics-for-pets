@@ -8,20 +8,54 @@
   <%= f.submit "submit" %>
 <% end %>
 
-<%= form_for(:session, :url => sessions_path, :html => { :class => "form form-registration" }) do |f| %>
-  <%= f.label :first %>
-  <%= f.text_field :first %>
-  <%= f.label :last %>
-  <%= f.text_field :last %>
-  <%= f.label :email %>
-  <%= f.text_field :email %>
-  <%= f.label :password %>
-  <%= f.password_field :password %>
-  <%= f.label :cell %>
-  <%= f.text_field :cell %>
-  <%= f.label :birthday %>
-  <%= f.text_field :month %>
-  <%= f.text_field :day %>
-  <%= f.text_field :year %>
-  <%= f.submit "submit" %>
-<% end %>
+<div class="column" id="content">
+  <div class="section">
+    <div class="region region-content">
+      <div id="block-system-main" class="block block-system">
+        <div class="content">
+          <div id="reg_header">
+            <img class="ds_logo" src="//files.dosomething.org/files/campaigns/beta/logo.png" alt="DoSomething.org logo">
+            <h1>
+              Peanut Butter &amp; Jam Slam<img class="bang" src="//files.dosomething.org/files/campaigns/beta/bang.png" alt="exclamation point">
+            </h1>
+            <h2>
+              <strong>1 out of 6</strong> Americans goes hungry every year. Sign up to change this.
+            </h2>
+          </div>
+          <div id="reg_leftcol">
+            <h1>
+              how it works
+            </h1>
+            <h2>
+              Donate 10 jars of peanut butter, jam or any other food and help end hunger in your community.
+            </h2>
+          </div>
+
+          <%= form_for(:session, :url => sessions_path, :html => { :class => "form form-registration" }) do |f| %>
+            <%= f.label :first %>
+            <%= f.text_field :first %>
+            <%= f.label :last %>
+            <%= f.text_field :last %>
+            <%= f.label :email %>
+            <%= f.text_field :email %>
+            <%= f.label :password %>
+            <%= f.password_field :password %>
+            <%= f.label :cell %>
+            <%= f.text_field :cell %>
+            <%= f.label :birthday %>
+            <%= f.text_field :month %>
+            <%= f.text_field :day %>
+            <%= f.text_field :year %>
+            <%= f.submit "submit" %>
+          <% end %>
+
+          <div id="reg_footer">
+            <p>
+              Clicking "Finish" won't sell your soul, but it means you agree to our <a href="/about/terms-of-service">terms of service</a> &amp; <a href="/about/privacy">privacy policy</a> &amp; to receive our weekly update.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
