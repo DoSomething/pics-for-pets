@@ -5,35 +5,24 @@
 // TODO - ONLY LOAD THIS PARTIAL ON GATES
 $campaign-main: #e77
 
-// TODO - REMOVE THIS SECTION AND PREPROCESS OFF TEMPLATE
-body.page-user-registration
-  #header,
-  nav[role="navigation"],
-  #block-menu-menu-footer
-    display: none
-
 // base HTML styling
-body.html
+body
   background: #f7f7f7
+  width: 100%
 
 label
   display: block
 
-// TODO - FIND WHERE THIS {clear:left;} IS COMING FROM AND REMOVE IT
-h1, h2, p
-  clear: none
+// TYPOGRAPHY
+// ----------
+.col
+  h1
+    color: $campaign-main
+    text-transform: uppercase
 
-// TODO - REMOVE NESTING ONCE THIS FILE IS ONLY LOADED ON GATES
-body.page-user-registration
-  h1, h2
-    font-family: din-web
-
-// page wrapper
-#page.container
-  width: 100%
-
-// page container
-#gate
+// CONTAINER
+// ---------
+.gate
   float: none
   width: 800px
   min-height: auto /* corrects fixed height inherited from sitewide styles */
@@ -48,14 +37,9 @@ body.page-user-registration
     width: 96%  
     padding: 6% 6% 1% 6%
 
-// text styles
-#reg_header, #reg_leftcol
-  h1
-    color: $campaign-main
-    text-transform: uppercase
-
-// header
-#reg_header
+// CAMPAIGN STAT
+// -------------
+.gate header
   width: 100%
   overflow: hidden
   h1, h2
@@ -75,7 +59,7 @@ body.page-user-registration
     width: 23px
     margin: 0 5px -5px 5px
 
-#reg_header
+.gate header
   @media only screen and (max-width: 650px)
     float: none
     h1
@@ -93,8 +77,9 @@ body.page-user-registration
     h1
       margin: 0.2em 0 0 0
 
-// left column
-#reg_leftcol
+// HOW IT WORKS
+// ------------
+.gate .left
   float: left
   width: 45%
   margin: 13% 0 0 -8%
@@ -120,7 +105,7 @@ body.page-user-registration
     border-width: 132px 30px 0 0
     border-color: $campaign-main transparent transparent transparent
 
-#reg_leftcol
+.gate .left
   @media only screen and (max-width: 650px)
     float: none
     margin: 0
@@ -135,8 +120,9 @@ body.page-user-registration
     h2
       color: $off-black
 
-// footer
-#reg_footer
+// FOOTER
+// ------
+.gate footer
   clear: both
   width: 95%
   padding: 3% 0 0 0
@@ -148,49 +134,25 @@ body.page-user-registration
   a
     text-decoration: underline
 
-// mutual form styling
-#dosomething-login-register-popup-form,
-#dosomething-login-register-popup-form--2,
-#dosomething-login-login-popup-form,
-#dosomething-login-login-popup-form--2
-  div.popup-content
-    background: transparent
-    min-height: auto
-    margin: 0 auto
-    padding: 0
-    width: 100%
-    box-shadow: none
-
-// user registration form
-#main-content, #page-title, #edit-title-text, #edit-connect, #edit-or, .form-required
-  display: none
-
-#dosomething-login-register-popup-form
+.gate .form
+  background: transparent
+  min-height: auto
+  padding: 0
+  width: 100%
+  box-shadow: none
   margin: 0 0 2% 0
   float: right
   width: 50%
-  @media only screen and (max-width: 650px)
-    float: none
-    margin: 5% auto
-    width: 95%
-  @media only screen and (max-width: 500px)
-    margin: 8% auto 4%
-
-// user registration form
-#dosomething-login-register-popup-form div
-  .popup-content
-    .disclaimer
-      display: none
-    label
-      text-transform: lowercase
-      padding: 0 0 0.4em 0
-      font-weight: 600
-      font-size: 13px
-      color: $off-black
-    .under-13-field
-      padding: 0
-    .form-item-parent-email
-      margin: 0.5em 0 0 0
+  label
+    text-transform: lowercase
+    padding: 0 0 0.4em 0
+    font-weight: 600
+    font-size: 13px
+    color: $off-black
+  .under-13-field
+    padding: 0
+  .form-item-parent-email
+    margin: 0.5em 0 0 0
   .form_header
     margin: 0 0 4% 0
     display: block
@@ -226,13 +188,18 @@ body.page-user-registration
     font-weight: 500
     font-size: 14px
     color: #222
+  @media only screen and (max-width: 650px)
+    float: none
+    margin: 5% auto
+    width: 95%
+  @media only screen and (max-width: 500px)
+    margin: 8% auto 4%
+
 
 // submit button for both forms
-#dosomething-login-register-popup-form #edit-final-submit,
-#dosomething-login-login-popup-form #edit-final-submit--2,
-#dosomething-login-login-popup-form--2 #edit-final-submit--3
+#edit-final-submit
   background: #fed100
-  margin: 1% 0 0 0
+  margin: 1em 0
   padding: 1px 0 0 0
   position: static
   font-size: 22px
@@ -243,60 +210,13 @@ body.page-user-registration
   +border-radius(3px) 
 
 // input fields for both forms
-#dosomething-login-register-popup-form, 
-#dosomething-login-register-popup-form--2,
-#dosomething-login-login-popup-form,
-#dosomething-login-login-popup-form--2
-  input
-    height: 2.5em
-    width: 100%
-    margin: 0.3em 0 1em 0
-    background: #fafafa
-    border: none
-    border: 1px solid #ddd
-    box-shadow: none
-    +border-radius(3px)
-
-// user login form
-#dosomething-login-login-popup-form,
-#dosomething-login-login-popup-form--2
-  .already-member
-    display: none
-
-// jQuery UI sits outside of above #wrapper
-div[aria-labelledby="ui-dialog-title-dosomething-login-login-popup-form"]
-  @media only screen and (max-width: 550px)
-    width: 100% !important
-  .ui-dialog-titlebar
-    float: right
-  .ui-dialog-titlebar-close
-    top: -15px
-    right: 5px
-    z-index: 3
-
-// hide questionable elements
-// TODO - DELETE THIS NOISE IN PHP
-#edit-or--2,
-#edit-or--3,
-#edit-title-text--2,
-#edit-title-text--3,
-#edit-connect--2,
-#edit-connect--3,
-.see-whats-new
-  display: none !important
-
-div[aria-labelledby="ui-dialog-title-dosomething-login-login-popup-form--2"]
-  .ui-dialog-titlebar
-    float: right
-  .ui-dialog-titlebar-close
-    top: -15px
-    right: 5px
-    z-index: 3
-
-#dosomething-login-login-popup-form--2
-  .description a
-    margin: 1em 0
-    display: block
-
-// NOTE: do not forget to combine '.popup-content' styles across both forms!
+.gate input
+  height: 2.5em
+  width: 100%
+  margin: 0.3em 0 1em 0
+  background: #fafafa
+  border: none
+  border: 1px solid #ddd
+  box-shadow: none
+  +border-radius(3px)
 

@@ -1,0 +1,46 @@
+<h1>user login/registration gate</h1>
+
+<%= form_for(:session, :url => sessions_path, :html => { :class => "form form-login" }) do |f| %>
+  <%= f.label :username %>
+  <%= f.text_field :username %>
+  <%= f.label :password %>
+  <%= f.password_field :password %>
+  <%= f.submit "submit" %>
+<% end %>
+
+<div class="gate">
+  <header>
+    <img class="ds_logo" src="//files.dosomething.org/files/campaigns/beta/logo.png" alt="DoSomething.org logo">
+    <h1>
+      Peanut Butter &amp; Jam Slam<img class="bang" src="//files.dosomething.org/files/campaigns/beta/bang.png" alt="exclamation point">
+    </h1>
+    <h2>
+      <strong>1 out of 6</strong> Americans goes hungry every year. Sign up to change this.
+    </h2>
+  </header>
+
+  <aside class="left">
+    <h1>how it works</h1>
+    <h2>Donate 10 jars of peanut butter, jam or any other food and help end hunger in your community.</h2>
+  </aside>
+
+  <%= simple_form_for(:session, :url => sessions_path, :html => { :class => "form form-registration right" }) do |f| %>
+    <%# TODO - ABSTRACT THIS %>
+    <img class="form_header" src="//files.dosomething.org/files/campaigns/beta/form_header.png" alt="sign up">
+    <%= f.input :first, wrapper_html: { class: 'form-item-first-name' } %>
+    <%= f.input :last, wrapper_html: { class: 'form-item-last-name' } %>
+    <%= f.input :email, wrapper_html: { class: 'form-item-email' } %>
+    <%= f.input :cell, wrapper_html: { class: 'form-item-cell' } %>
+    <%= f.input :password, wrapper_html: { class: 'form-item-pass' } %>
+    <%= f.input :month, label: false, wrapper_html: { class: 'form-type-month' } %>
+    <%= f.input :day, label: false, wrapper_html: { class: 'form-item-day' } %>
+    <%= f.input :year, label: false, wrapper_html: { class: 'form-item-year' } %>
+    <%= f.submit "submit", :id => "edit-final-submit" %>
+  <% end %>
+
+  <footer>
+    <p>
+      Clicking "Finish" won't sell your soul, but it means you agree to our <a href="/about/terms-of-service">terms of service</a> &amp; <a href="/about/privacy">privacy policy</a> &amp; to receive our weekly update.
+    </p>
+  </footer>
+</div>
