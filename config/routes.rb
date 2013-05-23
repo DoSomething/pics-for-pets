@@ -1,12 +1,12 @@
 CreateAndShare::Application.routes.draw do
 
-  root :to => 'logs#new', :as => :login
+  root :to => 'posts#index'
 
-  match '/logout' => 'logs#out', :as => :logout
-  match '/login' => redirect('/')
+  resources :sessions, :only => [:new, :create, :destroy]
 
-  resources :logs, :only => [:new, :create]
-  resources :users
+  match '/login',  to: 'sessions#new', :as => :login
+  match '/logout', to: 'sessions#destroy', :as => :logout
+
   resources :posts
 
   # TODO - GATE THESE PAGES BY NESTING THE ROUTES
