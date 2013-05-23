@@ -32,6 +32,8 @@ bottom_joined = bottom_text.split('||').map(&:upcase)
 bottom_text = bottom_joined.join("\n")
 bottom_height = (bottom_joined.count * 25) + 10
 
+font_path = Rails.root.to_s + '/DINComp-CondBold.ttf'
+
 # Top text box
 system '''
   convert ''' + path + ''' \
@@ -45,7 +47,7 @@ system '''
 system '''
   convert ''' + path + ''' \
     -gravity North \
-    -font /Users/mchittenden/picsforpets/create-and-share/DINComp-CondBold.ttf \
+    -font ''' + font_path + ''' \
     -pointsize 25 \
     -size 450x \
     -interline-spacing -13 \
@@ -72,7 +74,7 @@ system '''
 system '''
   convert ''' + path + ''' \
     -gravity South \
-    -font /Users/mchittenden/picsforpets/create-and-share/DINComp-CondBold.ttf \
+    -font ''' + font_path + ''' \
     -pointsize 25 \
     -size 450x \
     -interline-spacing -13 \
