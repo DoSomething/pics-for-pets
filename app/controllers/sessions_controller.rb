@@ -5,7 +5,6 @@ class SessionsController < ApplicationController
   end
 
   def create
-
     username = params[:session][:username]
     password = params[:session][:password]
 
@@ -21,7 +20,6 @@ class SessionsController < ApplicationController
     else
       render 'new', :flash.now[:message]= 'login failed'
     end
-
   end
 
   def destroy
