@@ -6,11 +6,9 @@
       <option value="all">All Animals</option>
       <%
         types = [['Cats', 'cats'], ['Dogs', 'dogs'], ['Other', 'others'], ['Featured', 'featured']]
+        # Add a trailing "s" so "dog" becomes "dogs".  Makes more sense.
+        params[:atype] << 's' if params[:atype].is_a? String and params[:atype][-1,1] != 's'
         types.each do |type, key|
-          # Remove the trailing "s" for "dogs", "cats", etc.
-          if params[:atype].is_a? String and params[:atype][-1,1] != 's'
-            params[:atype] = params[:atype] + 's'
-          end
       %>
         <option value="<%= key %>"<%= ' selected="selected"' if params[:atype] == key %>><%= type %></option>
       <% end %>
