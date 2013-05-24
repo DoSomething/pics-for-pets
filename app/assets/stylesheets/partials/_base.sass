@@ -9,6 +9,7 @@ body
 
 $link: #e77
 $msg: #53E68B
+$err: #e77
 
 .logout
   color: $link
@@ -25,6 +26,10 @@ $msg: #53E68B
   padding: 5px
   margin: 0.5em 0
   +border-radius(3px)
+
+.error
+  @extend .message
+  background: $err
 
 nav
   background: #eee
