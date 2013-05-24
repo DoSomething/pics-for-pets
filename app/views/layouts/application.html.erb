@@ -8,10 +8,13 @@
 </head>
 <body class="wrapper">
 
-<%= render 'debug' %>
+<%= render 'layouts/debug' %>
+
 <%= link_to 'logout', :logout, { :class => 'logout' } %>
 
+<%= render 'layouts/header' %>
 <%= yield %>
+<%= render 'layouts/footer' %>
 
 </body>
 </html>
