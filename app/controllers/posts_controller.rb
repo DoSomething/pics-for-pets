@@ -8,7 +8,7 @@ class PostsController < ApplicationController
   # GET /posts
   # GET /posts.json
   def index
-    @posts = Post.where(:flagged => false)
+    @posts = Post.where(:flagged => false).order('created_at DESC')
 
     respond_to do |format|
       format.html # index.html.erb
@@ -25,13 +25,13 @@ class PostsController < ApplicationController
     end
 
     if params[:run] == 'animal'
-      @posts = Post.where(:animal_type => params[:atype], :flagged => false)
+      @posts = Post.where(:animal_type => params[:atype], :flagged => false).order('created_at DESC')
     elsif params[:run] == 'state'
-      @posts = Post.where(:state => params[:state], :flagged => false)
+      @posts = Post.where(:state => params[:state], :flagged => false).order('created_at DESC')
     elsif params[:run] == 'both'
-      @posts = Post.where(:animal_type => params[:atype], :state => params[:state], :flagged => false)
+      @posts = Post.where(:animal_type => params[:atype], :state => params[:state], :flagged => false).order('created_at DESC')
     elsif params[:run] == 'featured'
-      @posts = Post.where(:promoted => true, :flagged => false)
+      @posts = Post.where(:promoted => true, :flagged => false).order('created_at DESC')
     end
 
     render :index

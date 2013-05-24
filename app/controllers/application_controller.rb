@@ -1,13 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
-  protected
-
-  helper_method :authenticated?, :admin?
-
-  def authenticated?
-    (session[:drupal_user_role] && session[:drupal_user_role].values.include?('authenticated user')) ? true : false
-  end
+  include ApplicationHelper
 
   def admin?
     (session[:drupal_user_role] && session[:drupal_user_role].values.include?('administrator')) ? true : false
