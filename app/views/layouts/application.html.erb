@@ -9,16 +9,20 @@
 <body class="wrapper">
 
 <% if !admin? %>
-  <h1>not admin</h1>
+  <h1 class="error">not admin</h1>
+<% end %>
+
+<% if admin? %>
+  <h1 class="message">admin</h1>
 <% end %>
 
 <% if !authenticated? %>
-  <h1>not authenticated</h1>
+  <h1 class="error">not authenticated</h1>
 <% end %>
 
-<p>session id:</p><small><%= session[:drupal_session_id]  %></small>
-<p>session name:</p><small><%= session[:drupal_session_name]  %></small>
-<%= link_to 'logout', :logout, { :class => 'logout' } %>
+<% if authenticated? %>
+  <h1 class="message">authenticated</h1>
+<% end %>
 
 <% if flash[:message] %>
   <div><p class="message"><%= h flash[:message] %></p></div>
@@ -27,6 +31,10 @@
 <% if flash[:error] %>
   <div><p class="error"><%= h flash[:error] %></p></div>
 <% end %>
+
+<p>session id:</p><small><%= session[:drupal_session_id]  %></small>
+<p>session name:</p><small><%= session[:drupal_session_name]  %></small>
+<%= link_to 'logout', :logout, { :class => 'logout' } %>
 
 <%= yield %>
 
