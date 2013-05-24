@@ -9,16 +9,22 @@ class ApplicationController < ActionController::Base
     (session[:drupal_user_role] && session[:drupal_user_role].values.include?('authenticated user')) ? true : false
   end
 
-  def user
+  def admin?
+    (session[:drupal_user_role] && session[:drupal_user_role].values.include?('administrator')) ? true : false
+  end
+
+  def is_authenticated
+    if authenticated?
+      redirect_to :root
+    end
+  end
+
+  def is_not_authenticated
     unless authenticated?
       flash[:error] = "you need to log in, kid"
       redirect_to :login
       false
     end
-  end
-
-  def admin?
-    (session[:drupal_user_role] && session[:drupal_user_role].values.include?('administrator')) ? true : false
   end
 
   def admin
