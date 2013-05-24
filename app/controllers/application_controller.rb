@@ -7,7 +7,6 @@ class ApplicationController < ActionController::Base
 
   def authenticated?
     (session[:drupal_user_role] && session[:drupal_user_role].values.include?('authenticated user')) ? true : false
-    #true if session[:drupal_user_role].values.include?('authenticated user')
   end
 
   def user
@@ -19,8 +18,7 @@ class ApplicationController < ActionController::Base
   end
 
   def admin?
-    false
-    #true if session[:drupal_user_role].values.include?('administrator')
+    (session[:drupal_user_role] && session[:drupal_user_role].values.include?('administrator')) ? true : false
   end
 
   def admin
@@ -28,6 +26,7 @@ class ApplicationController < ActionController::Base
       flash[:error] = "error: this page is available to admin only - login below"
       redirect_to :login
       false
+      # TODO - SHOULD WE LOG USERS OUT WHEN THEY LAND HERE? SESSION SHOULD BE EMPTY AT THIS POINT
     end
   end
 end

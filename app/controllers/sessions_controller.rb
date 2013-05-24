@@ -19,7 +19,7 @@ class SessionsController < ApplicationController
       session[:drupal_session_id]   = login_response['sessid']
       session[:drupal_session_name] = login_response['session_name']
 
-      flash[:message] = 'yaaaahs!'
+      flash[:message] = 'yaaaahs! - you\'ve logged in successfully'
       redirect_to :root
     end
   end
