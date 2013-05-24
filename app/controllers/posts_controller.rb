@@ -3,6 +3,8 @@ require 'fileutils'
 class PostsController < ApplicationController
   include Services
 
+  before_filter :authorize
+
   # GET /posts
   # GET /posts.json
   def index
