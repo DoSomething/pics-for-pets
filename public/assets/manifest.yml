@@ -7,5 +7,3 @@ application.css: application.css
 application/index.css: application.css
 jquery.min.map: jquery.min.map
 jquery/index.min.map: jquery.min.map
-throbber.gif: throbber.gif
-throbber/index.gif: throbber.gif

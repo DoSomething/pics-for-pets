@@ -2,6 +2,17 @@ class PostsController < ApplicationController
   include Services
 
   before_filter :is_not_authenticated
+  rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
+
+  def record_not_found
+    render :not_found
+  end
+
+  def not_found
+    respond_to do |format|
+      format.html
+    end
+  end
 
   # GET /posts
   # GET /posts.json
@@ -77,7 +88,6 @@ class PostsController < ApplicationController
       format.html
       format.json { render json: @posts }
     end
-    #render :index, :locals => { :filter => params[:run] }
   end
 
   def autoimg
