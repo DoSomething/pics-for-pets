@@ -7,10 +7,6 @@ body
   @media screen and (max-width: 960px)
     width: 100%
 
-$link: #e77
-$msg: #53E68B
-$err: #e77
-
 .logout
   color: $link
   &:hover
@@ -23,13 +19,17 @@ $err: #e77
   letter-spacing: 1px
   display: inline-block
   text-transform: uppercase
-  padding: 5px
-  margin: 0.5em 0
+  padding: 5px 20px
+  margin: 0.5em 0.5em 0.5em 0
   +border-radius(3px)
 
 .error
   @extend .message
   background: $err
+
+.form-registration, .form-login
+  abbr
+    display: none
 
 nav
   background: #eee
