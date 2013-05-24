@@ -3,10 +3,6 @@ class ApplicationController < ActionController::Base
 
   include ApplicationHelper
 
-  def admin?
-    (session[:drupal_user_role] && session[:drupal_user_role].values.include?('administrator')) ? true : false
-  end
-
   def is_authenticated
     if authenticated?
       redirect_to :root
