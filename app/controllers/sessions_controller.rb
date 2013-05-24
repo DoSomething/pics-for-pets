@@ -25,8 +25,7 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    session[:drupal_session_id] = nil
-    session[:drupal_session_name] = nil
+    reset_session
 
     redirect_to :login, :flash => { :message => 'logout successful' }
   end

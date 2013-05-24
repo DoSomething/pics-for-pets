@@ -45,25 +45,21 @@
     <%= f.text_field :shelter %>
   </div>
   <div class="field">
-    <%= f.label :flagged %><br />
-    <%= f.check_box :flagged %>
-  </div>
-  <div class="field">
-    <%= f.label :promoted %><br />
-    <%= f.check_box :promoted %>
-  </div>
-  <div class="field">
-    <%= f.label :share_count %><br />
-    <%= f.number_field :share_count %>
-  </div>
-  <div class="field">
     <%= f.label :story %><br />
     <%= f.text_area :story %>
   </div>
+  <% if admin? %>
   <div class="field">
-    <%= f.label :adopted %><br />
-    <%= f.check_box :adopted %>
+    <%= f.check_box :adopted %> <%= f.label :adopted %>
   </div>
+  <div class="field">
+    <%= f.check_box :flagged %>  <%= f.label :promoted %>
+  </div>
+  <div class="field">
+    <%= f.check_box :flagged %> <%= f.label :flagged %>
+  </div>
+  <% end %>
+  <%= f.hidden_field :share_count %>
   <%= f.hidden_field :creation_time, :value => Time.now %>
   <%= f.hidden_field :update_time, :value => Time.now %>
   <div class="actions">

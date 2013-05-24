@@ -1,5 +1,5 @@
 <div class="post id-<%= @post.id %>">
-  <div class="flag"><%= link_to 'Flag', flag_path(@post), :confirm => 'Flag this?' %></div>
+  <% if admin? %><div class="flag"><%= link_to 'Flag', flag_path(@post), :confirm => 'Flag this?' %></div><% end %>
   <div class="name-loc"><%= @post.name %>, <%= @post.state %></div>
   <div class="share">Facebook coming...</div>
   <div class="image"><%= image_tag @post.image(:gallery) %></div>
