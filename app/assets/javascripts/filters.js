@@ -1,4 +1,5 @@
-// Navigation filter functionality
+// FILTERS
+// -------
 $(function() {
   // Get user filter input and set destination
   $('#submit_filter').click(function(){

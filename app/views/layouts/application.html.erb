@@ -2,19 +2,24 @@
 <html>
 <head>
   <title>Pics for Pets</title>
+  <link rel="stylesheet" href="https://c308566.ssl.cf1.rackcdn.com/din-51.css" media="all" />
+  <link rel="stylesheet" href="/assets/din.css" media="all" />
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 </head>
-<body class="wrapper">
+<body>
 
 <%= render 'layouts/debug' %>
 
-<%= link_to 'logout', :logout, { :class => 'logout' } %>
+<%= render 'header' %>
+<%= render 'cta' %>
+<%= render 'filters' %>
 
-<%= render 'layouts/header' %>
 <%= yield %>
-<%= render 'layouts/footer' %>
+
+<%= render 'footer' %>
 
 </body>
 </html>
+

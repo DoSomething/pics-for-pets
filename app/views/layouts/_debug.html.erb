@@ -1,9 +1,13 @@
-<% if !admin? %><h1 class="error">not admin</h1><% end %>
-<% if admin? %><h1 class="message">admin</h1><% end %>
-<% if !authenticated? %><h1 class="error">not authenticated</h1><% end %>
-<% if authenticated? %><h1 class="message">authenticated</h1><% end %>
-<% if flash[:message] %><div><p class="message"><%= h flash[:message] %></p></div><% end %>
-<% if flash[:error] %><div><p class="error"><%= h flash[:error] %></p></div><% end %>
-<p>session id:</p><small><%= session[:drupal_session_id]  %></small>
-<p>session name:</p><small><%= session[:drupal_session_name]  %></small>
+<section class="debug">
+  <div class="section-container">
+    <% if !admin? %><h1 class="error">not admin</h1><% end %>
+    <% if admin? %><h1 class="message">admin</h1><% end %>
+    <% if !authenticated? %><h1 class="error">not authenticated</h1><% end %>
+    <% if authenticated? %><h1 class="message">authenticated</h1><% end %>
+    <% if flash[:message] %><div><p class="message"><%= h flash[:message] %></p></div><% end %>
+    <% if flash[:error] %><div><p class="error"><%= h flash[:error] %></p></div><% end %>
+    <p>session id: <span><%= session[:drupal_session_id]  %></span></p>
+    <p>session name: <span><%= session[:drupal_session_name]  %></span></p>
+  </div>
+</section>
 

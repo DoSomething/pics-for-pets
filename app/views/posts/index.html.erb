@@ -1,12 +1,10 @@
-<%= render 'nav' %>
-
-<div class="post-list">
-<% @posts.each do |post| %>
-  <% @post = post %>
-  <%= render 'post' %>
-<% end %>
-</div>
-
-<br />
-
-<%= link_to 'New Post', :real_submit_path %>
+<section class="posts">
+  <div class="section-container">
+    <h2>Share your favorite animals with friends who might adopt them.</h2>
+    <p>Every share gets a pet closer to finding a home. For every 200 shares an animal gets, we’ll send them food, toys and bedding.</p>
+    <% @posts.each do |post| %>
+      <% @post = post %>
+      <%= render 'post' %>
+    <% end %>
+  </div>
+</section>

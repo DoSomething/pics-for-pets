@@ -1,0 +1,33 @@
+<nav class="filters">
+  <div class="section-container">
+
+    <label for="animal_filter">Type of Pet:</label>
+    <select class="animal_filter filter" id="animal_filter">
+      <option value="all">All Animals</option>
+      <%
+        types = [['Cats', 'cat'], ['Dogs', 'dog'], ['Other', 'other'], ['Featured', 'featured']]
+        types.each do |type, key|
+          # Remove the trailing "s" for "dogs", "cats", etc.
+          if params[:atype].is_a? String and params[:atype][-1,1] == 's'
+            params[:atype] = params[:atype][0..-2]
+          end
+      %>
+        <option value="<%= key %>"<%= ' selected="selected"' if params[:atype] == key %>><%= type %></option>
+      <% end %>
+    </select>
+
+    <label for="state_filter">Location:</label>
+    <select class="state_filter filter" id="state_filter">
+      <option value="">All States</option>
+      <%
+        states = get_states
+        states.each do |state, key|
+      %>
+        <option value="<%= key %>"<%= ' selected="selected"' if params[:state] == key %>><%= state %></option>
+      <% end %>
+    </select>
+
+    <a href="#" class="filter btn" id="submit_filter">go</a>
+  </div>
+</nav>
+

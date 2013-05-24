@@ -5,3 +5,4 @@
   <div class="image"><%= image_tag @post.image(:gallery) %></div>
   <div class="adopt-me">Adopt <%= @post.name %> at <%= link_to @post.shelter + ', ' + @post.state, 'http://www.petfinder.com/awo/index.cgi?location=' + @post.state + '&keyword=' + @post.shelter %></div>
 </div>
+

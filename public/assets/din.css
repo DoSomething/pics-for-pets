@@ -1,0 +1,80 @@
+/* import font files using @font-face */
+@font-face {
+  font-family: "din-web";
+  src: url('type/DINWeb-CondLight.eot');
+  src: url('type/DINWeb-CondLight.eot?iefix') format('eot'), url('type/DINWeb-CondLight.woff') format('woff');
+  font-style: normal;
+  font-weight: 200;
+}
+
+@font-face {
+  font-family: "din-web";
+  src: url('type/DINWeb-CondLightIta.eot');
+  src: url('type/DINWeb-CondLightIta.eot?iefix') format('eot'), url('type/DINWeb-CondLightIta.woff') format('woff');
+  font-style: italic;
+  font-weight: 200;
+}
+
+@font-face {
+  font-family: "din-web";
+  src: url('type/DINWeb-Cond.eot');
+  src: url('type/DINWeb-Cond.eot?iefix') format('eot'), url('type/DINWeb-Cond.woff') format('woff');
+  font-style: normal;
+  font-weight: false;
+}
+
+@font-face {
+  font-family: "din-web";
+  src: url('type/DINWeb-CondIta.eot');
+  src: url('type/DINWeb-CondIta.eot?iefix') format('eot'), url('type/DINWeb-CondIta.woff') format('woff');
+  font-style: italic;
+  font-weight: false;
+}
+
+@font-face {
+  font-family: "din-web";
+  src: url('type/DINWeb-CondMedium.eot');
+  src: url('type/DINWeb-CondMedium.eot?iefix') format('eot'), url('type/DINWeb-CondMedium.woff') format('woff');
+  font-style: normal;
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: "din-web";
+  src: url('type/DINWeb-CondMediumIta.eot');
+  src: url('type/DINWeb-CondMediumIta.eot?iefix') format('eot'), url('type/DINWeb-CondMediumIta.woff') format('woff');
+  font-style: italic;
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: "din-web";
+  src: url('type/DINWeb-CondBold.eot');
+  src: url('type/DINWeb-CondBold.eot?iefix') format('eot'), url('type/DINWeb-CondBold.woff') format('woff');
+  font-style: normal;
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: "din-web";
+  src: url('type/DINWeb-CondBoldIta.eot');
+  src: url('type/DINWeb-CondBoldIta.eot?iefix') format('eot'), url('type/DINWeb-CondBoldIta.woff') format('woff');
+  font-style: italic;
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: "din-web";
+  src: url('type/DINWeb-CondBlack.eot');
+  src: url('type/DINWeb-CondBlack.eot?iefix') format('eot'), url('type/DINWeb-CondBlack.woff') format('woff');
+  font-style: normal;
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: "din-web";
+  src: url('type/DINWeb-CondBlackIta.eot');
+  src: url('type/DINWeb-CondBlackIta.eot?iefix') format('eot'), url('type/DINWeb-CondBlackIta.woff') format('woff');
+  font-style: italic;
+  font-weight: 700;
+}
