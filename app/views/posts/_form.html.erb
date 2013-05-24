@@ -11,8 +11,8 @@
     </div>
   <% end %>
   <%= f.input :image, required: true, wrapper_html: { class: 'form-item-first-name' } %>
-  <%= f.input :top_text, wrapper_html: { class: 'form-item-top-text' } %>
-  <%= f.input :bottom_text, wrapper_html: { class: 'form-item-bottom-text' } %>
+  <%= f.input :top_text, wrapper_html: { class: 'form-item-top-text', id: 'form-item-top-text' } %>
+  <%= f.input :bottom_text, wrapper_html: { class: 'form-item-bottom-text', id: 'form-item-bottom-text' } %>
   <div id="upload-preview">
     <div id="top_text"></div>
     <span>Upload an image and it will appear here.</span>
@@ -91,7 +91,7 @@
     handle_text_change('post_top_text', 'top_text');
     handle_text_change('post_bottom_text', 'bottom_text');
 
-    $('.form-item-top-text, .form-item-bottom-text').show();
+    $('#form-item-top-text, #form-item-bottom-text').show();
   }
 -->
 </script>
