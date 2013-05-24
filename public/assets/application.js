@@ -10030,9 +10030,16 @@ $(window).scroll(function() {
 	  	page++
 	  	// @Todo: throbber start
 	  	$(document).delay(1000, function() {
-	  	  $.getScript('/posts.js?page=' + page + '&last=' + latest, function() {
-	  	  	// @Todo: throbber end
-	  	  });
+	  	  if (typeof filter != 'undefined') {
+	  	    $.getScript('/' + filter + '.js?page=' + page + '&last=' + latest, function() {
+	  	  	  // @Todo: throbber end
+	  	    });
+	  	  }
+	  	  else {
+	  	    $.getScript('/posts.js?page=' + page + '&last=' + latest, function() {
+	  	  	  // @Todo: throbber end
+	  	    });
+	  	  }
 	  	});
 	  }
 	}

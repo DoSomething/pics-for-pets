@@ -14,7 +14,9 @@ class Post < ActiveRecord::Base
   has_attached_file :image, :styles => { :gallery => '450x450!' }, :default_url => '/images/:style/default.png'
   validates_attachment :image, :presence => true, :content_type => { :content_type => ['image/jpeg', 'image/png', 'image/gif'] }
 
-  self.per_page = 10
+  def self.per_page
+    10
+  end
 
   # Removes HTML tags.  This technically will automatically be sanitized,
   # but better safe than sorry.
