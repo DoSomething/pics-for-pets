@@ -13,7 +13,9 @@ class SessionsController < ApplicationController
     if login_response.kind_of?(Array)
       flash.now[:error] = 'wtf? try again'
       render :new
-    else
+    elsif login_response.kind_of?(Hash)
+      session[:drupal_user_id]      = login_response['user']['uid']
+      session[:drupal_user_role]    = login_response['user']['roles']
       session[:drupal_session_id]   = login_response['sessid']
       session[:drupal_session_name] = login_response['session_name']
 
