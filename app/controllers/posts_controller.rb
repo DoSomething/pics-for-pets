@@ -1,5 +1,3 @@
-require 'fileutils'
-
 class PostsController < ApplicationController
   include Services
 
@@ -8,9 +6,23 @@ class PostsController < ApplicationController
   # GET /posts
   # GET /posts.json
   def index
-    @posts = Post.where(:flagged => false).order('created_at DESC')
+    page = params[:page] || 0
+    limit = Post.per_page
+    offset = (page.to_i * Post.per_page)
+
+    @posts = Post
+              .where(:flagged => false)
+              .order('created_at DESC')
+              .limit(limit)
+    if !params[:last].nil?
+      @posts = @posts.where('id <= ?', params[:last])
+    else
+      @posts = @posts.offset(offset)
+    end
+    @count = Post.all.count
 
     respond_to do |format|
+      format.js
       format.html # index.html.erb
       format.json { render json: @posts }
     end
