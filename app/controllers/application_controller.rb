@@ -1,24 +1,20 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
-  protected
+  include ApplicationHelper
 
-  helper_method :authenticated?, :admin?
-
-  def authenticated?
-    (session[:drupal_user_role] && session[:drupal_user_role].values.include?('authenticated user')) ? true : false
+  def is_authenticated
+    if authenticated?
+      redirect_to :root
+    end
   end
 
-  def user
+  def is_not_authenticated
     unless authenticated?
       flash[:error] = "you need to log in, kid"
       redirect_to :login
       false
     end
-  end
-
-  def admin?
-    (session[:drupal_user_role] && session[:drupal_user_role].values.include?('administrator')) ? true : false
   end
 
   def admin
