@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
 
   def authorize
     unless admin?
-      flash[:error] = "error: this page is available to admin only"
+      flash[:error] = "error: this page is available to admin only - login below"
       redirect_to :login
       false
     end

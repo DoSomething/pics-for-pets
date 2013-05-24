@@ -10,15 +10,15 @@ class SessionsController < ApplicationController
 
     login_response = Services.login(username, password)
 
-    # TODO - NEED TO ADD VERIFICATION THAT LOGIN WAS SUCCESSFUL
-    session[:drupal_session_id]   = login_response['sessid']
-    session[:drupal_session_name] = login_response['session_name']
-
-    # NOTE - THIS IS A PLACEHOLDER CHECK FOR NOW
-    if username && password
-      redirect_to :root
+    if login_response.kind_of?(Array)
+      flash.now[:error] = 'wtf? try again'
+      render :new
     else
-      render 'new', :flash.now[:message]= 'login failed'
+      session[:drupal_session_id]   = login_response['sessid']
+      session[:drupal_session_name] = login_response['session_name']
+
+      flash[:message] = 'yaaaahs!'
+      redirect_to :root
     end
   end
 
