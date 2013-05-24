@@ -3,7 +3,7 @@ require 'fileutils'
 class PostsController < ApplicationController
   include Services
 
-  before_filter :user
+  before_filter :is_not_authenticated
 
   # GET /posts
   # GET /posts.json

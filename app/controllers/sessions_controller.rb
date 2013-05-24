@@ -1,6 +1,8 @@
 class SessionsController < ApplicationController
   include Services
 
+  before_filter :is_authenticated, :only => :new
+
   def new
   end
 
