@@ -1,16 +1,39 @@
-require 'fileutils'
-
 class PostsController < ApplicationController
   include Services
 
   before_filter :is_not_authenticated
+  rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
+
+  def record_not_found
+    render :not_found
+  end
+
+  def not_found
+    respond_to do |format|
+      format.html
+    end
+  end
 
   # GET /posts
   # GET /posts.json
   def index
-    @posts = Post.where(:flagged => false).order('created_at DESC')
+    page = params[:page] || 0
+    limit = Post.per_page
+    offset = (page.to_i * Post.per_page)
+
+    @posts = Post
+              .where(:flagged => false)
+              .order('created_at DESC')
+              .limit(limit)
+    if !params[:last].nil?
+      @posts = @posts.where('id < ?', params[:last])
+    else
+      @posts = @posts.offset(offset)
+    end
+    @count = Post.all.count
 
     respond_to do |format|
+      format.js
       format.html # index.html.erb
       format.json { render json: @posts }
     end
@@ -24,17 +47,47 @@ class PostsController < ApplicationController
       params[:atype] = params[:atype][0..-2] if params[:atype][-1,1] == 's'
     end
 
+    page = params[:page] || 0
+    offset = (page.to_i * Post.per_page)
+
     if params[:run] == 'animal'
-      @posts = Post.where(:animal_type => params[:atype], :flagged => false).order('created_at DESC')
+      @posts = Post
+                .where(:animal_type => params[:atype], :flagged => false)
+                .order('created_at DESC')
+                .limit(Post.per_page)
+      @count = Post.where(:animal_type => params[:atype], :flagged => false).order('created_at DESC').count
     elsif params[:run] == 'state'
-      @posts = Post.where(:state => params[:state], :flagged => false).order('created_at DESC')
+      @posts = Post
+                .where(:state => params[:state], :flagged => false)
+                .order('created_at DESC')
+                .limit(Post.per_page)
+      @count = Post.where(:state => params[:state], :flagged => false).order('created_at DESC').count
     elsif params[:run] == 'both'
-      @posts = Post.where(:animal_type => params[:atype], :state => params[:state], :flagged => false).order('created_at DESC')
+      @posts = Post
+                .where(:animal_type => params[:atype], :state => params[:state], :flagged => false)
+                .order('created_at DESC')
+                .limit(Post.per_page)
+      @count = Post.where(:animal_type => params[:atype], :state => params[:state], :flagged => false).order('created_at DESC').count
     elsif params[:run] == 'featured'
-      @posts = Post.where(:promoted => true, :flagged => false).order('created_at DESC')
+      @posts = Post
+                .where(:promoted => true, :flagged => false)
+                .order('created_at DESC')
+                .limit(Post.per_page)
+      @count = Post.where(:promoted => true, :flagged => false).order('created_at DESC')
     end
 
-    render :index
+    if !params[:last].nil?
+      @posts = @posts.where('id < ?', params[:last])
+    else
+      @posts = @posts.offset(offset)
+    end
+
+    @path = request.fullpath[1..-1]
+    respond_to do |format|
+      format.js
+      format.html
+      format.json { render json: @posts }
+    end
   end
 
   def autoimg

@@ -1,0 +1,17 @@
+<%= render 'nav' %>
+
+<script type="text/javascript">
+<!--
+	var count = <%= @count %>;
+	var latest = '<%= @posts.last!.id %>';
+	var filter = '<%= @path %>';
+-->
+</script>
+
+<div class="post-list">
+<%= render 'post' %>
+</div>
+
+<br />
+
+<%= link_to 'New Post', :real_submit_path %>

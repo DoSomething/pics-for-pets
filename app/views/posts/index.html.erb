@@ -1,10 +1,7 @@
 <section class="posts">
   <div class="section-container">
     <h2>Share your favorite animals with friends who might adopt them.</h2>
-    <p>Every share gets a pet closer to finding a home. For every 200 shares an animal gets, we’ll send them food, toys and bedding.</p>
-    <% @posts.each do |post| %>
-      <% @post = post %>
-      <%= render 'post' %>
-    <% end %>
+    <p>Every share gets a pet closer to finding a home.  For every 200 shares an animal gets, we'll send them food, toys and bedding.</p>
+    <%= render 'post' %>
   </div>
 </section>

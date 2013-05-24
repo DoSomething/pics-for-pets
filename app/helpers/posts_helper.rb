@@ -88,4 +88,13 @@ system '''
   ''' + path + '''
 '''
   end
+
+  module Scripts
+    def self.count
+      Post.all.count
+    end
+    def self.latest
+      Post.where(:filter => false).limit(10).last!.created_at
+    end
+  end
 end
