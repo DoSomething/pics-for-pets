@@ -1,4 +1,4 @@
-<%= form_for @post, :html => { :multipart => true } do |f| %>
+<%= simple_form_for(@post, :html => { :multipart => true, :class => "form form-registration right" }) do |f| %>
   <% if @post.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@post.errors.count, "error") %> prohibited this post from being saved:</h2>
@@ -10,61 +10,27 @@
       </ul>
     </div>
   <% end %>
-
-  <div class="field">
-    <%= f.label :image %><br />
-    <%= f.file_field :image %>
-  </div>
-  <div class="field">
-    <%= f.label :top_text %><br />
-    <%= f.text_field :top_text %>
-  </div>
-  <div class="field">
-    <%= f.label :bottom_text %><br />
-    <%= f.text_field :bottom_text %>
-  </div>
-  <div style="position: relative; display: block; width: 450px; height: 450px; border: 1px solid #000" id="upload-box">
-    <div id="top_text" style="visibility: hidden; position: absolute; z-index: 1; padding: 5px; background: rgba(0,0,0,0.25); display: block;width: 100%; box-sizing: border-box;"></div>
+  <%= f.input :image, required: true, wrapper_html: { class: 'form-item-first-name' } %>
+  <%= f.input :top_text, wrapper_html: { class: 'form-item-top-text' } %>
+  <%= f.input :bottom_text, wrapper_html: { class: 'form-item-bottom-text' } %>
+  <div id="upload-preview">
+    <div id="top_text"></div>
     <span>Upload an image and it will appear here.</span>
-    <div id="bottom_text" style="visibility: hidden; position: absolute; z-index: 1; bottom: 0px; padding: 5px; background: rgba(0,0,0,0.25); display: block;width: 100%; box-sizing: border-box;"></div>
+    <div id="bottom_text"></div>
   </div>
-  <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <%= f.label :animal_type %><br />
-    <%= f.select :animal_type, [['Cat', 'cat'], ['Dog', 'dog'], ['Other', 'other']] %>
-  </div>
-  <div class="field">
-    <%= f.label :state %><br />
-    <%= f.select :state, [['Alabama', 'AL'], ['Alaska', 'AK'], ['American Samoa', 'AS'], ['Arizona', 'AZ'], ['Arkansas', 'AR'], ['California', 'CA'], ['Colorado', 'CO'], ['Connecticut', 'CT'], ['Delaware', 'DE'], ['District of Columbia', 'DC'], ['Florida', 'FL'], ['Georgia', 'GA'], ['Guam', 'GU'], ['Hawaii', 'HI'], ['Idaho', 'ID'], ['Illinois', 'IL'], ['Indiana', 'IN'], ['Iowa', 'IA'], ['Kansas', 'KS'], ['Kentucky', 'KY'], ['Louisiana', 'LA'], ['Maine', 'ME'], ['Marshall Islands', 'MH'], ['Maryland', 'MD'], ['Massachusetts', 'MA'], ['Michigan', 'MI'], ['Minnesota', 'MN'], ['Mississippi', 'MS'], ['Missouri', 'MO'], ['Montana', 'MT'], ['Nebraska', 'NE'], ['Nevada', 'NV'], ['New Hampshire', 'NH'], ['New Jersey', 'NJ'], ['New Mexico', 'NM'], ['New York', 'NY'], ['North Carolina', 'NC'], ['North Dakota', 'ND'], ['Northern Marianas Islands', 'MP'], ['Ohio', 'OH'], ['Oklahoma', 'OK'], ['Oregon', 'OR'], ['Palau', 'PW'], ['Pennsylvania', 'PA'], ['Puerto Rico', 'PR'], ['Rhode Island', 'RI'], ['South Carolina', 'SC'], ['South Dakota', 'SD'], ['Tennessee', 'TN'], ['Texas', 'TX'], ['Utah', 'UT'], ['Vermont', 'VT'], ['Virgin Islands', 'VI'], ['Virginia', 'VA'], ['Washington', 'WA'], ['West Virginia', 'WV'], ['Wisconsin', 'WI'], ['Wyoming', 'WY']] %>
-  </div>
-  <div class="field">
-    <%= f.label :shelter %><br />
-    <%= f.text_field :shelter %>
-  </div>
-  <div class="field">
-    <%= f.label :story %><br />
-    <%= f.text_area :story %>
-  </div>
+  <%= f.input :name, label: "What is the animal's name?", wrapper_html: { class: 'form-item-cell' } %>
+  <%= f.input :animal_type, wrapper_html: { class: 'form-item-pass' }, :as => :select, :collection => [['Cat', 'cat'], ['Dog', 'dog'], ['Other', 'other']], prompt: 'Choose a type', include_blank: false %>
+  <%= f.input :shelter, label: "What shelter is this animal at?", wrapper_html: { class: 'form-item-day' } %>
+  <%= f.input :state, label: "What state is the shelter in?", wrapper_html: { class: 'form-type-month' }, :as => :select, :collection => get_states, prompt: 'Choose a state', include_blank: false %>
+  <%= f.input :story, label: "Does this pet have a compelling story? Write it here.", required: false, wrapper_html: { class: 'form-item-year' } %>
   <% if admin? %>
-  <div class="field">
-    <%= f.check_box :adopted %> <%= f.label :adopted %>
-  </div>
-  <div class="field">
-    <%= f.check_box :flagged %>  <%= f.label :promoted %>
-  </div>
-  <div class="field">
-    <%= f.check_box :flagged %> <%= f.label :flagged %>
-  </div>
+    <%= f.input :adopted, label: false, collection: [[1, '']], :as => :check_boxes %>
+    <%= f.input :flagged, label: false, collection: [[1, '']], :as => :check_boxes %>
+    <%= f.input :share_count, label: 'Share count' %>
   <% end %>
-  <%= f.hidden_field :share_count %>
-  <%= f.hidden_field :creation_time, :value => Time.now %>
-  <%= f.hidden_field :update_time, :value => Time.now %>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+  <%= f.input :creation_time, :as => :hidden, :value => Time.now %>
+  <%= f.input :update_time, :as => :hidden, :value => Time.now %>
+  <%= f.submit "submit", :id => "edit-final-submit", :value => 'Submit' %>
 <% end %>
 
 <script type="text/javascript">
@@ -105,6 +71,7 @@
         type: 'post',
         complete: function(response) {
           res = $.parseJSON(response.responseText);
+            console.log(res);
           if (res.success === true) {
             change_upload(res.filename);
           }
@@ -118,10 +85,13 @@
     var img = $('<img />');
     img.attr('src', '/system/tmp/' + filename);
     img.css({ 'width': '450px', 'height': '450px', 'position': 'absolute', 'z-index': 0 });
-    img.appendTo('#upload-box');
+    $('#upload-preview span').hide();
+    img.appendTo('#upload-preview');
 
     handle_text_change('post_top_text', 'top_text');
     handle_text_change('post_bottom_text', 'bottom_text');
+
+    $('.form-item-top-text, .form-item-bottom-text').show();
   }
 -->
 </script>
