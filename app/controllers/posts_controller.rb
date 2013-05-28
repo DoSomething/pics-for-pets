@@ -65,7 +65,7 @@ class PostsController < ApplicationController
                .order('posts.created_at DESC')
                .limit(Post.per_page)
     @count = Post
-              .order('created_at DESC')
+              .order('posts.created_at DESC')
               .where(:flagged => false)
 
     if params[:run] == 'animal'
@@ -81,8 +81,12 @@ class PostsController < ApplicationController
       @posts = @posts.where(:promoted => true)
       @count = @count.where(:promoted => true).count
     elsif params[:run] == 'my'
-      @posts = @posts.where('shares.uid = ?', session[:drupal_user_id])
-      @count = @count.where(:promoted => true).count
+      user_id = session[:drupal_user_id]
+      @posts = @posts.where('shares.uid = ? OR posts.uid = ?', user_id, user_id)
+      @count = @count
+               .joins('LEFT JOIN shares ON shares.post_id = posts.id')
+               .where('shares.uid = ? OR posts.uid = ?', user_id, user_id)
+               .count
     end
 
     if !params[:last].nil?
