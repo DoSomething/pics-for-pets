@@ -1,13 +1,13 @@
 <section class="cta">
   <div class="section-container">
   	<% if already_submitted? %>
-	    <%= link_to 'see your pets', :mypics, :class => 'btn btn-large btn-secondary' %>
-	    <%= link_to 'back to gallery', root_path, :class => 'btn btn-large btn-secondary' %>
+	    <%= link_to :root_path, :class => 'btn btn-large btn-secondary' do %><span>back to gallery</span><% end %>
+	    <%= link_to :mypics, :class => 'btn btn-large btn-primary' do %><span>see your pets</span><% end %>
     <% else %>
 	    <!--
 	    <h1>get involved with your local shelter</h1>
 	    -->
-	    <%= link_to 'submit your pic', :real_submit_path, :class => 'btn btn-cta-large btn-primary' %>
+      <%= link_to :real_submit_path, :class => 'btn btn-large' do %><span>submit your pic</span><% end %>
     <% end %>
   </div>
 </section>
