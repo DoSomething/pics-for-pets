@@ -1,11 +1,12 @@
 // GATE
 // ----
 
-// TODO - ONLY LOAD THIS PARTIAL ON GATES
+#login-form
+  display: none
 
 // base HTML styling
 body
-  background: #f7f7f7
+  background: $gate-page-bg
   width: 100%
 
 label
@@ -21,18 +22,19 @@ label
 // CONTAINER
 // ---------
 .gate
+  position: relative
   float: none
+  min-height: 720px
   width: 800px
-  min-height: auto /* corrects fixed height inherited from sitewide styles */
   margin: 2% auto
   padding: 3% 3% 1% 3%
-  background-color: #fff
-  background-image: url("//www.dosomething.org/files/campaigns/pbjs13/bg-gate.jpg")
+  background-color: $gate-sbg-color
+  background-image: url($gate-sbg-image)
   border: 1px solid #ddd
   +border-radius(2px)
   +box-shadow(#ccc 0px 15px 20px -10px)
   @media only screen and (max-width: 850px)
-    width: 96%  
+    width: 96%
     padding: 6% 6% 1% 6%
 
 // CAMPAIGN STAT
@@ -53,9 +55,6 @@ label
   img.ds_logo
     float: left
     width: 28%
-  img.bang
-    width: 23px
-    margin: 0 5px -5px 5px
 
 .gate header
   @media only screen and (max-width: 650px)
@@ -100,10 +99,13 @@ label
     width: 0px
     height: 0px
     border-style: solid
-    border-width: 132px 30px 0 0
+    border-width: 175px 30px 0 0
     border-color: $campaign-main transparent transparent transparent
 
 .gate .left
+  h1
+    color: $off-black
+    text-transform: uppercase
   @media only screen and (max-width: 650px)
     float: none
     margin: 0
@@ -113,8 +115,6 @@ label
     +box-shadow(none)
     &:after
       border: none
-    h1
-      color: $campaign-main
     h2
       color: $off-black
 
@@ -124,6 +124,8 @@ label
   clear: both
   width: 95%
   padding: 3% 0 0 0
+  position: absolute
+  bottom: 1.5em
   p, a
     color: #ddd
   p
