@@ -1,10 +1,10 @@
 <section class="cta">
   <div class="section-container">
-    <%# link_to 'see your pets', :@TODO, :class => 'btn btn-large btn-secondary' %>
-    <%# link_to 'back to gallery', :@TODO, :class => 'btn btn-large btn-secondary' %>
+    <%# link_to :your_pets, :class => 'btn btn-cta-large' do %><span>submit your pic</span><% end %>
+    <%# link_to :gallery, :class => 'btn btn-cta-large' do %><span>submit your pic</span><% end %>
     <!--
     <h1>get involved with your lcoal shelter</h1>
     -->
-    <%= link_to 'submit your pic', :real_submit_path, :class => 'btn btn-cta-large btn-primary' %>
+    <%= link_to :real_submit_path, :class => 'btn btn-cta-large' do %><span>submit your pic</span><% end %>
   </div>
 </section>
