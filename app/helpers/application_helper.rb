@@ -17,7 +17,7 @@ module ApplicationHelper
   # Did the user already submit something?
   def already_submitted?
   	user_id = session[:drupal_user_id]
-  	posts = Post.find_by_uid(user_id)
+  	posts = Post.where(:uid => user_id)
   	shares = Share.where(:uid => user_id)
 
   	(user_id && (!shares.nil? && shares.count > 0 || !posts.nil? && posts.count > 0))
