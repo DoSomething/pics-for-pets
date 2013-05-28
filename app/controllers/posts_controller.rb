@@ -18,7 +18,6 @@ class PostsController < ApplicationController
   # GET /posts.json
   def index
     page = params[:page] || 0
-    limit = Post.per_page
     offset = (page.to_i * Post.per_page)
 
     @posts = Post
@@ -26,8 +25,8 @@ class PostsController < ApplicationController
               .select('posts.*, COUNT(shares.*) AS share_count')
               .where(:flagged => false)
               .group('shares.post_id, posts.id')
-              .order('created_at DESC')
-              .limit(limit)
+              .order('posts.created_at DESC')
+              .limit(Post.per_page)
     if !params[:last].nil?
       @posts = @posts.where('posts.id < ?', params[:last])
     else
@@ -62,8 +61,8 @@ class PostsController < ApplicationController
                .joins('LEFT JOIN shares ON shares.post_id = posts.id')
                .select('posts.*, COUNT(shares.*) AS share_count')
                .where(:flagged => false)
-               .group('posts.id', 'shares.post_id')
-               .order('created_at DESC')
+               .group('posts.id, shares.post_id')
+               .order('posts.created_at DESC')
                .limit(Post.per_page)
     @count = Post
               .order('created_at DESC')
@@ -136,7 +135,14 @@ class PostsController < ApplicationController
   # GET /posts/1
   # GET /posts/1.json
   def show
-    @post = Post.where(:id => params[:id], :flagged => false).first
+    @post = Post
+              .joins('LEFT JOIN shares ON shares.post_id = posts.id')
+              .select('posts.*, COUNT(shares.*) AS share_count')
+              .where(:flagged => false, :id => params[:id])
+              .group('shares.post_id, posts.id')
+              .order('posts.created_at DESC')
+              .limit(Post.per_page)
+              .first
 
     respond_to do |format|
       format.html # show.html.erb
