@@ -18,5 +18,3 @@ config/database.yml
 
 public/system/posts
 public/system/tmp
-
-.sass-cache
