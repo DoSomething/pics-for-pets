@@ -38,6 +38,7 @@ class PostsController < ApplicationController
       format.js
       format.html # index.html.erb
       format.json { render json: @posts }
+      format.csv { render csv: @posts }
     end
   end
 
@@ -100,6 +101,7 @@ class PostsController < ApplicationController
       format.js
       format.html
       format.json { render json: @posts }
+      format.csv { send_data @posts.as_csv }
     end
   end
 
