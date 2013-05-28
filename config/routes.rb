@@ -1,5 +1,5 @@
 CreateAndShare::Application.routes.draw do
-
+  resources :shares, :only => [:create]
   root :to => 'posts#index'
 
   resources :sessions, :only => [:new, :create, :destroy]

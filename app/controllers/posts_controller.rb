@@ -30,7 +30,7 @@ class PostsController < ApplicationController
     else
       @posts = @posts.offset(offset)
     end
-    @count = Post.all.count
+    @count = Post.where(:flagged => false).count
 
     respond_to do |format|
       format.js
@@ -44,7 +44,7 @@ class PostsController < ApplicationController
     if params[:atype].is_a? String
       # Cats isn't a valid filter, but cat is.  Let's chop off
       # the "s" if it exists.
-      params[:atype] = params[:atype][0..-2] if params[:atype][-1,1] == 's'
+      params[:atype] = params[:atype].chop unless params[:atype][-1,1] != 's'
     end
 
     page = params[:page] || 0
