@@ -10056,24 +10056,28 @@ $(function() {
 
 var page = 0;
 $(window).scroll(function() {
-	if (page * 10 < count) {
-	  if ($(window).scrollTop() == $(document).height() - $(window).height()) {
-	  	page++
-	  	// @Todo: throbber start
-	  	$(document).delay(1000, function() {
-	  	  if (typeof filter != 'undefined') {
-	  	    $.getScript('/' + filter + '.js?page=' + page + '&last=' + latest, function() {
-	  	  	  // @Todo: throbber end
-	  	    });
-	  	  }
-	  	  else {
-	  	    $.getScript('/posts.js?page=' + page + '&last=' + latest, function() {
-	  	  	  // @Todo: throbber end
-	  	    });
-	  	  }
-	  	});
-	  }
-	}
+  if (typeof count === 'undefined') {
+    return;
+  }
+
+  if (page * 10 < count) {
+    if ($(window).scrollTop() == $(document).height() - $(window).height()) {
+      page++
+      // @Todo: throbber start
+      $(document).delay(1000, function() {
+        if (typeof filter != 'undefined') {
+          $.getScript('/' + filter + '.js?page=' + page + '&last=' + latest, function() {
+            // @Todo: throbber end
+          });
+        }
+        else {
+          $.getScript('/posts.js?page=' + page + '&last=' + latest, function() {
+            // @Todo: throbber end
+          });
+        }
+      });
+    }
+  }
 });
 // This is a manifest file that'll be compiled into application.js, which will include all the files
 // listed below.

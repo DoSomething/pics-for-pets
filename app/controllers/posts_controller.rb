@@ -153,6 +153,7 @@ class PostsController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @post }
+      format.csv { send_data @posts.as_csv }
     end
   end
 
@@ -180,6 +181,8 @@ class PostsController < ApplicationController
   # POST /posts
   # POST /posts.json
   def create
+    render :status => :forbidden unless authenciated?
+
     params[:post][:uid] = session[:drupal_user_id]
     @post = Post.new(params[:post])
 
