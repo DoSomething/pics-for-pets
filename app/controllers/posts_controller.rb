@@ -181,7 +181,7 @@ class PostsController < ApplicationController
   # POST /posts
   # POST /posts.json
   def create
-    render :status => :forbidden unless authenciated?
+    render :status => :forbidden unless authenticated?
 
     params[:post][:uid] = session[:drupal_user_id]
     @post = Post.new(params[:post])
