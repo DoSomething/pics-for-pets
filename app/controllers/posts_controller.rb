@@ -169,6 +169,7 @@ class PostsController < ApplicationController
   # POST /posts
   # POST /posts.json
   def create
+    params[:post][:uid] = session[:drupal_user_id]
     @post = Post.new(params[:post])
 
     respond_to do |format|
