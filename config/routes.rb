@@ -11,6 +11,7 @@ CreateAndShare::Application.routes.draw do
 
   # TODO - GATE THESE PAGES BY NESTING THE ROUTES
   match 'submit' => 'posts#new', :as => :real_submit_path
+  match 'mypics' => 'posts#filter', :run => 'my'
   match ':id' => 'posts#show', :constraints => { :id => /\d+/ }, :as => :show_post
   match ':atype' => 'posts#filter', :constraints => { :atype => /(cat|dog|other)s?/ }, :run => 'animal'
   match ':state' => 'posts#filter', :constraints => { :state => /[A-Z]{2}/ }, :run => 'state'

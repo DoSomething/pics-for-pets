@@ -42,7 +42,11 @@ class PostsController < ApplicationController
     end
   end
 
-  # GET /show/(cat|dog|other)s?
+  # GET /(cat|dog|other)s?
+  # GET /([A-Z]{2})
+  # GET /(cat|dog|other)s?-([A-Z]{2})
+  # GET /featured
+  # GET /mypics
   def filter
     if params[:atype].is_a? String
       # Cats isn't a valid filter, but cat is.  Let's chop off
@@ -53,42 +57,33 @@ class PostsController < ApplicationController
     page = params[:page] || 0
     offset = (page.to_i * Post.per_page)
 
+    # Preliminary queries.  These are "finished" later.
+    @posts = Post
+               .joins('LEFT JOIN shares ON shares.post_id = posts.id')
+               .select('posts.*, COUNT(shares.*) AS share_count')
+               .where(:flagged => false)
+               .group('posts.id', 'shares.post_id')
+               .order('created_at DESC')
+               .limit(Post.per_page)
+    @count = Post
+              .order('created_at DESC')
+              .where(:flagged => false)
+
     if params[:run] == 'animal'
-      @posts = Post
-                .joins('LEFT JOIN shares ON shares.post_id = posts.id')
-                .select('posts.*, COUNT(shares.*) AS share_count')
-                .where(:animal_type => params[:atype], :flagged => false)
-                .group('posts.id, shares.post_id')
-                .order('created_at DESC')
-                .limit(Post.per_page)
-      @count = Post.where(:animal_type => params[:atype], :flagged => false).order('created_at DESC').count
+      @posts = @posts.where(:animal_type => params[:atype])
+      @count = @count.where(:animal_type => params[:atype]).count
     elsif params[:run] == 'state'
-      @posts = Post
-                .joins('LEFT JOIN shares ON shares.post_id = posts.id')
-                .select('posts.*, COUNT(shares.*) AS share_count')
-                .where(:state => params[:state], :flagged => false)
-                .group('posts.id, shares.post_id')
-                .order('created_at DESC')
-                .limit(Post.per_page)
-      @count = Post.where(:state => params[:state], :flagged => false).order('created_at DESC').count
+      @posts = @posts.where(:state => params[:state])
+      @count = @count.where(:state => params[:state]).count
     elsif params[:run] == 'both'
-      @posts = Post
-                .joins('LEFT JOIN shares ON shares.post_id = posts.id')
-                .select('posts.*, COUNT(shares.*) AS share_count')
-                .where(:animal_type => params[:atype], :state => params[:state], :flagged => false)
-                .order('created_at DESC')
-                .group('posts.id, shares.post_id')
-                .limit(Post.per_page)
-      @count = Post.where(:animal_type => params[:atype], :state => params[:state], :flagged => false).order('created_at DESC').count
+      @posts = @posts.where(:animal_type => params[:atype], :state => params[:state])
+      @count = @count.where(:animal_type => params[:atype], :state => params[:state]).count
     elsif params[:run] == 'featured'
-      @posts = Post
-                .joins('LEFT JOIN shares ON shares.post_id = posts.id')
-                .select('posts.*, COUNT(shares.*) AS share_count')
-                .where(:promoted => true, :flagged => false)
-                .group('posts.id, shares.post_id')
-                .order('created_at DESC')
-                .limit(Post.per_page)
-      @count = Post.where(:promoted => true, :flagged => false).order('created_at DESC')
+      @posts = @posts.where(:promoted => true)
+      @count = @count.where(:promoted => true).count
+    elsif params[:run] == 'my'
+      @posts = @posts.where('shares.uid = ?', session[:drupal_user_id])
+      @count = @count.where(:promoted => true).count
     end
 
     if !params[:last].nil?
