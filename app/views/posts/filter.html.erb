@@ -7,9 +7,5 @@
 </script>
 
 <div class="post-list">
-<%= render 'post' %>
+<%=raw render('post').gsub(/\n/, '') %>
 </div>
-
-<br />
-
-<%= link_to 'New Post', :real_submit_path %>
