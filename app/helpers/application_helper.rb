@@ -20,6 +20,6 @@ module ApplicationHelper
   	posts = Post.find_by_uid(user_id)
   	shares = Share.where(:uid => user_id)
 
-  	(user_id && ((!shares.nil? && shares.count > 0) || (!posts.nil? && posts.count > 0)))
+  	(user_id && (!shares.nil? || !posts.nil?))
   end
 end
