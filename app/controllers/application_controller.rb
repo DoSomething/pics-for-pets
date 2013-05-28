@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
   end
 
   def is_not_authenticated
-    unless authenticated?
+    unless authenticated? || request.format.symbol == :json
       flash[:error] = "you need to log in, kid"
       redirect_to :login
       false
