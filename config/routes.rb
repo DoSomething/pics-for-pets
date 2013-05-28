@@ -1,5 +1,25 @@
 CreateAndShare::Application.routes.draw do
-  root :to => "home#index"
+  resources :shares, :only => [:create]
+  root :to => 'posts#index'
+
+  resources :sessions, :only => [:new, :create, :destroy]
+
+  match '/login',  to: 'sessions#new', :as => :login
+  match '/logout', to: 'sessions#destroy', :as => :logout
+
+  resources :posts
+
+  # TODO - GATE THESE PAGES BY NESTING THE ROUTES
+  match 'submit' => 'posts#new', :as => :real_submit_path
+  match 'mypics' => 'posts#filter', :run => 'my', :as => :mypics
+  match ':id' => 'posts#show', :constraints => { :id => /\d+/ }, :as => :show_post
+  match ':atype' => 'posts#filter', :constraints => { :atype => /(cat|dog|other)s?/ }, :run => 'animal'
+  match ':state' => 'posts#filter', :constraints => { :state => /[A-Z]{2}/ }, :run => 'state'
+  match ':atype-:state' => 'posts#filter', :constraints => { :atype => /(cat|dog|other)s?/, :state => /[A-Z]{2}/ }, :run => 'both'
+  match 'featured' => 'posts#filter', :run => 'featured'
+  match 'autoimg' => 'posts#autoimg'
+  match 'alterimg/:id' => 'posts#alterimg', :as => :alter_image
+  match 'flag/:id' => 'posts#flag', :as => :flag
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

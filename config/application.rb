@@ -1,6 +1,7 @@
 require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
+require 'csv'
 
 if defined?(Bundler)
   # If you precompile assets before deploying to production, use this line
@@ -11,12 +12,17 @@ end
 
 module CreateAndShare
   class Application < Rails::Application
+    # This setting is overridden in /config/environments/production.rb for
+    # our production environment; HTTPS is not needed for development mode
+    config.force_ssl = false
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
 
     # Custom directories with classes and modules you want to be autoloadable.
-    # config.autoload_paths += %W(#{config.root}/extras)
+    # Autoload custom modules shared between controllers
+    config.autoload_paths += %W(#{config.root}/lib/modules)
 
     # Only load the plugins named here, in the order given (default is alphabetical).
     # :all can be used as a placeholder for all plugins not explicitly named.

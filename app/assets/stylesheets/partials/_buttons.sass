@@ -1,0 +1,40 @@
+// BUTTON STYLES
+// -------------
+.btn
+  background: $btn-color
+  margin: 0 auto
+  padding: 0.25em 0
+  clear: both
+  position: static
+  height: 2em
+  display: block
+  border: 1px solid $btn-border
+  cursor: pointer
+  color: $off-black !important
+  font-family: din
+  font-weight: 700
+  text-align: center
+  text-decoration: none !important
+  text-transform: uppercase
+  +border-radius(5px)
+  &:hover /* While mouse hovers */
+    background: $btn-hover
+    +background-image(linear-gradient($btn-color, $btn-hover))
+  &:active /* While mouse clicks */
+    color: lighten($off-black, 10) !important
+    padding: 0.35em 0 0.15em !important
+    background: $btn-color
+    +background-image(linear-gradient($btn-hover, $btn-color))
+  &:link, &:active, &:hover
+    color: $off-black
+    text-decoration: none !important
+
+.btn-cta-small
+  font-size: em-calc(14)
+
+.btn-cta-medium
+  font-size: em-calc(18)
+
+.btn-cta-large
+  font-size: em-calc(24)
+

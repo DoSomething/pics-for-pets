@@ -12,4 +12,8 @@ test:
   <<: *connection
 
 production:
-  <<: *connection
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+  database: create_and_share
+

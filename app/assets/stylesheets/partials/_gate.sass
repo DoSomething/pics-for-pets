@@ -1,0 +1,222 @@
+// GATE
+// ----
+
+#login-form
+  display: none
+
+// base HTML styling
+body
+  background: $gate-page-bg
+  width: 100%
+
+label
+  display: block
+
+// TYPOGRAPHY
+// ----------
+.col
+  h1
+    color: $campaign-main
+    text-transform: uppercase
+
+// CONTAINER
+// ---------
+.gate
+  position: relative
+  float: none
+  min-height: 720px
+  width: 800px
+  margin: 2% auto
+  padding: 3% 3% 1% 3%
+  background-color: $gate-sbg-color
+  background-image: url($gate-sbg-image)
+  border: 1px solid #ddd
+  +border-radius(2px)
+  +box-shadow(#ccc 0px 15px 20px -10px)
+  @media only screen and (max-width: 850px)
+    width: 96%
+    padding: 6% 6% 1% 6%
+
+// CAMPAIGN STAT
+// -------------
+.gate header
+  width: 100%
+  overflow: hidden
+  h1, h2
+    text-align: right
+    float: right
+    width: 70%
+  h1
+    font-size: 44px
+    font-weight: 600
+    margin: 0.4em 0 0 0
+  h2
+    margin: 0.5em 0.3em 0 0
+  img.ds_logo
+    float: left
+    width: 28%
+
+.gate header
+  @media only screen and (max-width: 650px)
+    float: none
+    h1
+      margin: 0.5em 0 0 0
+      font-size: 31px
+    h2
+      margin: 0.1em 0.2em 0 0
+      font-size: 19px
+    img.ds_logo
+      width: 25%
+    img.bang
+      width: 17px
+      margin: 0 2px -2px 2px
+  @media only screen and (max-width: 530px)
+    h1
+      margin: 0.2em 0 0 0
+
+// HOW IT WORKS
+// ------------
+.gate .left
+  float: left
+  width: 45%
+  margin: 13% 0 0 -8%
+  padding: 1em
+  position: relative
+  background: $campaign-main
+  @media only screen and (max-width: 865px)
+    padding: 1em 1em 1em 7% 
+  h1, h2
+    color: $font-light
+  h1
+    font-size: 25px
+  h2
+    font-size: 18px
+  &:after /* triangle effect */
+    position: absolute
+    right: -30px
+    top: 0
+    content: ""
+    width: 0px
+    height: 0px
+    border-style: solid
+    border-width: 175px 30px 0 0
+    border-color: $campaign-main transparent transparent transparent
+
+.gate .left
+  h1
+    color: $off-black
+    text-transform: uppercase
+  @media only screen and (max-width: 650px)
+    float: none
+    margin: 0
+    padding: 3%
+    width: 95%
+    background: none
+    +box-shadow(none)
+    &:after
+      border: none
+    h2
+      color: $off-black
+
+// FOOTER
+// ------
+.gate footer
+  clear: both
+  width: 95%
+  padding: 3% 0 0 0
+  position: absolute
+  bottom: 1.5em
+  p, a
+    color: #ddd
+  p
+    font-size: 10px
+    text-align: center
+  a
+    text-decoration: underline
+
+.gate .form
+  background: transparent
+  min-height: auto
+  padding: 0
+  width: 100%
+  box-shadow: none
+  margin: 0 0 2% 0
+  float: right
+  width: 50%
+  label
+    text-transform: lowercase
+    padding: 0 0 0.4em 0
+    font-weight: 600
+    font-size: 13px
+    color: $off-black
+  .under-13-field
+    padding: 0
+  .form-item-parent-email
+    margin: 0.5em 0 0 0
+  .form_header
+    margin: 0 0 4% 0
+    display: block
+  .form-item
+    width: 100%
+    float: none !important
+    margin: 0
+  .form-item-first-name, .form-item-last-name
+    float: left !important
+    width: 40%
+  .form-item-last-name
+    width: 55%
+    margin: 0 0 0 5%
+  #edit-birthday
+    label
+      float: none !important
+      margin: 0
+    span
+      position: static !important
+  .form-item-day, .form-item-month, .form-item-year
+    float: left !important
+    width: 10%
+    margin: 0 5% 0 0
+    padding: 0
+  .form-item-year
+    width: 15%
+  .ds-login-popup-footer
+    margin: 0 0 1em 0
+  .already-member
+    float: none
+    padding: 0
+    font-family: din-web-reg
+    font-weight: 500
+    font-size: 14px
+    color: #222
+  @media only screen and (max-width: 650px)
+    float: none
+    margin: 5% auto
+    width: 95%
+  @media only screen and (max-width: 500px)
+    margin: 8% auto 4%
+
+
+// submit button for both forms
+#edit-final-submit
+  background: #fed100
+  margin: 1em 0
+  padding: 1px 0 0 0
+  position: static
+  font-size: 22px
+  height: 31px
+  width: 65px
+  display: block
+  color: #333131
+  +border-radius(3px) 
+
+// input fields for both forms
+.gate input
+  height: 2.5em
+  width: 100%
+  margin: 0.3em 0 1em 0
+  background: #fafafa
+  border: none
+  border: 1px solid #ddd
+  box-shadow: none
+  +border-radius(3px)
+

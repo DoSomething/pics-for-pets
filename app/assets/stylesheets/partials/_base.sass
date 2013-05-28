@@ -1,0 +1,385 @@
+// GENERAL ELEMENT STYLES
+// ----------------------
+body
+  background: $global-sbg
+
+.message
+  color: #fff
+  background: $msg
+  font-weight: 500
+  letter-spacing: 1px
+  font-size: 1em
+  display: inline-block
+  text-transform: uppercase
+  padding: 5px 20px
+  margin: 0.5em 0.5em 0.5em 0
+  +border-radius(3px)
+
+.debug
+  p
+    color: #fff
+  span
+    color: #222
+
+.error
+  @extend .message
+  background: $err
+
+.form-registration, .form-login
+  abbr
+    display: none
+
+.section-container
+  width: 960px
+  margin: 0 auto
+  position: relative
+
+.filter.btn
+  width: 3em
+  float: right
+  margin: 0.7em 1em 0 0
+  border-radius: 3px
+
+// INDEX HEADLINE
+// --------------
+.scroll-header-style
+  width: 500px
+  margin: 2% auto 0
+  @media only screen and (max-width: 700px)
+    width: 430px
+  @media only screen and (max-width: 450px)
+    width: 94%
+    margin: 3% auto 0
+  h1, h2
+    text-transform: uppercase
+    text-align: left
+  h1
+    font-size: 30px
+    font-weight: 600
+    color: #222
+    margin: 0
+    @media only screen and (max-width: 450px)
+      font-size: 21px
+  h2
+    color: rgb(204, 36, 36)
+
+// GENERAL LAYOUT
+// --------------
+
+.flagged
+  background: #808080
+
+.fb-picture
+  margin: -70px 0 0 -125px
+  img
+    +border-radius(2px)
+  @media only screen and (max-width: 700px)
+    width: 50px
+    margin: 0 auto
+    padding: 0 0 10px 0
+
+.go-to-gallery
+  text-align: center
+  text-transform: uppercase
+  display: block
+
+.flag
+  clear: both
+  height: 45px
+  text-align: right
+
+.dateline, .author /* hide the timestamp and author */
+  display: none
+
+// INVITE FRIENDS
+// --------------
+.fb-invite-friends
+  margin: 15px auto 0
+
+.connect-with-facebook a /* override styles inherited from the 'do it' theme */
+  background-position: 50% 0%
+  margin: 15px auto 0
+  height: 40px
+  @media only screen and (max-width: 500px)
+    background-size: 250px
+    width: 250px
+    height: 33px
+    margin: 25px auto 25px
+
+// BUTTON STYLES
+// -------------
+.fakefile /* [upload a file] div underlay */,
+#edit-submitted-field-cas-image-und-0-remove-button /* [remove] uploaded image */
+  padding: 10px
+  text-transform: uppercase
+  font-family: din-web
+  font-weight: 600
+  font-size: 22px
+  width: 130px
+  height: 35px
+  +border-radius(2px)
+
+.fakefile
+  position: absolute
+  top: 0px
+  left: 0px
+  z-index: 1
+  width: 147px
+
+#edit-submitted-field-cas-image-und-0-remove-button
+  margin: -10px auto 25px
+  padding: 2px 0 0 0
+  width: 80px
+  border: none
+  display: block
+
+.form-file.new /* [upload a file] input overlay */
+  position: relative
+  text-align: right
+  -moz-opacity: 0
+  opacity: 0
+  z-index: 2
+  width: 147px
+  height: 35px
+  cursor: pointer
+
+.submit-start button /* [next] (first instace of) */,
+.node-crazy-shit #edit-actions .form-submit /* matches all buttons */
+  margin: 0
+  padding: 0
+  float: right
+  position: relative
+  color: #fff
+  border: none
+  text-transform: uppercase
+  font-family: din-web-reg
+  font-weight: 400
+  font-size: 18px
+  height: 30px
+  +border-radius(2px)
+
+.submit-start button,
+#edit-next /* [next] button */
+  width: 60px !important
+
+#edit-previous /* [back] button */
+  width: 60px !important
+  float: left !important
+
+#edit-submit /* [submit] button */
+  width: 80px
+  float: right !important
+
+// throbber margin
+#views_infinite_scroll-ajax-loader
+  margin: 3% 0
+
+// styles empty gallery placeholder
+.no-results
+  font-size: 35px
+  line-height: 45px
+  text-align: center
+  text-transform: uppercase
+  font-weight: 600
+  padding: 5% 0 20% 
+  @media only screen and (max-width: 500px)
+    padding: 10% 0 20%
+  .small_button /* override default button styles */
+    float: none
+    margin: 7% auto 0
+    display: block
+    width: 160px
+
+// PAGINATION
+// ----------
+.item-list .pager /* hides the default Drupal pagination links save [prev] & [next]*/
+  .pager-current,  .pager-item,  .pager-ellipsis, .pager-first, .pager-last
+    display: none
+
+.item-list .pager
+  width: 500px
+  margin: 0 auto
+  @media only screen and (max-width: 700px)
+    width: 430px
+  @media only screen and (max-width: 430px)
+    width: 98%
+  a
+    color: #fff
+  .pager-previous
+    float: left
+  .pager-next
+    float: right
+
+// ERROR MESSAGES
+// --------------
+#page .messages /* increased specificity to over-ride do it theme styles */
+  width: 500px
+  margin: 0 auto
+  border: none
+  background: inherit
+  font-size: 15px
+  color: #222
+  .placeholder /* styles file name & file size */
+    background: rgb(230, 183, 183)
+    padding: 0 0.3em
+    +border-radius(2px)
+  @media only screen and (max-width: 700px)
+    width: 430px
+  @media only screen and (max-width: 400px)
+    width: 98%
+
+// NEW STUFF
+// ---------
+.nav-container
+  width: 500px
+  margin: 0 auto
+  overflow: hidden
+  ul, li
+    padding: 0
+    margin: 0
+  ul.filter-list
+    width: 50%
+    clear: both
+  ul.filter-options
+    overflow: hidden
+    text-align: left
+    float: left
+  li.filter-option, li.filter-selection
+    font-size: 1.2em
+  li
+    list-style: none
+  li ul
+    display: none
+
+  .filter-state,
+  .filter-type
+    background: #ccc
+    cursor: pointer
+    &:hover
+      color: lighten($off-black, 10)
+
+// NAV
+// ---
+.crazy-menu-wrapper li
+  color: #fff
+  text-transform: uppercase
+  list-style: none
+  padding: 5px
+  margin: 5px
+  background: #666
+  display: block
+  float: left
+  width: 180px
+  color: pink
+  &:hover
+    background: #777
+
+.crazy-menu-wrapper .type-filter
+  width: 200px
+
+.crazy-menu-wrapper, .crazy-sub-menu-wrapper
+  width: 100%
+  margin: 0
+  padding: 0
+
+.crazy-menu, .crazy-sub-menu
+  overflow: hidden
+  list-style: none
+  li
+    float: left
+    text-align: center
+  a
+    display: block
+    font-family: din-web-reg
+    font-weight: 400
+    text-transform: uppercase
+    &:hover
+      text-decoration: none
+
+// NAV
+// ---
+
+.crazy-menu-wrapper
+  background-color: $off_black
+
+.crazy-menu
+  margin: 0 auto
+  width: 600px
+  padding: 0
+  @media only screen and (max-width: 650px)
+    width: 100%
+  li
+    width: 25%
+    margin: 0 0 -5px 0
+  a
+    font-size: 25px
+    line-height: 50px
+    color: #fff
+    @media only screen and (max-width: 650px)
+      font-size: 17px
+      line-height: 45px
+
+  .last /* styles [submit] as a button */
+    background-image: -webkit-linear-gradient(top, rgb(225, 19, 19), rgb(180, 16, 16))
+    margin: 7px 0 0 0
+    width: 15%
+    height: 30px
+    @media only screen and (max-width: 650px)
+      width: 20%
+      height: 25px
+    +border-radius(3px)
+    a
+      margin: -8px 0 0 0
+      font-size: 20px
+      opacity: 0.9
+      @media only screen and (max-width: 650px)
+        font-size: 15px
+      &:hover
+        color: #fff
+
+  .last a.active /* when [submit] nave is selected -- do not display active color */
+    color: #fff
+
+// FILTERS
+// -------
+
+.crazy-sub-menu-wrapper
+  background-color: #fff
+
+.crazy-sub-menu
+  margin: 0 auto 1%
+  padding: 0
+  width: 500px
+  @media only screen and (max-width: 650px)
+    width: 100%
+  li
+    margin: 2%
+    width: 29%
+    @media only screen and (max-width: 650px)
+      margin: 1%
+  a
+    font-size: 18px
+    line-height: 36px
+    color: $off_black
+    &:hover
+      background-color: $off_black
+      color: #fff
+      +border-radius(3px)
+    @media only screen and (max-width: 650px)
+      font-size: 14px
+      line-height: 23px
+
+  a.active
+    background-color: $off_black
+    color: #fff
+    +border-radius(4px)
+    &:hover
+      color: #fff
+
+.debug
+  padding: 0 0 1em 0
+
+#submit_filter /* @TODO - MOVE THIS */
+  width: 2.3em !important
+  border: #bbb 1px solid
+  background: #ccc

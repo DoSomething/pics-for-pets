@@ -1,0 +1,73 @@
+// HEADER
+// ------
+.utility-bar
+  height: em-calc(40)
+  padding: 0 0.5em
+  overflow: hidden
+  background: $cta-sbg
+  a
+    float: right
+    padding: 0.5em
+    text-transform: uppercase
+    text-decoration: none
+    color: #fff
+    &:hover
+      color: #fff
+      text-decoration: none
+
+header
+  background-image: url(/images/bg-header.jpg)
+  background-color: $header-sbg
+  background-repeat: no-repeat
+  background-size: 56.6% 101%
+  background-position: 50% 50%
+  height: 200px
+
+div.header-inner
+  height: 200px
+  width: 900px
+  margin: 0 auto
+  position: relative
+  overflow: hidden
+  @media only screen and (max-width: 920px)
+    height: 150px
+    width: 98%
+  @media only screen and (max-width: 620px)
+    padding: 2% 0
+    height: auto
+
+img.header-pics-logo
+  position: absolute
+  height: 150px
+  right: 0
+  top: 25px
+  @media only screen and (max-width: 920px)
+    height: 140px
+  @media only screen and (max-width: 620px)
+    display: none
+
+img.header-sponsor
+  left: 0
+  @media only screen and (max-width: 620px)
+    position: static
+    width: 145px
+    float: left
+    margin: 0 0 0 10.5%
+  @media only screen and (max-width: 450px)
+    margin: 0 0 0 1.5%
+
+img.header-ds-logo /* additional DS logo for lower screen resolutions */
+  position: absolute
+  top: -25px
+  left: 0
+  height: 150px
+  @media only screen and (max-width: 920px)
+    display: block 
+  @media only screen and (max-width: 620px)
+    position: static
+    height: 50px
+    float: right
+    margin: 1% 9.5% 0 0 
+  @media only screen and (max-width: 450px)
+    margin: 1% 0.5% 0 0
+

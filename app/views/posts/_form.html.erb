@@ -1,0 +1,96 @@
+<%= simple_form_for(@post, :html => { :multipart => true, :class => "form form-registration right" }) do |f| %>
+  <% if @post.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@post.errors.count, "error") %> prohibited this post from being saved:</h2>
+
+      <ul>
+      <% @post.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <%= f.input :image, required: true, wrapper_html: { class: 'form-item-first-name' } %>
+  <%= f.input :top_text, wrapper_html: { class: 'form-item-top-text', id: 'form-item-top-text' } %>
+  <%= f.input :bottom_text, wrapper_html: { class: 'form-item-bottom-text', id: 'form-item-bottom-text' } %>
+  <div id="upload-preview">
+    <div id="top_text"></div>
+    <div id="placeholder_text"<p>Upload an image and it will appear here.</p></div>
+    <div id="bottom_text"></div>
+  </div>
+  <%= f.input :name, label: "What is the animal's name?", wrapper_html: { class: 'form-item-cell' } %>
+  <%= f.input :animal_type, wrapper_html: { class: 'form-item-pass' }, :as => :select, :collection => [['Cat', 'cat'], ['Dog', 'dog'], ['Other', 'other']], prompt: 'Choose a type', include_blank: false %>
+  <%= f.input :shelter, label: "What shelter is this animal at?", wrapper_html: { class: 'form-item-day' } %>
+  <%= f.input :state, label: "What state is the shelter in?", wrapper_html: { class: 'form-type-month' }, :as => :select, :collection => get_states, prompt: 'Choose a state', include_blank: false %>
+  <%= f.input :story, label: "Does this pet have a compelling story? Write it here.", required: false, wrapper_html: { class: 'form-item-year' } %>
+  <% if admin? %>
+    <%= f.input :adopted, label: false, collection: [[1, '']], :as => :check_boxes %>
+    <%= f.input :flagged, label: false, collection: [[1, '']], :as => :check_boxes %>
+    <%= f.input :share_count, label: 'Share count' %>
+  <% end %>
+  <%= f.input :creation_time, :as => :hidden, :value => Time.now %>
+  <%= f.input :update_time, :as => :hidden, :value => Time.now %>
+  <%= f.submit "submit", :id => "edit-final-submit", :value => 'Submit' %>
+<% end %>
+
+<script type="text/javascript">
+<!-- 
+  function handle_text_change(field, elm) {
+    $('#' + field).data('val',  $('#' + field).val() ); // save value
+    $('#' + field).change(function() { // works when input will be blured and the value was changed
+      $('#' + elm).text($(this).val());
+    });
+    $('#' + field).keyup(function() { // works immediately when user press button inside of the input
+      if( $('#' + field).val() != $('#' + field).data('val') ){ // check if value changed
+        $('#' + field).data('val',  $('#' + field).val() ); // save new value
+        if ($('#' + field).val() != "") {
+          if ($('#' + elm).css('visibility') != "visible") {
+            $('#' + elm).css('visibility', 'visible');
+          }
+        }
+        else {
+          $('#' + elm).css('visibility', 'hidden');
+        }
+
+        $(this).change(); // simulate "change" event
+      }
+    });
+  }
+
+  $('#post_image').change(function() {
+    var file_data = $("#post_image").prop("files")[0];   // Getting the properties of file from file field
+    var form_data = new FormData();                  // Creating object of FormData class
+    form_data.append("file", file_data)              // Appending parameter named file with properties of file_field to form_data
+    $.ajax({
+        url: "/autoimg",
+        dataType: 'script',
+        cache: false,
+        contentType: false,
+        processData: false,
+        data: form_data,                         // Setting the data attribute of ajax with file_data
+        type: 'post',
+        complete: function(response) {
+          res = $.parseJSON(response.responseText);
+          if (res.success === true) {
+            change_upload(res.filename);
+          }
+        }
+
+    });
+  })
+
+  function change_upload(filename) {
+    $('#upload-box').find('span').hide();
+    var img = $('<img />');
+    img.attr('src', '/system/tmp/' + filename);
+    img.css({ 'width': '450px', 'height': '450px', 'position': 'absolute', 'z-index': 0 });
+    $('#upload-preview span').hide();
+    img.appendTo('#upload-preview');
+
+    handle_text_change('post_top_text', 'top_text');
+    handle_text_change('post_bottom_text', 'bottom_text');
+
+    $('#form-item-top-text, #form-item-bottom-text').show();
+  }
+-->
+</script>
