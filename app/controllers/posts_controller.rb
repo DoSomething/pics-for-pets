@@ -22,11 +22,14 @@ class PostsController < ApplicationController
     offset = (page.to_i * Post.per_page)
 
     @posts = Post
+              .joins('LEFT JOIN shares ON shares.post_id = posts.id')
+              .select('posts.*, COUNT(shares.*) AS share_count')
               .where(:flagged => false)
+              .group('shares.post_id, posts.id')
               .order('created_at DESC')
               .limit(limit)
     if !params[:last].nil?
-      @posts = @posts.where('id < ?', params[:last])
+      @posts = @posts.where('posts.id < ?', params[:last])
     else
       @posts = @posts.offset(offset)
     end
@@ -52,32 +55,44 @@ class PostsController < ApplicationController
 
     if params[:run] == 'animal'
       @posts = Post
+                .joins('LEFT JOIN shares ON shares.post_id = posts.id')
+                .select('posts.*, COUNT(shares.*) AS share_count')
                 .where(:animal_type => params[:atype], :flagged => false)
+                .group('posts.id, shares.post_id')
                 .order('created_at DESC')
                 .limit(Post.per_page)
       @count = Post.where(:animal_type => params[:atype], :flagged => false).order('created_at DESC').count
     elsif params[:run] == 'state'
       @posts = Post
+                .joins('LEFT JOIN shares ON shares.post_id = posts.id')
+                .select('posts.*, COUNT(shares.*) AS share_count')
                 .where(:state => params[:state], :flagged => false)
+                .group('posts.id, shares.post_id')
                 .order('created_at DESC')
                 .limit(Post.per_page)
       @count = Post.where(:state => params[:state], :flagged => false).order('created_at DESC').count
     elsif params[:run] == 'both'
       @posts = Post
+                .joins('LEFT JOIN shares ON shares.post_id = posts.id')
+                .select('posts.*, COUNT(shares.*) AS share_count')
                 .where(:animal_type => params[:atype], :state => params[:state], :flagged => false)
                 .order('created_at DESC')
+                .group('posts.id, shares.post_id')
                 .limit(Post.per_page)
       @count = Post.where(:animal_type => params[:atype], :state => params[:state], :flagged => false).order('created_at DESC').count
     elsif params[:run] == 'featured'
       @posts = Post
+                .joins('LEFT JOIN shares ON shares.post_id = posts.id')
+                .select('posts.*, COUNT(shares.*) AS share_count')
                 .where(:promoted => true, :flagged => false)
+                .group('posts.id, shares.post_id')
                 .order('created_at DESC')
                 .limit(Post.per_page)
       @count = Post.where(:promoted => true, :flagged => false).order('created_at DESC')
     end
 
     if !params[:last].nil?
-      @posts = @posts.where('id < ?', params[:last])
+      @posts = @posts.where('posts.id < ?', params[:last])
     else
       @posts = @posts.offset(offset)
     end
