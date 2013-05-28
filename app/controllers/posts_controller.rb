@@ -247,7 +247,7 @@ class PostsController < ApplicationController
     @post.save
 
     respond_to do |format|
-      format.html { redirect_to posts_url }
+      format.html { redirect_to request.env["HTTP_REFERER"] }
     end
   end
 end
