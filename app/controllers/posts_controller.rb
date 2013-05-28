@@ -163,6 +163,11 @@ class PostsController < ApplicationController
 
   # GET /posts/1/edit
   def edit
+    # Shouldn't be here if they're not an admin.
+    if !admin?
+      redirect_to :root
+    end
+
     @post = Post.find(params[:id])
   end
 
@@ -186,6 +191,11 @@ class PostsController < ApplicationController
   # PUT /posts/1
   # PUT /posts/1.json
   def update
+    # Shouldn't be here if they're not an admin.
+    if !admin?
+      redirect_to :root
+    end
+
     @post = Post.find(params[:id])
 
     respond_to do |format|
@@ -202,6 +212,11 @@ class PostsController < ApplicationController
   # DELETE /posts/1
   # DELETE /posts/1.json
   def destroy
+    # Shouldn't be here if they're not an admin.
+    if !admin?
+      redirect_to :root
+    end
+
     @post = Post.find(params[:id])
     @post.destroy
 
@@ -213,6 +228,11 @@ class PostsController < ApplicationController
 
 
   def flag
+    # Shouldn't be here if they're not an admin.
+    if !admin?
+      redirect_to :root
+    end
+
     @post = Post.find(params[:id])
     @post.flagged = true
     @post.save
