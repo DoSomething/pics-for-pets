@@ -1,27 +1,60 @@
+// TODO - THIS FILE WAS THROWN TO TOGETHER, REFACTOR, MOVE INTO A PARTIAL, ETC.
 .form-item-top-text,
 .form-item-bottom-text
-	display: none
+  display: none
 
 #upload-preview
-	position: relative
-	display: block
-	width: 450px
-	height: 450px
-	border: 1px solid #000
+  position: relative
+  display: block
+  width: 450px
+  height: 450px
+  border: 4px dashed #fff
+  margin: 2em auto
 
-	#top_text,
-	#bottom_text
-		visibility: hidden
-		position: absolute
-		z-index: 1
-		padding: 5px
-		background: rgba(0,0,0,0.25)
-		display: block
-		width: 100%
-		box-sizing: border-box
-		text-align: center
-		color: #fff
-		text-transform: uppercase
+  #top_text,
+  #bottom_text
+    visibility: hidden
+    position: absolute
+    z-index: 1
+    padding: 5px
+    background: rgba(0,0,0,0.25)
+    display: block
+    width: 100%
+    box-sizing: border-box
+    text-align: center
+    color: #fff
+    text-transform: uppercase
 
-	#bottom_text
-		bottom: 0px
+  #bottom_text
+    bottom: 0px
+
+  #placeholder_text
+    position: absolute
+    top: 8em
+    text-transform: uppercase
+    text-align: center
+    color: #fff
+    font-size: 1.5em
+    font-weight: 600
+    letter-spacing: 1px
+
+.posts-new
+  .section-container
+    width: 450px
+    margin: 2em auto
+    label
+      color: #fff
+      display: block
+      margin: 1em 0 0 0
+    label, input[type="text"], input[type="file"] select
+      font-size: 1.2em
+      line-height: 1.5em
+    input[type="text"], input[type="file"]
+      color: #aaa
+      display: block
+      outline: none
+      border: none
+      padding: 0.5em 1em
+      +border-radius(3px)
+    select
+      display: block
