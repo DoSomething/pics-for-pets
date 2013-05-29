@@ -5,13 +5,9 @@
     color: $posts-c
     text-align: center
   h2
-    text-transform: uppercase
-    line-height: 1.5em
-    letter-spacing: 0.05em
-    padding: 1.5em 0 1em
+    +section-header-text
   p
-    border-bottom: 5px solid #fff
-    padding: 0 0 2em 0
+    +border-bottom-divider
   
   .section-container
     width: $posts-sw
@@ -19,7 +15,7 @@
 .post
   width: 500px
   margin: 30px auto
-  padding: 30px 15px
+  padding: 15px
   position: relative
   background-color: #fff
   border: 20px solid darken($posts-sbg, 5)
@@ -37,5 +33,16 @@
 
   .image
     width: 450px
-    margin: 0 auto
+    margin: 10px auto 25px
 
+// POST META-DATA
+// --------------
+.name-loc
+  font-size: em-calc(24)
+  font-weight: 600
+  text-transform: uppercase
+  margin: 0 0 5px 25px
+
+.adopt-me
+  font-size: em-calc(18)
+  margin: 0 0 0 25px

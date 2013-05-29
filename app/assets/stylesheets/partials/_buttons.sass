@@ -17,13 +17,10 @@
   text-decoration: none !important
   text-transform: uppercase
   +border-radius(5px)
+  +background-image(linear-gradient($btn-color, $btn-hover))
   &:hover /* While mouse hovers */
     background: $btn-hover
-    +background-image(linear-gradient($btn-color, $btn-hover))
-  &:active /* While mouse clicks */
-    color: lighten($off-black, 10) !important
-    padding: 0.35em 0 0.15em !important
-    background: $btn-color
+  &:active
     +background-image(linear-gradient($btn-hover, $btn-color))
   &:link, &:active, &:hover
     color: $off-black
@@ -38,3 +35,45 @@
 .btn-cta-large
   font-size: em-calc(24)
 
+// POSTS#INDEX
+a.share-btn, span.share-count
+  text-transform: uppercase
+  display: inline-block
+  font-size: em-calc(18)
+  +border-radius(2px)
+
+a.share-btn
+  color: #fff
+  background: $btn-blue
+  margin: 15px 15px 15px 25px
+  padding: 0.4em 1em 0.1em 0.5em
+  text-decoration: none
+  letter-spacing: 1px
+  font-weight: 500
+  width: 5em
+
+span.share-count /* @TODO - ASSIGN THIS THE .BTN CLASS */
+  color: $btn-grey-c /* @TODO - MAKE THIS A MIXIN */
+  background-color: $btn-grey-bg
+  padding: 0.6em 0.8em 0.6em 0.8em
+  position: relative
+  font-weight: 600
+  &:after, &:before
+    right: 100%
+    border: solid transparent
+    content: " "
+    height: 0
+    width: 0
+    position: absolute
+    pointer-events: none
+  &:after
+    border-color: rgba(136, 183, 213, 0)
+    border-right-color: #ddd
+    border-width: 5px
+    top: 50%
+    margin-top: -5px
+  &:before
+    border-color: rgba(194, 225, 245, 0)
+    border-width: 6px
+    top: 50%
+    margin-top: -6px

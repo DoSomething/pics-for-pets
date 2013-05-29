@@ -1,3 +1,4 @@
+<h2>tell us about your animal</h2>
 <%= simple_form_for(@post, :html => { :multipart => true, :class => "form form-submit right" }) do |f| %>
   <% if @post.errors.any? %>
     <div id="error_explanation">
@@ -30,11 +31,11 @@
   <% end %>
   <%= f.input :creation_time, :as => :hidden, :value => Time.now %>
   <%= f.input :update_time, :as => :hidden, :value => Time.now %>
-  <%= f.submit "submit", :id => "edit-final-submit", :value => 'Submit' %>
+  <%= f.submit 'submit', :value => 'Submit', :id => 'edit-final-submit', :class => 'btn btn-cta-large btn-primary' %>
 <% end %>
 
 <script type="text/javascript">
-<!-- 
+<!--
   function handle_text_change(field, elm) {
     $('#' + field).data('val',  $('#' + field).val() ); // save value
     $('#' + field).change(function() { // works when input will be blured and the value was changed

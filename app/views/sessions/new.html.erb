@@ -1,13 +1,17 @@
 <div class="gate">
   <header>
-    <img class="ds_logo" src="/images/logo-ds.png" alt="DoSomething.org logo">
+    <img class="logo-ds" src="/images/logo-ds.png" alt="DoSomething.org logo">
     <h1>Pics for Pets</h1>
-    <h2><strong>1 out of 6</strong> Americans goes hungry every year. Sign up to change this.</h2>
+    <h2>Over half of the <strong>5 to 7 million</strong> pets that enter shelters are put to sleep. Help save their lives just by hitting “share.”</h2>
   </header>
 
-  <aside class="left">
+  <aside>
     <h1>how it works</h1>
-    <h2>Donate 10 jars of peanut butter, jam or any other food and help end hunger in your community.</h2>
+    <ol>
+      <li>Browse our gallery of animals who need homes</li>
+      <li>Share your favorites with friends to earn food and toys for the animals</li>
+      <li>Visit your local shelter to take photos for a chance to win a $3,000 scholarship</li>
+    </ol>
   </aside>
 
   <%= form_for(:session, :url => sessions_path, :html => { :class => 'form form-login', :id => 'login-form' }) do |f| %>
@@ -15,7 +19,7 @@
     <%= f.text_field :username %>
     <%= f.label :password %>
     <%= f.password_field :password %>
-    <%= f.submit "submit" %>
+    <%= f.submit 'submit', :class => 'btn btn-cta-large btn-primary' %>
     <p>Not a DoSomething.org member? <%= link_to 'register', '#', { :id => 'registration-link' } %></p>
   <% end %>
 
@@ -25,10 +29,11 @@
     <%= f.input :email, wrapper_html: { class: 'form-item-email' } %>
     <%= f.input :cell, wrapper_html: { class: 'form-item-cell' } %>
     <%= f.input :password, wrapper_html: { class: 'form-item-pass' } %>
-    <%= f.input :month, label: false, wrapper_html: { class: 'form-type-month' } %>
-    <%= f.input :day, label: false, wrapper_html: { class: 'form-item-day' } %>
-    <%= f.input :year, label: false, wrapper_html: { class: 'form-item-year' } %>
-    <%= f.submit "submit", :id => "btn btn-large btn-primary" %>
+    <%= f.label 'birthday' %>
+    <%= f.input :month, label: false, placeholder: 'MM', wrapper_html: { class: 'form-item-month' } %>
+    <%= f.input :day, label: false, placeholder: 'DD', wrapper_html: { class: 'form-item-day' } %>
+    <%= f.input :year, label: false, placeholder: 'YYYY', wrapper_html: { class: 'form-item-year' } %>
+    <%= f.submit 'submit', :class => 'btn btn-cta-large btn-primary' %>
     <p>Already have an account? <%= link_to 'log in', '#', { :id => 'login-link' } %></p>
   <% end %>
 

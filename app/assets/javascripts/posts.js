@@ -1,6 +1,7 @@
 // POSTS
 // -----
 $(function() {
+
   // AUTOMATICALLY RESIZE BTN WIDTHS
   set_width = function(parent, child, width) {
     $(parent).each(function() {
@@ -15,8 +16,9 @@ $(function() {
   $debug = $('.debug');
   $debug.hide();
 
-  $('#debug').click(function() {
+  $('#debug').unbind('click').click(function() {
     $debug.slideToggle('fast');
+    return false;
   });
 
   // FACEBOOK POST SHARING FUNCTIONALITY

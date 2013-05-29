@@ -1,7 +1,13 @@
-// TODO - THIS FILE WAS THROWN TO TOGETHER, REFACTOR, MOVE INTO A PARTIAL, ETC.
+// @TODO - THIS FILE WAS THROWN TO TOGETHER, REFACTOR, MOVE INTO A PARTIAL, ETC.
 .form-item-top-text,
 .form-item-bottom-text
   display: none
+
+h2
+  color: #fff
+  margin: 0 0 36px 0
+  +section-header-text
+  +border-bottom-divider
 
 #upload-preview
   position: relative
@@ -19,11 +25,13 @@
     padding: 5px
     background: rgba(0,0,0,0.25)
     display: block
-    width: 100%
+    width: 97.5%
     box-sizing: border-box
     text-align: center
     color: #fff
     text-transform: uppercase
+    font-size: 1.5em
+    line-height: 1.5em
 
   #bottom_text
     bottom: 0px
@@ -46,15 +54,23 @@
       color: #fff
       display: block
       margin: 1em 0 0 0
+    select
+      +select-option
+      display: block
+      background: #fff
+      padding: 0.2em 0.5em 0.3em 0.2em
     label, input[type="text"], input[type="file"] select
       font-size: 1.2em
       line-height: 1.5em
-    input[type="text"], input[type="file"]
-      color: #aaa
+    input[type="text"], input[type="file"], textarea
+      color: #888
+      width: 435px
       display: block
       outline: none
       border: none
-      padding: 0.5em 1em
+      padding: 0.5em
       +border-radius(3px)
-    select
-      display: block
+
+    .btn
+      width: 6em
+      margin: 1em 0
