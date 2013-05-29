@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130528172514) do
+ActiveRecord::Schema.define(:version => 20130529164516) do
 
   create_table "posts", :force => true do |t|
     t.string   "image"
@@ -19,8 +19,8 @@ ActiveRecord::Schema.define(:version => 20130528172514) do
     t.string   "animal_type"
     t.string   "state"
     t.string   "shelter"
-    t.boolean  "flagged"
-    t.boolean  "promoted"
+    t.boolean  "flagged",            :default => false
+    t.boolean  "promoted",           :default => false
     t.integer  "share_count"
     t.text     "story"
     t.datetime "creation_time"
@@ -28,8 +28,8 @@ ActiveRecord::Schema.define(:version => 20130528172514) do
     t.boolean  "adopted"
     t.string   "top_text"
     t.string   "bottom_text"
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
+    t.datetime "created_at",                            :null => false
+    t.datetime "updated_at",                            :null => false
     t.string   "image_file_name"
     t.string   "image_content_type"
     t.integer  "image_file_size"

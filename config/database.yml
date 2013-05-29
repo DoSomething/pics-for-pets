@@ -10,6 +10,7 @@ development:
 
 test:
   <<: *connection
+  database: create_and_share_test
 
 production:
   adapter: postgresql
