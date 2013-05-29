@@ -11,6 +11,8 @@ gem 'httparty'
 gem 'simple_form'
 gem 'therubyracer'
 
+gem 'gibbon'
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
