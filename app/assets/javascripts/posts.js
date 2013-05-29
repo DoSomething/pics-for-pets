@@ -24,13 +24,16 @@ $(function() {
   // FACEBOOK POST SHARING FUNCTIONALITY
   $('.facebook-share').click(function() {
     var id = $(this).attr('data-id');
+    var name = $(this).parent().parent().find('span.name').text();
+    var picture = $(this).parent().parent().find('img').attr('src');
+
     FB.ui({
       'method': 'feed',
       'link': document.location.href,
-      'name': 'Adopt this pet',
+      'name': 'Want to adopt me?',
       'caption': 'Pics for Pets',
-      'description': 'You MUST adopt this pet.',
-      'picture': 'http://mchitten.com/system/posts/images/000/000/011/gallery/700.jpg'
+      'description': name + ' is super cute and deserves a loving home.  Could you be ' + name + '\'s new owner?',
+      'picture': picture
     }, function(response) {
       $.post('/shares', { 'share': { 'post_id': id } }, function(res) {
 

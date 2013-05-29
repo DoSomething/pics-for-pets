@@ -1,7 +1,7 @@
 <div class="post id-<%= @post.id %>">
   <% if admin? %><div class="flag"><%= link_to 'Flag', flag_path(@post), :confirm => 'Flag this?' %></div><% end %>
-  <div class="share"><a href="#" class="share-btn" data-id="<%= @post.id %>">Facebook</a><span class="share-count"><%= @post.share_count %></span></div>
+  <div class="share"><a href="#" class="facebook-share share-btn" data-id="<%= @post.id %>">Facebook</a><span class="share-count"><%= @post.share_count %></span></div>
   <div class="image"><%= image_tag @post.image(:gallery) %></div>
-  <div class="name-loc"><%= @post.name %>, <%= @post.state %></div>
+  <div class="name-loc"><span class="name"><%= @post.name %></span>, <%= @post.state %></div>
   <div class="adopt-me">Adopt <%= @post.name %> at <%= link_to @post.shelter + ', ' + @post.state, 'http://www.petfinder.com/awo/index.cgi?location=' + @post.state + '&keyword=' + @post.shelter, :target => '_blank' %></div>
 </div>
