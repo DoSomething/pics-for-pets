@@ -11,7 +11,7 @@ class SessionsController < ApplicationController
     username = params[:session][:username]
     password = params[:session][:password]
 
-    login_response = Services.login(username, password)
+    login_response = Services::Auth.login(username, password)
 
     if login_response.kind_of?(Array)
       flash.now[:error] = 'wtf? try again'
