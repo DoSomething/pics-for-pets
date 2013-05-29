@@ -10,9 +10,8 @@ CreateAndShare::Application.routes.draw do
   resources :posts
 
   # TODO - GATE THESE PAGES BY NESTING THE ROUTES
-  match 'loaderio-41509449f6c0cd90528875300c3606af.html' => 'posts#loaderio'
   match 'submit' => 'posts#new', :as => :real_submit_path
-  match 'mypics' => 'posts#filter', :run => 'my', :as => :mypics
+  match 'mypets' => 'posts#filter', :run => 'my', :as => :mypics
   match ':id' => 'posts#show', :constraints => { :id => /\d+/ }, :as => :show_post
   match ':atype' => 'posts#filter', :constraints => { :atype => /(cat|dog|other)s?/ }, :run => 'animal'
   match ':state' => 'posts#filter', :constraints => { :state => /[A-Z]{2}/ }, :run => 'state'
