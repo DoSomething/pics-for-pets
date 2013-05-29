@@ -250,4 +250,8 @@ class PostsController < ApplicationController
       format.html { redirect_to request.env["HTTP_REFERER"] }
     end
   end
+
+  def loaderio
+    render :text => 'loaderio-41509449f6c0cd90528875300c3606af'
+  end
 end
