@@ -142,9 +142,9 @@ class PostsController < ApplicationController
   # GET /posts/1.json
   def show
     @post = Post
+              .where(:id => params[:id], :flagged => false)
               .joins('LEFT JOIN shares ON shares.post_id = posts.id')
               .select('posts.*, COUNT(shares.*) AS share_count')
-              .where(:flagged => false, :id => params[:id])
               .group('shares.post_id, posts.id')
               .order('posts.created_at DESC')
               .limit(Post.per_page)
@@ -153,7 +153,7 @@ class PostsController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @post }
-      format.csv { send_data @posts.as_csv }
+      format.csv { send_data @post.as_csv }
     end
   end
 

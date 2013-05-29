@@ -18,3 +18,5 @@ config/database.yml
 
 public/system/posts
 public/system/tmp
+
+spec/images/*
