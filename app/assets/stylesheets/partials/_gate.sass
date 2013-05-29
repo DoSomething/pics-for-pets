@@ -12,19 +12,12 @@ body
 label
   display: block
 
-// TYPOGRAPHY
-// ----------
-.col
-  h1
-    color: $campaign-main
-    text-transform: uppercase
-
 // CONTAINER
 // ---------
 .gate
   position: relative
   float: none
-  min-height: 720px
+  min-height: 900px
   width: 800px
   margin: 2% auto
   padding: 3% 3% 1% 3%
@@ -45,67 +38,71 @@ label
   h1, h2
     text-align: right
     float: right
-    width: 70%
+    width: 60%
   h1
     font-size: 44px
     font-weight: 600
     margin: 0.4em 0 0 0
+    text-transform: uppercase
+    color: $campaign-main
   h2
+    font-size: 1em
+    font-weight: 500
     margin: 0.5em 0.3em 0 0
-  img.ds_logo
+
+  .logo-ds
     float: left
     width: 28%
 
-.gate header
   @media only screen and (max-width: 650px)
     float: none
     h1
       margin: 0.5em 0 0 0
-      font-size: 31px
+      font-size: em-calc(31)
     h2
       margin: 0.1em 0.2em 0 0
-      font-size: 19px
-    img.ds_logo
+      font-size: em-calc(19)
+    .log-ds
       width: 25%
-    img.bang
-      width: 17px
-      margin: 0 2px -2px 2px
+
   @media only screen and (max-width: 530px)
     h1
       margin: 0.2em 0 0 0
 
 // HOW IT WORKS
 // ------------
-.gate .left
+.gate aside
   float: left
   width: 45%
   margin: 13% 0 0 -8%
   padding: 1em
   position: relative
   background: $campaign-main
-  @media only screen and (max-width: 865px)
-    padding: 1em 1em 1em 7% 
-  h1, h2
-    color: $font-light
   h1
-    font-size: 25px
-  h2
-    font-size: 18px
+    font-size: em-calc(25)
+    color: lighten($off-black, 10)
+    text-transform: uppercase
   &:after /* triangle effect */
     position: absolute
-    right: -30px
+    right: -29px
     top: 0
     content: ""
     width: 0px
     height: 0px
     border-style: solid
-    border-width: 175px 30px 0 0
+    border-width: 240px 30px 0 0
     border-color: $campaign-main transparent transparent transparent
+  ol
+    list-style: decimal
+    margin: 0 0 0 1em
+    padding: 0 0 0 0.5em
+  li
+    padding: 0.5em 0
+    color: #fff
 
-.gate .left
-  h1
-    color: $off-black
-    text-transform: uppercase
+  @media only screen and (max-width: 865px)
+    padding: 1em 1em 1em 7%
+
   @media only screen and (max-width: 650px)
     float: none
     margin: 0
@@ -129,11 +126,13 @@ label
   p, a
     color: #ddd
   p
-    font-size: 10px
+    font-size: em-calc(12)
     text-align: center
   a
     text-decoration: underline
 
+// LOGIN & REG. FORMS
+// ------------------
 .gate .form
   background: transparent
   min-height: auto
@@ -145,42 +144,60 @@ label
   width: 50%
   label
     text-transform: lowercase
-    padding: 0 0 0.4em 0
-    font-weight: 600
-    font-size: 13px
+    font-weight: 400
+    font-size: em-calc(18)
     color: $off-black
+  p /* "Already registered & Need an account?" language */
+    clear: left
+    font-size: 0.9em
+
+  .btn
+    width: 6em
+    float: left
+    margin: 0.5em 0 1em 0
+
   .under-13-field
     padding: 0
+
   .form-item-parent-email
     margin: 0.5em 0 0 0
+
   .form_header
     margin: 0 0 4% 0
     display: block
+
   .form-item
     width: 100%
     float: none !important
     margin: 0
+
   .form-item-first-name, .form-item-last-name
     float: left !important
     width: 40%
+
   .form-item-last-name
-    width: 55%
-    margin: 0 0 0 5%
+    width: 50%
+    margin: 0 0 0 10%
+
   #edit-birthday
     label
       float: none !important
       margin: 0
     span
       position: static !important
+
   .form-item-day, .form-item-month, .form-item-year
     float: left !important
-    width: 10%
-    margin: 0 5% 0 0
+    width: 2.6em
+    margin: 0 9% 0 0
     padding: 0
+
   .form-item-year
-    width: 15%
+    width: 3.5em
+
   .ds-login-popup-footer
     margin: 0 0 1em 0
+
   .already-member
     float: none
     padding: 0
@@ -188,13 +205,14 @@ label
     font-weight: 500
     font-size: 14px
     color: #222
+
   @media only screen and (max-width: 650px)
     float: none
     margin: 5% auto
     width: 95%
+
   @media only screen and (max-width: 500px)
     margin: 8% auto 4%
-
 
 // submit button for both forms
 #edit-final-submit
@@ -207,16 +225,23 @@ label
   width: 65px
   display: block
   color: #333131
-  +border-radius(3px) 
+  +border-radius(3px)
 
 // input fields for both forms
-.gate input
+.gate input[type="text"],
+.gate input[type="email"],
+.gate input[type="number"],
+.gate input[type="password"]
   height: 2.5em
   width: 100%
-  margin: 0.3em 0 1em 0
+  margin: 0.3em 0 0.5em 0
   background: #fafafa
   border: none
   border: 1px solid #ddd
+  font-weight: 400
+  font-size: em-calc(18)
+  color: #888
+  padding: 0 0 0 0.5em
   box-shadow: none
   +border-radius(3px)
 
