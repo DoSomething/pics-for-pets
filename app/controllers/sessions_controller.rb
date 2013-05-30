@@ -8,6 +8,8 @@ class SessionsController < ApplicationController
   end
 
   def create
+    # @TODO - IF AUTHENTICATED, THROW 500
+
     # form
     form     = params[:form]
 
@@ -29,8 +31,6 @@ class SessionsController < ApplicationController
     elsif form == 'register'
       services_response = Services::Auth.register(password, email, first, last, cell, month, day, year)
     end
-
-    puts services_response
 
     if !services_response[:user][:uid].empty? && form == 'register'
       Services::Auth.login(username, password)
