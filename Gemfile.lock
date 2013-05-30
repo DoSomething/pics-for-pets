@@ -197,8 +197,8 @@ DEPENDENCIES
   gibbon
   httparty
   jquery-rails
-  omniauth-facebook
   newrelic_rpm
+  omniauth-facebook
   paperclip
   pg
   rails (= 3.2.13)
