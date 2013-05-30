@@ -35,9 +35,9 @@ $(function() {
       'description': name + ' is super cute and deserves a loving home.  Could you be ' + name + '\'s new owner?',
       'picture': picture
     }, function(response) {
-      $.post('/shares', { 'share': { 'post_id': id } }, function(res) {
-
-      });
+      if (response && response.post_id) {
+        $.post('/shares', { 'share': { 'post_id': id } }, function(res) {});
+      }
     });
     return false;
   });

@@ -9,8 +9,8 @@ describe 'sign up', :type => :feature, :js => true do
     page.should have_content 'Not a DoSomething.org member?'
 
     within '.form-login' do
-      find(:id, 'session_username').set 'mchitten@gmail.com'
-      find(:id, 'session_password').set 'h4dlj6pTr'
+      find(:id, 'session_username').set 'bohemian_test'
+      find(:id, 'session_password').set 'bohemian_test'
       click_button 'submit'
     end
 
@@ -56,8 +56,6 @@ describe 'submit flow', :type => :feature, :js => true do
       find(:id, 'post_shelter').set 'Shelter'
       find(:xpath, '//*[@id="post_state"]/option[16]').click
 
-      page.save_screenshot 'spec/images/screen.jpg'
-
       click_button 'Submit'
     end
 
@@ -66,13 +64,13 @@ describe 'submit flow', :type => :feature, :js => true do
 
   it 'xfilters' do
     visit '/cats-ID'
-    page.should have_content 'Spot, ID'
+    page.should have_content 'SPOT, ID'
 
     visit '/cats'
-    page.should have_content 'Spot, ID'
+    page.should have_content 'SPOT, ID'
 
     visit '/ID'
-    page.should have_content 'Spot, ID'
+    page.should have_content 'SPOT, ID'
 
     visit '/cats-CA'
     page.should have_content 'Oh, shit'

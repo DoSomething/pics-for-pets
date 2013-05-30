@@ -1,25 +1,40 @@
-var page = 0;
-$(window).scroll(function() {
-  if (typeof count === 'undefined') {
-    return;
+$(document).ready(function() {
+  var page = 0;     // Default page
+  var running = 10; // How many posts are currently shown
+  var done = [];
+
+  function in_view() {
+    $('.inview').bind('inview', function(event, visible) {
+      // Page + 1
+      page++;
+
+      // Remove the current inview element.
+      $('.inview').remove();
+
+      // If we are viewing a filter...
+      if (typeof filter != 'undefined') {
+          $.getScript('/' + filter + '.js?page=' + page + '&last=' + latest, function() {
+            running += returned;
+            // Only keep going if there are more posts to show.
+            if (running < count) {
+              in_view();
+            }
+            // @Todo: throbber end
+          });
+      }
+      else {
+        $.getScript('/posts.js?page=' + page + '&last=' + latest, function() {
+          running += returned;
+          // Only keep going if there are more posts to show.
+          if (running < count) {
+            in_view();
+          }
+          // @Todo: throbber end
+        });
+      }
+    });
   }
 
-  if (page * 10 < count) {
-    if ($(window).scrollTop() == $(document).height() - $(window).height()) {
-      page++
-      // @Todo: throbber start
-      $(document).delay(1000, function() {
-        if (typeof filter != 'undefined') {
-          $.getScript('/' + filter + '.js?page=' + page + '&last=' + latest, function() {
-            // @Todo: throbber end
-          });
-        }
-        else {
-          $.getScript('/posts.js?page=' + page + '&last=' + latest, function() {
-            // @Todo: throbber end
-          });
-        }
-      });
-    }
-  }
+  // Go.
+  in_view();
 });
