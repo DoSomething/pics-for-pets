@@ -1,8 +1,9 @@
 CreateAndShare::Application.routes.draw do
-  resources :shares, :only => [:create]
   root :to => 'posts#index'
 
   resources :sessions, :only => [:new, :create, :destroy]
+  resources :users, :only => [:create]
+  resources :shares, :only => [:create]
 
   match '/login',  to: 'sessions#new', :as => :login
   match '/logout', to: 'sessions#destroy', :as => :logout
@@ -20,6 +21,10 @@ CreateAndShare::Application.routes.draw do
   match 'autoimg' => 'posts#autoimg'
   match 'alterimg/:id' => 'posts#alterimg', :as => :alter_image
   match 'flag/:id' => 'posts#flag', :as => :flag
+
+  # FACEBOOK AUTH
+  match 'auth/:provider/callback' => 'sessions#fboauth'
+  match 'auth/failure' => redirect('/'), :notice => 'Login failed! Try again?'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

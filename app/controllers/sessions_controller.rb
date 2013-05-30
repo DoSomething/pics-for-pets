@@ -1,5 +1,6 @@
 class SessionsController < ApplicationController
   include Services
+  include SessionsHelper
 
   before_filter :is_authenticated, :only => :new
   layout 'gate'
@@ -39,14 +40,17 @@ class SessionsController < ApplicationController
     if services_response.kind_of?(Array)
       flash.now[:error] = 'wtf? try again'
       render :new
-    elsif services_response.kind_of?(Hash)
-      # @TODO - REMOVE SESSION_NAME & SESSION_ID
-      session[:drupal_user_id]      = services_response['user']['uid']
-      session[:drupal_user_role]    = services_response['user']['roles']
-      session[:drupal_session_id]   = services_response['sessid']
-      session[:drupal_session_name] = services_response['session_name']
-      # Log user in if they were successfully registered
+    elsif login_response.kind_of?(Hash)
+      Services::Auth.authenticate(session, login_response['user']['uid'], login_response['user']['roles'])
       flash[:message] = 'yaaaahs! - you\'ve logged in successfully'
+      redirect_to :root
+    end
+  end
+
+  def fboauth
+    auth = env['omniauth.auth']['extra']['raw_info']
+    if handle_auth(auth)
+      flash[:message] = "You are now connected through Facebook!"
       redirect_to :root
     end
   end

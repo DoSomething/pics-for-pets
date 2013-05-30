@@ -28,6 +28,19 @@ module Services
         'profile_main[field_user_official_rules][und]' => 1 # Pass user's acceptance of our official rules
       })
     end
+
+    def self.check_exists(email)
+      get('/ruby/users/' + email + '?' + Time.now.to_i.to_s)
+    end
+
+    def self.check_admin(email)
+      get ('/ruby/users/is_admin/' + email + '?' + Time.now.to_i.to_s)
+    end
+
+    def self.authenticate(session, uid, roles={})
+      session[:drupal_user_id]      = uid
+      session[:drupal_user_role]    = roles
+    end
   end
 
   # MailChimp (email) methods
