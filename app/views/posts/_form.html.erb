@@ -11,22 +11,30 @@
       </ul>
     </div>
   <% end %>
-  <%= f.input :image, required: true, wrapper_html: { class: 'form-item-first-name' } %>
-  <%= f.input :top_text, wrapper_html: { class: 'form-item-top-text', id: 'form-item-top-text' } %>
-  <%= f.input :bottom_text, wrapper_html: { class: 'form-item-bottom-text', id: 'form-item-bottom-text' } %>
-  <div id="upload-preview">
-    <div id="top_text"></div>
-    <div id="placeholder_text"<p>Upload an image and it will appear here.</p></div>
-    <div id="bottom_text"></div>
-  </div>
+
+  <% if !@post.image_file_name %> 
+    <%= f.input :image, required: true, wrapper_html: { class: 'form-item-first-name' } %>
+    <%= f.input :top_text, wrapper_html: { class: 'form-item-top-text', id: 'form-item-top-text' } %>
+    <%= f.input :bottom_text, wrapper_html: { class: 'form-item-bottom-text', id: 'form-item-bottom-text' } %>
+    <div id="upload-preview">
+      <div id="top_text"></div>
+      <div id="placeholder_text"<p>Upload an image and it will appear here.</p></div>
+      <div id="bottom_text"></div>
+    </div>
+  <% else %>
+    <div id="upload-preview">
+      <%= image_tag @post.image.url(:gallery) %>
+    </div>
+  <% end %>
   <%= f.input :name, label: "What is the animal's name?", wrapper_html: { class: 'form-item-cell' } %>
   <%= f.input :animal_type, wrapper_html: { class: 'form-item-pass' }, :as => :select, :collection => [['Cat', 'cat'], ['Dog', 'dog'], ['Other', 'other']], prompt: 'Choose a type', include_blank: false %>
   <%= f.input :shelter, label: "What shelter is this animal at?", wrapper_html: { class: 'form-item-day' } %>
   <%= f.input :state, label: "What state is the shelter in?", wrapper_html: { class: 'form-type-month' }, :as => :select, :collection => get_states, prompt: 'Choose a state', include_blank: false %>
   <%= f.input :story, label: "Does this pet have a compelling story? Write it here.", required: false, wrapper_html: { class: 'form-item-year' } %>
   <% if admin? %>
-    <%= f.input :adopted, label: false, collection: [[1, '']], :as => :check_boxes %>
-    <%= f.input :flagged, label: false, collection: [[1, '']], :as => :check_boxes %>
+    <%= f.input :adopted, label: 'Adopted', :as => :boolean %>
+    <%= f.input :flagged, label: 'Flagged', :as => :boolean %>
+    <%= f.input :promoted, label: 'Promoted', :as => :boolean %>
     <%= f.input :share_count, label: 'Share count' %>
   <% end %>
   <%= f.input :creation_time, :as => :hidden, :value => Time.now %>
