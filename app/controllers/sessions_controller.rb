@@ -1,5 +1,6 @@
 class SessionsController < ApplicationController
   include Services
+  include SessionsHelper
 
   before_filter :is_authenticated, :only => :new
   layout 'gate'
@@ -23,6 +24,14 @@ class SessionsController < ApplicationController
       session[:drupal_session_name] = login_response['session_name']
 
       flash[:message] = 'yaaaahs! - you\'ve logged in successfully'
+      redirect_to :root
+    end
+  end
+
+  def fboauth
+    auth = env['omniauth.auth']['extra']['raw_info']
+    if handle_auth(auth)
+      flash[:message] = "You are now connected through Facebook!"
       redirect_to :root
     end
   end

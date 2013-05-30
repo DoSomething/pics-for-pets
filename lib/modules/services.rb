@@ -15,7 +15,18 @@ module Services
       post('/rest/user/logout.json', :body => { :username => username, :password => password })
     end
 
-    # TODO - CREATE USER REGISTRATION METHOD
+    def self.check_exists(email)
+      get('/ruby/users/' + email + '?' + Time.now.to_i.to_s)
+    end
+
+    def self.check_admin(email)
+      get ('/ruby/users/is_admin/' + email + '?' + Time.now.to_i.to_s)
+    end
+
+    def self.authenticate(session, uid, roles={})
+      session[:drupal_user_id]      = uid
+      session[:drupal_user_role]    = roles
+    end
   end
 
   # MailChimp (email) methods
