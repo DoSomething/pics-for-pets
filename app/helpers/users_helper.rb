@@ -2,13 +2,13 @@ module UsersHelper
   include Services
 
   def ruby_user_exists(email, fbid)
-  	@user = User.where('email = ? or fbid = ?', email, fbid).first
+    @user = User.where('email = ? or fbid = ?', email, fbid).first
 
-  	if !@user.nil?
-  	  { 'uid' => @user.uid, 'is_admin' => @user.is_admin }
-  	else
-  	  false
-  	end
+    if !@user.nil?
+      { 'uid' => @user.uid, 'is_admin' => @user.is_admin }
+    else
+      false
+    end
   end
 
   def drupal_user_exists(email)
@@ -20,7 +20,7 @@ module UsersHelper
 
       validates_admin = false
       if !is_admin.first.nil?
-      	validates_admin = true
+        validates_admin = true
         # Fake the admin array.
         if !is_admin.first['uid'].nil?
           roles = { 1 => 'administrator', 2 => 'authenticated user' }
@@ -33,16 +33,16 @@ module UsersHelper
   end
 
   def ruby_add_user(email, fbid, uid, is_admin)
-  	@user = User.new
-  	@user.uid = uid
-  	@user.email = email
-  	@user.fbid = fbid
-  	@user.is_admin = is_admin
+    @user = User.new
+    @user.uid = uid
+    @user.email = email
+    @user.fbid = fbid
+    @user.is_admin = is_admin
 
-  	if @user.save
-  		true
-  	else
-  		false
-  	end
+    if @user.save
+      true
+    else
+      false
+    end
   end
 end
