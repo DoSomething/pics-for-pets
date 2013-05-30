@@ -85,6 +85,7 @@ GEM
     mime-types (1.23)
     multi_json (1.7.3)
     multi_xml (0.5.3)
+    newrelic_rpm (3.6.2.96)
     nokogiri (1.5.9)
     paperclip (3.4.1)
       activemodel (>= 3.0.0)
@@ -175,6 +176,7 @@ DEPENDENCIES
   gibbon
   httparty
   jquery-rails
+  newrelic_rpm
   paperclip
   pg
   rails (= 3.2.13)
