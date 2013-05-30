@@ -12,6 +12,7 @@ gem 'simple_form'
 gem 'therubyracer'
 
 gem 'gibbon'
+gem 'omniauth-facebook'
 gem 'newrelic_rpm'
 
 # Gems used only for assets and not required
