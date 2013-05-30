@@ -15,7 +15,19 @@ module Services
       post('/rest/user/logout.json', :body => { :username => username, :password => password })
     end
 
-    # TODO - CREATE USER REGISTRATION METHOD
+    def self.register(password, email, first, last, cell, month, day, year)
+      birthday = "#{month}/#{day}/#{year}"
+      post('/rest/user/register.json', :body => {
+        'profile_main[field_user_first_name][und][0][value]' => first,
+        'profile_main[field_user_last_name][und][0][value]' => last,
+        'mail' => email,
+        'profile_main[field_user_mobile][und][0][value]' => cell,
+        'pass'  => password,
+        'profile_main[field_user_birthday][und][0][value][date]' => birthday,
+        'name'  =>  email, # Set username equal to email
+        'profile_main[field_user_official_rules][und]' => 1 # Pass user's acceptance of our official rules
+      })
+    end
   end
 
   # MailChimp (email) methods
