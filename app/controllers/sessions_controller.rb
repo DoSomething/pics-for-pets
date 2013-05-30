@@ -2,7 +2,7 @@ class SessionsController < ApplicationController
   include Services
   include SessionsHelper
 
-  before_filter :is_authenticated, :only => :login
+  before_filter :is_authenticated, :only => :new
   layout 'gate'
 
   def new
@@ -30,6 +30,7 @@ class SessionsController < ApplicationController
     # @TODO - PASSWORD VALIDATION CHECK; MINIMUM CHECK ON LENGTH
     # @TODO - ACCEPTABLE RESPONSE TO USER WHO FAILS TO LOG IN
     # @TODO - STOP REDIRECTING TO /SESSIONS
+    # @TODO - KEEP FIELDS POPULATED WHEN CONTROLLER ERRORS OUT
 
     if form == 'login'
       response = Services::Auth.login(username, password)
@@ -40,7 +41,7 @@ class SessionsController < ApplicationController
       else
         # you are drunk; go home
         flash.now[:error] = 'wtf? try again -- user login failed' + " #{response}"
-        render :login
+        render :new
       end
     elsif form == 'register'
       response = Services::Auth.register(password, email, first, last, cell, month, day, year)
@@ -54,12 +55,12 @@ class SessionsController < ApplicationController
         else
           # you are drunk; go home
           flash.now[:error] = 'wtf? try again -- user login post reg failed' + " #{response}"
-          render :login
+          render :new
         end
       else
         # you are drunk; go home
         flash.now[:error] = "failed to register: #{response[0]}"
-        render :login
+        render :new
       end
     end
   end
@@ -74,7 +75,7 @@ class SessionsController < ApplicationController
 
   def destroy
     reset_session
-    redirect_to :login, :flash => { :message => 'logout successful' }
+    redirect_to :new, :flash => { :message => 'logout successful' }
   end
 
 end
