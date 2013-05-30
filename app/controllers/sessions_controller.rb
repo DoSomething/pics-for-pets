@@ -2,7 +2,7 @@ class SessionsController < ApplicationController
   include Services
   include SessionsHelper
 
-  before_filter :is_authenticated, :only => :new
+  before_filter :is_authenticated, :only => :login
   layout 'gate'
 
   def new
@@ -40,7 +40,7 @@ class SessionsController < ApplicationController
       else
         # you are drunk; go home
         flash.now[:error] = 'wtf? try again -- user login failed' + " #{response}"
-        render :new
+        render :login
       end
     elsif form == 'register'
       response = Services::Auth.register(password, email, first, last, cell, month, day, year)
@@ -54,12 +54,12 @@ class SessionsController < ApplicationController
         else
           # you are drunk; go home
           flash.now[:error] = 'wtf? try again -- user login post reg failed' + " #{response}"
-          render :new
+          render :login
         end
       else
         # you are drunk; go home
         flash.now[:error] = "failed to register: #{response[0]}"
-        render :new
+        render :login
       end
     end
   end

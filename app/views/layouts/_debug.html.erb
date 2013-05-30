@@ -7,7 +7,7 @@
     <% if flash[:message] %><div><p class="message"><%= h flash[:message] %></p></div><% end %>
     <% if flash[:error] %><div><p class="error"><%= h flash[:error] %></p></div><% end %>
     <p>uid: <span><%= session[:drupal_user_id]  %></span></p>
-    <p>status: <span><%= session[:drupal_user_role]["1"] || session[:drupal_user_role]["2"]  %></span></p>
+    <p>status: <span><%= session[:drupal_user_role] %></span></p>
   </div>
 </section>
 
