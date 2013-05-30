@@ -14,7 +14,7 @@
     </ol>
   </aside>
 
-  <%= form_for(:session, :url => sessions_path, :html => { :class => 'form form-login', :id => 'login-form' }) do |f| %>
+  <%= form_for(:session, :url => login_path, :html => { :class => 'form form-login', :id => 'login-form' }) do |f| %>
     <%= f.label :username %>
     <%= f.text_field :username %>
     <%= f.label :password %>
@@ -23,7 +23,7 @@
     <p>Not a DoSomething.org member? <%= link_to 'register', '#', { :id => 'registration-link' } %></p>
   <% end %>
 
-  <%= simple_form_for(:session, :url => sessions_path, :html => { :class => 'form form-registration right', :id => 'registration-form' }) do |f| %>
+  <%= simple_form_for(:session, :url => login_path, :html => { :class => 'form form-registration right', :id => 'registration-form' }) do |f| %>
     <%= f.input :first, wrapper_html: { class: 'form-item-first-name' } %>
     <%= f.input :last, wrapper_html: { class: 'form-item-last-name' } %>
     <%= f.input :email, wrapper_html: { class: 'form-item-email' } %>

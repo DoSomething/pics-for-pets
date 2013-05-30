@@ -14,18 +14,20 @@ class SessionsController < ApplicationController
     # form
     form     = params[:form]
 
+    sess = params[:session]
+
     # login
-    username = params[:session][:username]
-    password = params[:session][:password]
+    username = sess[:username]
+    password = sess[:password]
 
     # registration
-    email    = params[:session][:email]
-    first    = params[:session][:first]
-    last     = params[:session][:last]
-    cell     = params[:session][:cell]
-    month    = params[:session][:month]
-    day      = params[:session][:day]
-    year     = params[:session][:year]
+    email    = sess[:email]
+    first    = sess[:first]
+    last     = sess[:last]
+    cell     = sess[:cell]
+    month    = sess[:month]
+    day      = sess[:day]
+    year     = sess[:year]
 
     # @TODO - PASSWORD VALIDATION CHECK; MINIMUM CHECK ON LENGTH
     # @TODO - ACCEPTABLE RESPONSE TO USER WHO FAILS TO LOG IN
@@ -75,7 +77,7 @@ class SessionsController < ApplicationController
 
   def destroy
     reset_session
-    redirect_to :new, :flash => { :message => 'logout successful' }
+    redirect_to :login, :flash => { :message => 'logout successful' }
   end
 
 end
