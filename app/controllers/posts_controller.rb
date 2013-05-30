@@ -24,13 +24,21 @@ class PostsController < ApplicationController
               .joins('LEFT JOIN shares ON shares.post_id = posts.id')
               .select('posts.*, COUNT(shares.*) AS share_count')
               .where(:flagged => false)
-              .group('shares.post_id, posts.id')
+              .group('posts.id')
               .order('posts.created_at DESC')
               .limit(Post.per_page)
     if !params[:last].nil?
       @posts = @posts.where('posts.id < ?', params[:last])
     else
-      @posts = @posts.offset(offset)
+      @promoted = @posts
+                    .limit(1)
+                    .where(:promoted => true)
+                    .first!
+
+      @posts = @posts
+                .offset(offset)
+                .where(:promoted => false)
+                .limit(Post.per_page - 1)
     end
     @count = Post.where(:flagged => false).count
 
