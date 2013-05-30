@@ -15,17 +15,31 @@ module Services
       post('/rest/user/logout.json', :body => { :username => username, :password => password })
     end
 
+    def self.authenticate(session, uid, roles={})
+      session[:drupal_user_id]      = uid
+      session[:drupal_user_role]    = roles
+    end
+
+    def self.register(password, email, first, last, cell, month, day, year)
+      birthday = "#{month}/#{day}/#{year}"
+      post('/rest/user/register.json', :body => {
+        'profile_main[field_user_first_name][und][0][value]' => first,
+        'profile_main[field_user_last_name][und][0][value]' => last,
+        'mail' => email,
+        'profile_main[field_user_mobile][und][0][value]' => cell,
+        'pass'  => password,
+        'profile_main[field_user_birthday][und][0][value][date]' => birthday,
+        'name'  =>  email, # Set username equal to email
+        'profile_main[field_user_official_rules][und]' => 1 # Pass user's acceptance of the official rules
+      })
+    end
+
     def self.check_exists(email)
       get('/ruby/users/' + email + '?' + Time.now.to_i.to_s)
     end
 
     def self.check_admin(email)
       get ('/ruby/users/is_admin/' + email + '?' + Time.now.to_i.to_s)
-    end
-
-    def self.authenticate(session, uid, roles={})
-      session[:drupal_user_id]      = uid
-      session[:drupal_user_role]    = roles
     end
   end
 
