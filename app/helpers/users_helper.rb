@@ -29,6 +29,8 @@ module UsersHelper
 
       Services::Auth.authenticate(session, response.first['uid'], roles)
       { 'uid' => response.first['uid'], 'is_admin' => validates_admin }
+    else
+      false
     end
   end
 

@@ -23,7 +23,6 @@ CreateAndShare::Application.routes.draw do
   match 'flag/:id' => 'posts#flag', :as => :flag
 
   # FACEBOOK AUTH
-  match 'blah' => 'sessions#fboauth'
   match 'auth/:provider/callback' => 'sessions#fboauth'
   match 'auth/failure' => redirect('/'), :notice => 'Login failed! Try again?'
 
