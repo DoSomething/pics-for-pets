@@ -8,15 +8,15 @@
 </head>
 <body>
 
-<% if Rails.env.development? %><%= render 'layouts/debug' %><% end %>
+<% if Rails.env.development? %><%= render 'partials/debug' %><% end %>
 
-<%= render 'header' %>
-<%= render 'cta' %>
-<%= render 'filters' %>
+<%= render 'partials/header' %>
+<%= render 'partials/cta' %>
+<%= render 'partials/filters' %>
 
 <%= yield %>
 
-<%= render 'footer' %>
+<%= render 'partials/footer' %>
 
 </body>
 </html>

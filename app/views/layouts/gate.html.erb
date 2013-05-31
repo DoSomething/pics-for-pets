@@ -10,7 +10,7 @@
 
 <%# TODO - BREAK GATE COMPONENTS INTO PARTIALS %>
 
-<% if Rails.env.development? %><%= render 'layouts/debug' %><% end %>
+<% if Rails.env.development? %><%= render 'partials/debug' %><% end %>
 
 <%= link_to 'debug', '#', { :id => 'debug' } %>
 

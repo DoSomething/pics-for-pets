@@ -5,12 +5,17 @@ CreateAndShare::Application.routes.draw do
   resources :users, :only => [:create]
   resources :shares, :only => [:create]
 
+  # Gate
   match '/login',  to: 'sessions#new', :as => :login
   match '/logout', to: 'sessions#destroy', :as => :logout
 
+ # Static
+ get '/static_pages/guide'
+ get '/static_pages/gallery'
+
   resources :posts
 
-  # TODO - GATE THESE PAGES BY NESTING THE ROUTES
+  # @TODO - GATE THESE PAGES BY NESTING THE ROUTES
   match 'submit' => 'posts#new', :as => :real_submit_path
   match 'mypets' => 'posts#filter', :run => 'my', :as => :mypics
   match ':id' => 'posts#show', :constraints => { :id => /\d+/ }, :as => :show_post
