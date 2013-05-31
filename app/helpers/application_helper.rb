@@ -14,6 +14,10 @@ module ApplicationHelper
     (session[:drupal_user_role] && session[:drupal_user_role].values.include?('administrator')) ? true : false
   end
 
+  def fb_app_id
+    ENV['facebook_app_id']
+  end
+
   # Did the user already submit something?
   def already_submitted?
   	user_id = session[:drupal_user_id]
