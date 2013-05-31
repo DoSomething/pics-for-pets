@@ -24,11 +24,11 @@ module PostsHelper
 top_text = self.find_break_points(the_top_text)
 bottom_text = self.find_break_points(the_bottom_text)
 
-top_joined = top_text.split('||')#.map(&:upcase)
+top_joined = top_text.split('||').map(&:upcase)
 top_text = top_joined.join("\n")
 top_height = (top_joined.count * 25) + 10
 
-bottom_joined = bottom_text.split('||')#.map(&:upcase)
+bottom_joined = bottom_text.split('||').map(&:upcase)
 bottom_text = bottom_joined.join("\n")
 bottom_height = (bottom_joined.count * 25) + 10
 
@@ -51,6 +51,11 @@ system '''
     -pointsize 25 \
     -size 450x \
     -interline-spacing -13 \
+    -fill black \
+      -annotate -1-1 "''' + top_text + '''" \
+      -annotate +1-1 "''' + top_text + '''" \
+      -annotate +1+1 "''' + top_text + '''" \
+      -annotate -1+1 "''' + top_text + '''" \
     -fill white \
       -annotate +0-0 "''' + top_text + '''" \
   ''' + path + '''
@@ -73,6 +78,11 @@ system '''
     -pointsize 25 \
     -size 450x \
     -interline-spacing -13 \
+    -fill black \
+      -annotate -1-1 "''' + bottom_text + '''" \
+      -annotate +1-1 "''' + bottom_text + '''" \
+      -annotate +1+1 "''' + bottom_text + '''" \
+      -annotate -1+1 "''' + bottom_text + '''" \
     -fill white \
       -annotate +0-0 "''' + bottom_text + '''" \
   ''' + path + '''
