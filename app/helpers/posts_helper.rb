@@ -4,7 +4,7 @@ module PostsHelper
 	  text.scan(/./).each do |c|
 	    count += 1
 	    position += 1
-	    if count == 35
+	    if count == 50
 	      if c == ' '
 	        text[position] = '||'
 	      else
@@ -34,11 +34,12 @@ bottom_height = (bottom_joined.count * 25) + 10
 
 font_path = Rails.root.to_s + '/DINComp-CondBold.ttf'
 
+if !top_text.empty?
 # Top text box
 system '''
   convert ''' + path + ''' \
     -strokewidth 0 \
-    -fill "rgba( 0, 0, 0 , 0.25 )" \
+    -fill "rgba( 0, 0, 0 , 0.35 )" \
     -draw "rectangle 0,0 450,''' + top_height.to_s + ''' " \
   ''' + path + '''
 '''
@@ -55,12 +56,14 @@ system '''
       -annotate +0-0 "''' + top_text + '''" \
   ''' + path + '''
 '''
+end
 
+if !bottom_text.empty?
 # Bottom text box
 system '''
   convert ''' + path + ''' \
     -strokewidth 0 \
-    -fill "rgba( 0, 0, 0 , 0.25 )" \
+    -fill "rgba( 0, 0, 0 , 0.35 )" \
     -draw "rectangle 450,450 0,''' + (450 - (bottom_height + 6)).to_s + '''" \
   ''' + path + '''
 '''
@@ -77,6 +80,7 @@ system '''
       -annotate +0-0 "''' + bottom_text + '''" \
   ''' + path + '''
 '''
+end
   end
 
   module Scripts
