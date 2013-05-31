@@ -7,10 +7,8 @@ CreateAndShare::Application.routes.draw do
   match '/logout', to: 'sessions#destroy', :as => :logout
 
   # Static
-  get '/static_pages/start'
-  get '/static_pages/gallery'
-  match '/start',   to: 'static_pages#start',   :as => :start
-  match '/gallery', to: 'static_pages#gallery', :as => :gallery
+  get '/start',   to: 'static_pages#start',   :as => :start
+  get '/gallery', to: 'static_pages#gallery', :as => :gallery
 
   resources :posts
   resources :users, :only => [:create]
