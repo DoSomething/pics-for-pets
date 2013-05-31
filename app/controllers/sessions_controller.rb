@@ -72,6 +72,9 @@ class SessionsController < ApplicationController
     if handle_auth(auth)
       flash[:message] = "You are now connected through Facebook!"
       redirect_to :root
+    else
+      flash.now[:error] = 'Auth failed! Please try again, or try registering through the form below.'
+      render :new
     end
   end
 
