@@ -8,7 +8,7 @@
 </head>
 <body>
 
-<%= render 'layouts/debug' %>
+<% if Rails.env.development? %><%= render 'layouts/debug' %><% end %>
 
 <%= render 'header' %>
 <%= render 'cta' %>
