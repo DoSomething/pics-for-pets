@@ -45,7 +45,6 @@ class PostsController < ApplicationController
     if request.format.symbol == :json
       @posts.each do |post|
         post.image.options[:default_style] = :gallery
-        #post.image_path = post.image.url(:gallery)
       end
     end
 
@@ -109,6 +108,12 @@ class PostsController < ApplicationController
       @posts = @posts.where('posts.id < ?', params[:last])
     else
       @posts = @posts.offset(offset)
+    end
+
+    if request.format.symbol == :json
+      @posts.each do |post|
+        post.image.options[:default_style] = :gallery
+      end
     end
 
     @path = request.fullpath[1..-1]
