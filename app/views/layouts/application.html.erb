@@ -11,8 +11,10 @@
 <% if Rails.env.development? %><%= render 'partials/debug' %><% end %>
 
 <%= render 'partials/header' %>
-<%= render 'partials/cta' %>
-<%= render 'partials/filters' %>
+<% unless params[:controller].eql?('static_pages') %>
+  <%= render 'partials/cta' %>
+  <%= render 'partials/filters' %>
+<% end %>
 
 <%= yield %>
 

@@ -1,27 +1,27 @@
 <section class="start">
   <div class="section-container">
-<p>Sometimes an amazing photo is all that stands between a homeless pet and a new home. Lend a nearby shelter your photo skills and share the pictures with your friends to help animals get adopted!</p>
-<h1>Step 1: How to take an irresistible photo</h1> 
-<p>Which one of these pics tugs at your heartstrings?</p>
-<section class="col-2">
-<p>A good photo makes all the difference for a homeless animal.</p>
-<pre>
-Here’s how you make it happen.
+    <p>Sometimes an amazing photo is all that stands between a homeless pet and a new home. Lend a nearby shelter your photo skills and share the pictures with your friends to help animals get adopted!</p>
+    <h1>Step 1: How to take an irresistible photo</h1> 
+    <p>Which one of these pics tugs at your heartstrings?</p>
+    <%= image_tag '/images/bg-start-guide.png', :alt => 'An example of a good and bad photos' %>
+    <p>A good photo makes all the difference for a homeless animal.</p>
+    <p>Here’s how you make it happen.</p>
+    <ul>
+      <li>Download our action kit to get a shelter near you on board.</li>
+      <li>Ask a shelter rep to handle the animal so you can keep your hands on the camera.</li>
+      <li>Remember the formula for a stunning pet pic:</li>
+    </ul>
+    <%= image_tag '/images/bg-start-equation.png', :alt => 'flash off + cage free = pro photo' %>
 
-    Download our action kit to get a shelter near you on board.
+    <h1>Step 2: Find a shelter near you on Petfinder.</h1>
+    <div class="shelter-finder" id="shelter-finder">
+      <p class="error">Please enter a valid U.S. zip code</p>
+      <label>zip code</label>
+      <input type="number" id="shelter-zip"></input>
+      <a href="#" id="shelter-submit" class="btn btn-cta-med btn-secondary" target="_blank"><span>find a shelter</span></a>
+    </div>
 
-    Ask a shelter rep to handle the animal so you can keep your hands on the camera.
-
-    Remember the formula for a stunning pet pic:
-
-Questions? Email puppy@dosomething.org and ask away!
-
-Step 2: Find a shelter near you on Petfinder.
-
-Zip: [                      ] [FIND A SHELTER]
-
-
-Step 3: Back from the shelter? [Send us your photos]
-</pre>
+    <h1>Step 3: Back from the shelter?</h1>
+    <%= link_to :real_submit_path, :class => 'btn btn-large' do %><span>submit your pic</span><% end %>
   </div>
 </section>
