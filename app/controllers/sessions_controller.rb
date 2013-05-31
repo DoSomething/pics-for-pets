@@ -36,7 +36,7 @@ class SessionsController < ApplicationController
       response = Services::Auth.login(username, password)
       if response.code == 200 && response.kind_of?(Hash)
         Services::Auth.authenticate(session, response['user']['uid'], response['user']['roles'])
-        flash[:message] = 'super! - you\'ve logged in successfully' + " #{response}"
+        flash[:message] = 'super! - you\'ve logged in successfully'
         redirect_to :root
       else
         # you are drunk; go home
@@ -50,7 +50,7 @@ class SessionsController < ApplicationController
         if response.code == 200 && response.kind_of?(Hash)
           # super -- proceed
           Services::Auth.authenticate(session, response['user']['uid'], response['user']['roles'])
-          flash[:message] = 'super! - you\'ve registered successfully' + " #{response}"
+          flash[:message] = 'super! - you\'ve registered successfully'
           redirect_to :root
         else
           # you are drunk; go home
