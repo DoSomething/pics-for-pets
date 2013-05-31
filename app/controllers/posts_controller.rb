@@ -42,6 +42,13 @@ class PostsController < ApplicationController
     end
     @count = Post.where(:flagged => false).count
 
+    if request.format.symbol == :json
+      @posts.each do |post|
+        post.image.options[:default_style] = :gallery
+        #post.image_path = post.image.url(:gallery)
+      end
+    end
+
     respond_to do |format|
       format.js
       format.html # index.html.erb
