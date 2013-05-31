@@ -28,7 +28,6 @@ module SessionsHelper
         if ruby_add_user(auth['email'], auth['id'], res['uid'], res['is_admin'])
           true
         end
-      end
       # REGISTER USER
       else
         password = (0...50).map{ ('a'..'z').to_a[rand(26)] }.join
