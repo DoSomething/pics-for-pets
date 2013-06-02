@@ -1,14 +1,15 @@
 $(document).ready(function() {
   handle_text_change = function(field, elm, inverse) {
-    $('#' + field).data('val',  $('#' + field).val() ); // save value
-    $('#' + field).change(function() { // works when input will be blured and the value was changed
+    $('#' + field).data('val', $('#' + field).val());
+    $('#' + field).change(function() {
       $('#' + elm + ' .yours').text($(this).val());
     });
-    $('#' + field).keyup(function() { // works immediately when user press button inside of the input
-      if( $('#' + field).val() !== $('#' + field).data('val') ){ // check if value changed
-        $('#' + field).data('val',  $('#' + field).val() ); // save new value
+
+    $('#' + field).keyup(function() {
+      if ($('#' + field).val() !== $('#' + field).data('val')) {
+        $('#' + field).data('val', $('#' + field).val());
         if ($('#' + field).val() !== "") {
-          if ($('#' + elm).css('visibility') != "visible") {
+          if ($('#' + elm).css('visibility') !== "visible") {
             $('#' + elm).css('visibility', 'visible');
           }
 
@@ -19,7 +20,7 @@ $(document).ready(function() {
           $('.' + inverse).show();
         }
 
-        $(this).change(); // simulate "change" event
+        $(this).change();
       }
     });
   };
@@ -39,24 +40,23 @@ $(document).ready(function() {
   };
 
   $('#post_image').change(function() {
-    var file_data = $("#post_image").prop("files")[0];   // Getting the properties of file from file field
-    var form_data = new FormData();                  // Creating object of FormData class
-    form_data.append("file", file_data);              // Appending parameter named file with properties of file_field to form_data
+    var file_data = $("#post_image").prop("files")[0];
+    var form_data = new FormData();
+    form_data.append("file", file_data);
     $.ajax({
-        url: "/autoimg",
-        dataType: 'script',
-        cache: false,
-        contentType: false,
-        processData: false,
-        data: form_data,                         // Setting the data attribute of ajax with file_data
-        type: 'post',
-        complete: function(response) {
-          res = $.parseJSON(response.responseText);
-          if (res.success === true) {
-            change_upload(res.filename);
-          }
+      url: "/autoimg",
+      dataType: 'script',
+      cache: false,
+      contentType: false,
+      processData: false,
+      data: form_data,
+      type: 'post',
+      complete: function(response) {
+        res = $.parseJSON(response.responseText);
+        if (res.success === true) {
+          change_upload(res.filename);
         }
-
+      }
     });
   });
 });
