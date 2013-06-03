@@ -39,6 +39,7 @@ class PostsController < ApplicationController
           @p
             .limit(1)
             .where(:promoted => true)
+            .order('RAND()')
             .all
             .first
         end
