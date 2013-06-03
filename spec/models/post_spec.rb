@@ -20,13 +20,13 @@ def build_post
 end
 
 describe Post do
-  it '1. creates' do
+  it '1. Creates' do
     post = build_post()
 
     post.id.should_not == nil
   end
 
-  it '2. finds by id' do
+  it '2. Finds by id' do
     post = build_post()
     p = Post.find_by_id(post.id)
     p.uid.should eq 778374
