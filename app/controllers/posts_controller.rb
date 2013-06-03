@@ -6,13 +6,7 @@ class PostsController < ApplicationController
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
 
   def record_not_found
-    render :not_found
-  end
-
-  def not_found
-    respond_to do |format|
-      format.html
-    end
+    render 'not_found'
   end
 
   # GET /posts
