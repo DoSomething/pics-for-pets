@@ -87,42 +87,62 @@ class PostsController < ApplicationController
     offset = (page.to_i * Post.per_page)
 
     # Preliminary queries.  These are "finished" later.
-    @posts = Post
+      @p = Post
                .joins('LEFT JOIN shares ON shares.post_id = posts.id')
                .select('posts.*, COUNT(shares.*) AS share_count')
                .where(:flagged => false)
                .group('posts.id, shares.post_id')
                .order('posts.created_at DESC')
                .limit(Post.per_page)
-    @count = Post
+      @total = Post
               .order('posts.created_at DESC')
               .where(:flagged => false)
 
+    var = 'posts-filter-'
     if params[:run] == 'animal'
-      @posts = @posts.where(:animal_type => params[:atype])
-      @count = @count.where(:animal_type => params[:atype]).count
+      var += params[:atype]
+      @p = @p.where(:animal_type => params[:atype])
+      @count = Rails.cache.fetch var + '-count' do
+        @total.where(:animal_type => params[:atype]).count
+      end
     elsif params[:run] == 'state'
-      @posts = @posts.where(:state => params[:state])
-      @count = @count.where(:state => params[:state]).count
+      var += params[:state]
+      @p = @p.where(:state => params[:state])
+      @count = Rails.cache.fetch var + '-count' do
+        @total.where(:state => params[:state]).count
+      end
     elsif params[:run] == 'both'
-      @posts = @posts.where(:animal_type => params[:atype], :state => params[:state])
-      @count = @count.where(:animal_type => params[:atype], :state => params[:state]).count
+      var += params[:atype] + '-' + params[:state]
+      @p = @p.where(:animal_type => params[:atype], :state => params[:state])
+      @count = Rails.cache.fetch var + '-count' do
+        @total.where(:animal_type => params[:atype], :state => params[:state]).count
+      end
     elsif params[:run] == 'featured'
-      @posts = @posts.where(:promoted => true)
-      @count = @count.where(:promoted => true).count
+      var += 'featured'
+      @p = @p.where(:promoted => true)
+      @count = Rails.cache.fetch var + '-count' do
+        @total.where(:promoted => true).count
+      end
     elsif params[:run] == 'my'
       user_id = session[:drupal_user_id]
-      @posts = @posts.where('shares.uid = ? OR posts.uid = ?', user_id, user_id)
-      @count = @count
-               .joins('LEFT JOIN shares ON shares.post_id = posts.id')
-               .where('shares.uid = ? OR posts.uid = ?', user_id, user_id)
-               .count
+      var += 'mypets-' + user_id
+      @p = @p.where('shares.uid = ? OR posts.uid = ?', user_id, user_id)
+      @count = Rails.cache.fetch var + '-count' do
+        @count
+          .joins('LEFT JOIN shares ON shares.post_id = posts.id')
+          .where('shares.uid = ? OR posts.uid = ?', user_id, user_id)
+          .count
+      end
     end
 
     if !params[:last].nil?
-      @posts = @posts.where('posts.id < ?', params[:last])
+      @posts = Rails.cache.fetch var + '-before-' + params[:last] do
+        @p.where('posts.id < ?', params[:last]).all
+      end
     else
-      @posts = @posts.offset(offset)
+      @posts = Rails.cache.fetch var do
+        @p.offset(offset).all
+      end
     end
 
     if request.format.symbol == :json
@@ -131,7 +151,9 @@ class PostsController < ApplicationController
       end
     end
 
+    @page = page.to_s
     @path = request.fullpath[1..-1]
+    @filter = var
     respond_to do |format|
       format.js
       format.html
