@@ -39,9 +39,8 @@ class PostsController < ApplicationController
           @p
             .limit(1)
             .where(:promoted => true)
-            .order('RAND()')
             .all
-            .first
+            .first(:order => 'RAND()')
         end
         @posts = Rails.cache.fetch 'posts-index' do
           @p
