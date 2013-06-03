@@ -34,10 +34,11 @@ module SessionsHelper
         date = Date.strptime(auth['birthday'], '%m/%d/%Y')
         response = Services::Auth.register(password, auth['email'], auth['first_name'], auth['last_name'], '', date.month, date.day, date.year)
         if response.code == 200 && response.kind_of?(Hash)
-          response = Services::Auth.login(email, password)
+          response = Services::Auth.login(auth['email'], password)
           if response.code == 200 && response.kind_of?(Hash)
             # super -- proceed
-            if (ruby_add_user(auth['email'], auth['id'], response['user']['uid'], !response['user']['roles'].nil?))
+            if (ruby_add_user(auth['email'], auth['id'], response['user']['uid'], response['user']['roles'].values.include?('administrator')))
+              Services::Auth.authenticate(session, response['user']['uid'], response['user']['roles'])
               true
             else
               false

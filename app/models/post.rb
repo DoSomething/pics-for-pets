@@ -38,4 +38,10 @@ class Post < ActiveRecord::Base
       end
     end
   end
+
+  after_save :touch_cache
+  def touch_cache
+    # We need to clear all caches -- Every cache depends on the one before it.
+    Rails.cache.clear
+  end
 end
