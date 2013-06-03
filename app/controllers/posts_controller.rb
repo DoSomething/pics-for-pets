@@ -56,6 +56,10 @@ class PostsController < ApplicationController
         end
       end
 
+    @last = 0
+    if !@posts.last.nil?
+      @last = @posts.last.id
+    end
     @page = page.to_s
     if request.format.symbol == :json
       @posts.each do |post|
@@ -151,6 +155,10 @@ class PostsController < ApplicationController
       end
     end
 
+    @last = 0
+    if !@posts.last.nil?
+      @last = @posts.last.id
+    end
     @page = page.to_s
     @path = request.fullpath[1..-1]
     @filter = var

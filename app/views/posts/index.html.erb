@@ -2,7 +2,7 @@
 <script type="text/javascript">
 <!--
 	var count = <%= @count %>;
-	var latest = <%= @posts.last.id %>;
+	var latest = <%= @last %>;
 -->
 </script>
 
@@ -11,8 +11,12 @@
     <h2>Share your favorite animals with friends who might adopt them.</h2>
     <p>Every share gets a pet closer to finding a home.  For every 200 shares an animal gets, we'll send them food, toys and bedding.</p>
     <div class="post-list">
-      <%=raw render('post').gsub(/\n/, '') %>
-      <div class="inview"></div>
+      <% if @posts.length > 0 %>
+        <%=raw render('post').gsub(/\n/, '') %>
+        <div class="inview"></div>
+      <% else %>
+        <%= render 'not_found' %>
+      <% end %>
     </div>
   </div>
 </section>
