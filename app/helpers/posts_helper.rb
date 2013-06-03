@@ -1,4 +1,16 @@
 module PostsHelper
+  def cache_list_add(item)
+    @cache_list = Rails.cache.read 'cache-list'
+    if !@cache_list.is_a? Array
+      @cache_list = []
+    end
+
+    if !@cache_list.include? item
+      @cache_list.push item
+      Rails.cache.write 'cache-list', @cache_list
+    end
+  end
+
   def self.find_break_points(text)
 	  count = position = 0
 	  text.scan(/./).each do |c|

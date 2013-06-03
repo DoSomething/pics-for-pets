@@ -1,5 +1,6 @@
 class PostsController < ApplicationController
   include Services
+  include PostsHelper
 
   before_filter :is_not_authenticated
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
@@ -17,31 +18,45 @@ class PostsController < ApplicationController
   # GET /posts
   # GET /posts.json
   def index
-    page = params[:page] || 0
-    offset = (page.to_i * Post.per_page)
+      page = params[:page] || 0
+      offset = (page.to_i * Post.per_page)
 
-    @posts = Post
+      @p = Post
               .joins('LEFT JOIN shares ON shares.post_id = posts.id')
               .select('posts.*, COUNT(shares.*) AS share_count')
               .where(:flagged => false)
               .group('posts.id')
               .order('posts.created_at DESC')
               .limit(Post.per_page)
-    if !params[:last].nil?
-      @posts = @posts.where('posts.id < ?', params[:last])
-    else
-      @promoted = @posts
-                    .limit(1)
-                    .where(:promoted => true)
-                    .first!
+      if !params[:last].nil?
+        @posts = Rails.cache.fetch 'posts-index-before-' + params[:last] do
+          @p
+            .where('posts.id < ?', params[:last])
+            .all
+        end
+      else
+        @promoted = Rails.cache.fetch 'posts-index-promoted' do
+          @p
+            .limit(1)
+            .where(:promoted => true)
+            .all
+            .first
+        end
+        @posts = Rails.cache.fetch 'posts-index' do
+          @p
+            .where(:promoted => false)
+            .limit(Post.per_page - 1)
+            .all
+        end
+        @count = Rails.cache.fetch 'posts-index-count' do
+          Post
+            .where(:flagged => false)
+            .all
+            .count
+        end
+      end
 
-      @posts = @posts
-                .offset(offset)
-                .where(:promoted => false)
-                .limit(Post.per_page - 1)
-    end
-    @count = Post.where(:flagged => false).count
-
+    @page = page.to_s
     if request.format.symbol == :json
       @posts.each do |post|
         post.image.options[:default_style] = :gallery
