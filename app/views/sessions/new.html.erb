@@ -19,7 +19,7 @@
     <%= f.text_field :username %>
     <%= f.label :password %>
     <%= f.password_field :password %>
-    <%= f.submit 'submit', :name => 'form', :value => 'login', :class => 'btn btn-cta-large btn-primary' %>
+    <%= f.submit 'submit', :name => 'form', :value => 'login', :class => 'btn primary large primary' %>
     <p>Not a DoSomething.org member? <%= link_to 'register', '#', { :id => 'registration-link' } %></p>
   <% end %>
 
@@ -33,7 +33,7 @@
     <%= f.input :month, label: false, placeholder: 'MM', wrapper_html: { class: 'form-item-month' } %>
     <%= f.input :day, label: false, placeholder: 'DD', wrapper_html: { class: 'form-item-day' } %>
     <%= f.input :year, label: false, placeholder: 'YYYY', wrapper_html: { class: 'form-item-year' } %>
-    <%= f.submit 'submit', :name => 'form', :value => 'register', :class => 'btn btn-cta-large btn-primary' %>
+    <%= f.submit 'submit', :name => 'form', :value => 'register', :class => 'btn primary large' %>
     <p>Already have an account? <%= link_to 'log in', '#', { :id => 'login-link' } %></p>
   <% end %>
 

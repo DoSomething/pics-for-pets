@@ -21,6 +21,17 @@
   border-bottom: 5px solid #fff
   padding: 0 0 24px 0
 
+@mixin input-style-basic /* @TODO - USE CLASSES INSTEAD */
+  color: #888
+  width: 435px
+  display: block
+  outline: none
+  border: none
+  padding: 0.5em
+  +border-radius(3px)
+  abbr
+    display: none
+
 @function em-calc($target)
   @return ($target/16)*1em
 
