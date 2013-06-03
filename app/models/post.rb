@@ -26,8 +26,13 @@ class Post < ActiveRecord::Base
   def strip_tags
     self.name = self.name.gsub(/\<[^\>]+\>/, '')
     self.shelter = self.shelter.gsub(/\<[^\>]+\>/, '')
-    self.top_text = self.top_text.gsub(/\<[^\>]+\>/, '')
-    self.bottom_text = self.bottom_text.gsub(/\<[^\>]+\>/, '')
+
+    if !self.top_text.nil?
+      self.top_text = self.top_text.gsub(/\<[^\>]+\>/, '')
+    end
+    if !self.bottom_text.nil?
+      self.bottom_text = self.bottom_text.gsub(/\<[^\>]+\>/, '')
+    end
   end
 
   def self.as_csv

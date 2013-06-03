@@ -21,3 +21,4 @@ public/system/tmp
 public/assets
 
 spec/images/*
+.idea

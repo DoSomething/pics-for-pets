@@ -11,7 +11,7 @@ describe 'sign up', :type => :feature, :js => true do
     within '.form-login' do
       find(:id, 'session_username').set 'bohemian_test'
       find(:id, 'session_password').set 'bohemian_test'
-      click_button 'submit'
+      click_button 'login'
     end
 
     page.should have_content 'TYPE OF PET'
@@ -29,7 +29,7 @@ describe 'submit flow', :type => :feature, :js => true do
     within '.form-login' do
       find(:id, 'session_username').set 'bohemian_test'
       find(:id, 'session_password').set 'bohemian_test'
-      click_button 'submit'
+      click_button 'login'
     end
   end
 
@@ -49,7 +49,6 @@ describe 'submit flow', :type => :feature, :js => true do
       form.should have_content 'Bottom text'
 
       find(:id, 'post_top_text').set 'Top text'
-      find(:id, 'post_bottom_text').set 'Bottom text'
 
       find(:id, 'post_name').set 'Spot'
       find(:xpath, '//*[@id="post_animal_type"]/option[2]').click
@@ -73,9 +72,9 @@ describe 'submit flow', :type => :feature, :js => true do
     page.should have_content 'SPOT, ID'
 
     visit '/cats-CA'
-    page.should have_content 'Oh, shit'
+    page.should have_content 'Oh, no!'
 
     visit '/CA'
-    page.should have_content 'Oh, shit'
+    page.should have_content 'Oh, no!'
   end
 end
