@@ -45,32 +45,31 @@ class SessionsController < ApplicationController
           render :new
         end
       else
-        response = Services::Auth.login(username, password)
-        if response.code == 200 && response.kind_of?(Hash)
-          @user = User.new({
-            :email => username,
-            :fbid => 0,
-            :uid => response['user']['uid'],
-            :is_admin => response['user']['roles'].values.include?('administrator')
-          })
+        User.create({
+          :email => username,
+          :fbid => 0,
+          :uid => response['user']['uid'],
+          :is_admin => response['user']['roles'].values.include?('administrator')
+        }, username, password)
 
-          if @user.save
-            User.login(session, response['user']['uid'], username, password)
-            if User.logged_in?
-              flash[:message] = "You've logged in succesfully!"
-              redirect_to :root
-            end
+        if User.created?
+          User.login(session, response['user']['uid'], username, password)
+          if User.logged_in?
+            flash[:message] = "You've logged in succesfully!"
+            redirect_to :root
+          else
+            flash[:message] = "Oh no! Something went wrong with your login.  Try again."
+            render :new
           end
         else
-          # you are drunk; go home
-          flash.now[:error] = "Oh no! Something went wrong.  Try again."
+          flash[:message] = "Oh no! Something went wrong.  Try again."
           render :new
         end
       end
     elsif form == 'register'
-      @user = User.register(password, email, first, last, cell, "#{month}/#{day}/#{year}")
+      @user = User.register(password, email, 0, first, last, cell, "#{month}/#{day}/#{year}")
       if User.registered?
-        User.login(session, @user.id, email, password)
+        User.login(session, @user.uid, email, password)
         if User.logged_in?
           flash.now[:message] = 'Super! You\'ve registered successfully' + " #{response}"
           redirect_to :root
@@ -100,5 +99,4 @@ class SessionsController < ApplicationController
     reset_session
     redirect_to :login, :flash => { :message => 'logout successful' }
   end
-
 end

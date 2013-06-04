@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
 
   @@registered = false
   @@logged_in = false
+  @@created = false
   @@errors = []
 
   ##
@@ -32,18 +33,22 @@ class User < ActiveRecord::Base
   def self.register(password, email, fbid, first, last, cell, birthday, is_admin = false)
     bday = Date.strptime(birthday, '%m/%d/%Y')
     response = Services::Auth.register(password, email, first, last, cell, bday.month, bday.day, bday.year)
-    if response.code == 200 && response.kind_of?(Hash)
-      @user = User.new({
-        :email => email,
-        :fbid => fbid,
-        :uid => response['user']['uid'],
-        :is_admin => response['user']['roles'].values.include?('administrator')
-      })
-      begin
-        @user.save
-        @@registered = true
-      rescue
-        @@errors.push 'There was an error with creating your account.'
+    if response.code == 200 && response.kind_of?(Hash) && response.parsed_response.first != "An account with that username already exists"
+      login = Services::Auth.login(email, password)
+      if login.code == 200 && login.kind_of?(Hash)
+        @user = User.new({
+          :email => email,
+          :fbid => fbid,
+          :uid => login['user']['uid'],
+          :is_admin => login['user']['roles'].values.include?('administrator')
+        })
+        begin
+          @user.save
+          @@registered = true
+          @user
+        rescue
+          @@errors.push 'There was an error with creating your account.'
+        end
       end
     else
       @@errors.push response[0]
@@ -51,7 +56,7 @@ class User < ActiveRecord::Base
   end
 
   def self.login(session, uid, username, password, roles = nil)
-    if self.exists? uid
+    if @exists = self.exists?(uid)
       response = Services::Auth.login(username, password)
       if response.code == 200 && response.kind_of?(Hash)
         session[:drupal_user_id]   = response['user']['uid']
@@ -60,9 +65,25 @@ class User < ActiveRecord::Base
       else
         @@logged_in = false
       end
+    else
+      @@logged_in = false
     end
   end
 
+  def self.create(parameters, username, password)
+    response = Services::Auth.login(username, password)
+    @user = User.new(parameters)
+
+    if @user.save
+      @@created = true
+    else
+      @@created = false
+    end
+  end
+
+  def self.created?
+  	@@created || false
+  end
   def self.exists?(uid, email = nil)
     if !uid.nil?
       @c = User.find_by_uid(uid)

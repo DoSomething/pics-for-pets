@@ -8,11 +8,11 @@ module Services
     base_uri 'www.dosomething.org:443' # Force HTTPS connection via port 443
 
     def self.login(username, password)
-      post('/rest/user/login.json', :body => { :username => username, :password => password })
+      post('/rest/user/login.json', :body => { :username => CGI.escape(username), :password => CGI.escape(password) })
     end
 
     def self.logout(username, password)
-      post('/rest/user/logout.json', :body => { :username => username, :password => password })
+      post('/rest/user/logout.json', :body => { :username => CGI.escape(username), :password => CGI.escape(password) })
     end
 
     def self.authenticate(session, uid, roles={})
