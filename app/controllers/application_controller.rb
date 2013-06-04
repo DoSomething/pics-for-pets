@@ -24,4 +24,10 @@ class ApplicationController < ActionController::Base
       # TODO - SHOULD WE LOG USERS OUT WHEN THEY LAND HERE? SESSION SHOULD BE EMPTY AT THIS POINT
     end
   end
+
+  alias :std_redirect_to :redirect_to
+  def redirect_to(*args)
+    flash.keep
+    std_redirect_to *args
+  end
 end

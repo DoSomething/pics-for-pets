@@ -57,11 +57,11 @@ class SessionsController < ApplicationController
             redirect_to :root
           else
             flash[:error] = "Oh no! Something went wrong with your login.  Try again."
-            render :new
+            redirect_to :login
           end
         else
           flash[:error] = "Invalid username / password"
-          render :new
+          redirect_to :login
         end
       end
     elsif form == 'register'
@@ -73,11 +73,11 @@ class SessionsController < ApplicationController
           redirect_to :root
         else
           flash.now[:error] = 'Oh no! Something went wrong while logging you in.  Try again?'
-          render :new
+          redirect_to :login
         end
       else
         flash.now[:error] = "A user with that account already exists."
-        render :new
+        redirect_to :login
       end
     end
   end
