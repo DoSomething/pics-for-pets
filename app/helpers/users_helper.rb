@@ -14,7 +14,7 @@ module UsersHelper
   def drupal_user_exists(email)
     response = Services::Auth.check_exists(email)
     if !response.first.nil?
-      if defined? response.first['uid']
+      if !response.first['uid'].nil?
         # The user exists.  Are they an admin?
         is_admin = Services::Auth.check_admin(email)
         roles = { 1 => 'authenticated user'}
