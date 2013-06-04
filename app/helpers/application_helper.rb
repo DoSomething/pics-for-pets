@@ -14,12 +14,18 @@ module ApplicationHelper
     (session[:drupal_user_role] && session[:drupal_user_role].values.include?('administrator')) ? true : false
   end
 
+  def fb_app_id
+    ENV['facebook_app_id']
+  end
+
   # Did the user already submit something?
   def already_submitted?
-  	user_id = session[:drupal_user_id]
-  	posts = Post.where(:uid => user_id)
-  	shares = Share.where(:uid => user_id)
+    user_id = session[:drupal_user_id]
+    Rails.cache.fetch 'already-submitted-' + user_id.to_s do
+      posts = Post.where(:uid => user_id)
+      shares = Share.where(:uid => user_id)
 
-  	(user_id && (!shares.nil? && shares.count > 0 || !posts.nil? && posts.count > 0))
+      (user_id && (!shares.nil? && shares.count > 0 || !posts.nil? && posts.count > 0))
+    end
   end
 end

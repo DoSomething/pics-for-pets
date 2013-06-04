@@ -14,6 +14,9 @@ $(document).ready(function() {
       // If we are viewing a filter...
       if (typeof filter != 'undefined') {
           $.getScript('/' + filter + '.js?page=' + page + '&last=' + latest, function() {
+            // Reload Facebook click event
+            load_facebook();
+            // Running count += returned count
             running += returned;
             // Only keep going if there are more posts to show.
             if (running < count) {
@@ -24,6 +27,9 @@ $(document).ready(function() {
       }
       else {
         $.getScript('/posts.js?page=' + page + '&last=' + latest, function() {
+          // Load Facebook
+          load_facebook();
+          // Running count += returned count
           running += returned;
           // Only keep going if there are more posts to show.
           if (running < count) {

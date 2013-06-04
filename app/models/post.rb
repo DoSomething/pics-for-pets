@@ -26,8 +26,13 @@ class Post < ActiveRecord::Base
   def strip_tags
     self.name = self.name.gsub(/\<[^\>]+\>/, '')
     self.shelter = self.shelter.gsub(/\<[^\>]+\>/, '')
-    self.top_text = self.top_text.gsub(/\<[^\>]+\>/, '')
-    self.bottom_text = self.bottom_text.gsub(/\<[^\>]+\>/, '')
+
+    if !self.top_text.nil?
+      self.top_text = self.top_text.gsub(/\<[^\>]+\>/, '')
+    end
+    if !self.bottom_text.nil?
+      self.bottom_text = self.bottom_text.gsub(/\<[^\>]+\>/, '')
+    end
   end
 
   def self.as_csv
@@ -37,5 +42,11 @@ class Post < ActiveRecord::Base
         csv << item.attributes.values_at(*column_names)
       end
     end
+  end
+
+  after_save :touch_cache
+  def touch_cache
+    # We need to clear all caches -- Every cache depends on the one before it.
+    Rails.cache.clear
   end
 end
