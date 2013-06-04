@@ -1,63 +1,82 @@
 // BUTTON STYLES
 // -------------
+
+// DISPLAY STYLES
 .btn
-  background: $btn-color
   margin: 0 auto
-  padding: 0.25em 0
+  padding: 0.2em 0 0.25em 0
   clear: both
   position: static
   height: 2em
   display: block
-  border: 1px solid $btn-border
   cursor: pointer
-  color: $off-black !important
   font-family: din
   font-weight: 700
   text-align: center
   text-decoration: none !important
   text-transform: uppercase
-  +border-radius(5px)
-  +background-image(linear-gradient($btn-color, $btn-hover))
+  +border-radius(3px)
+
+// COLOR STYLES & HOVER STATES
+.btn.primary /* @TODO - MAKE THIS A FUNCTION */
+  color: $btn-primary-color !important
+  border: 1px solid $btn-primary-border
+  background: $btn-primary
+  +background-image(linear-gradient($btn-primary, $btn-primary-hover))
   &:hover /* While mouse hovers */
-    background: $btn-hover
+    background: $btn-primary-hover
   &:active
-    +background-image(linear-gradient($btn-hover, $btn-color))
+    +background-image(linear-gradient($btn-primary-hover, $btn-primary))
   &:link, &:active, &:hover
     color: $off-black
     text-decoration: none !important
 
-.btn-cta-small
+.btn.secondary
+  background: $btn-secondary
+  color: $btn-secondary-color !important
+  +background-image(linear-gradient($btn-secondary, $btn-secondary-hover))
+  &:hover /* While mouse hovers */
+    background: $btn-secondary-hover
+  &:active
+    +background-image(linear-gradient($btn-secondary-hover, $btn-secondary))
+  &:link, &:active, &:hover
+    text-decoration: none !important
+
+.btn.share
+  background: $btn-share
+  color: $btn-share-color !important
+  display: inline-block
+  margin: 15px 1em 15px 1.5em
+  padding: 0.23em 0.3em 0
+  +background-image(linear-gradient($btn-share, $btn-share-hover))
+  &:hover /* While mouse hovers */
+    background: $btn-share-hover
+  &:active
+    +background-image(linear-gradient($btn-share-hover, $btn-share))
+  &:link, &:active, &:hover
+    text-decoration: none !important
+
+// TYPOGRAPHY
+.btn.small
   font-size: em-calc(14)
 
-.btn-cta-medium
+.btn.medium
   font-size: em-calc(18)
 
-.btn-cta-large
+.btn.large
   font-size: em-calc(24)
 
 // POSTS#INDEX
-a.share-btn, span.share-count
+span.share-count /* @TODO - ASSIGN THIS THE .BTN CLASS */
   text-transform: uppercase
   display: inline-block
   font-size: em-calc(18)
-  +border-radius(2px)
-
-a.share-btn
-  color: #fff
-  background: $btn-blue
-  margin: 15px 15px 15px 25px
-  padding: 0.4em 1em 0.1em 0.5em
-  text-decoration: none
-  letter-spacing: 1px
-  font-weight: 500
-  width: 5em
-
-span.share-count /* @TODO - ASSIGN THIS THE .BTN CLASS */
-  color: $btn-grey-c /* @TODO - MAKE THIS A MIXIN */
-  background-color: $btn-grey-bg
+  color: $btn-secondary-color /* @TODO - MAKE THIS A MIXIN */
+  background-color: $btn-secondary
   padding: 0.6em 0.8em 0.6em 0.8em
   position: relative
   font-weight: 600
+  +border-radius(3px)
   &:after, &:before
     right: 100%
     border: solid transparent

@@ -1,8 +1,8 @@
 <section class="utility-bar">
-  <%= link_to 'debug', '#', { :id => 'debug' } %>
+  <% if Rails.env.development? %><%= link_to 'debug', '#', { :id => 'debug' } %><% end %>
   <%= link_to 'logout', :logout, { :class => 'logout' } %>
 </section>
-<header>
+<header class="header">
   <div class="section-container">
     <a href="/"><%= image_tag '/images/logo-ds.png', :class => 'header-ds-logo', :alt => 'DoSomething.org logo' %></a>
     <%= image_tag '/images/logo-pics.png', :class => 'header-pics-logo', :alt => 'Pics for Pets logo' %>

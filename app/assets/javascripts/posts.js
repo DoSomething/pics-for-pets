@@ -53,6 +53,21 @@ $(function() {
   // FACEBOOK POST SHARING FUNCTIONALITY
   load_facebook();
 
+  // PET FINDER SHELTER LOCATOR
+  var $err = $('#shelter-finder .error');
+  $err.hide();
+  $('#shelter-submit').click(function() {
+    var zip = $('#shelter-zip').val();
+    var dest = 'http://www.petfinder.com/awo/index.cgi?location=' + zip + '&keyword=';
+    if( zip.match(/^\d{5}$/)  ) {
+      $('#shelter-submit').attr('href', dest);
+    }
+    else {
+      $err.show();
+      return false;
+    }
+  });
+
   // END
 });
 
