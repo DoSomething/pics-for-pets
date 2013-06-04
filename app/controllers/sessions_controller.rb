@@ -35,25 +35,40 @@ class SessionsController < ApplicationController
     # @TODO - KEEP FIELDS POPULATED WHEN CONTROLLER ERRORS OUT
 
     if form == 'login'
-      response = Services::Auth.login(username, password)
-      if response.code == 200 && response.kind_of?(Hash)
-        Services::Auth.authenticate(session, response['user']['uid'], response['user']['roles'])
+      if res = ruby_user_exists(username, nil)
+        roles = { 1 => 'authenticated user' }
+        if res['is_admin']
+          roles = { 1 => 'administrator', 2 => 'authenticated user' }
+        end
+
+        Services::Auth.authenticate(session, res['uid'], roles)
         flash[:message] = 'super! - you\'ve logged in successfully' + " #{response}"
         redirect_to :root
       else
-        # you are drunk; go home
-        flash.now[:error] = 'wtf? try again -- user login failed' + " #{response}"
-        render :new
+        response = Services::Auth.login(username, password)
+        if response.code == 200 && response.kind_of?(Hash)
+          if ruby_add_user(username, 0, response['user']['uid'], response['user']['roles'].values.include?('administrator'))
+            Services::Auth.authenticate(session, response['user']['uid'], response['user']['roles'])
+            flash[:message] = 'super! - you\'ve logged in successfully' + " #{response}"
+            redirect_to :root
+          end
+        else
+          # you are drunk; go home
+          flash.now[:error] = 'wtf? try again -- user login failed' + " #{response}"
+          render :new
+        end
       end
     elsif form == 'register'
       response = Services::Auth.register(password, email, first, last, cell, month, day, year)
       if response.code == 200 && response.kind_of?(Hash)
         response = Services::Auth.login(email, password)
         if response.code == 200 && response.kind_of?(Hash)
-          # super -- proceed
-          Services::Auth.authenticate(session, response['user']['uid'], response['user']['roles'])
-          flash[:message] = 'super! - you\'ve registered successfully' + " #{response}"
-          redirect_to :root
+          if ruby_add_user(email, 0, response['user']['uid'], response['user']['roles'].values.include?('administrator'))
+            # super -- proceed
+            Services::Auth.authenticate(session, response['user']['uid'], response['user']['roles'])
+            flash[:message] = 'super! - you\'ve registered successfully' + " #{response}"
+            redirect_to :root
+          end
         else
           # you are drunk; go home
           flash.now[:error] = 'wtf? try again -- user login post reg failed' + " #{response}"

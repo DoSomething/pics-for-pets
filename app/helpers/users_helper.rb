@@ -2,7 +2,11 @@ module UsersHelper
   include Services
 
   def ruby_user_exists(email, fbid)
-    @user = User.where('email = ? or fbid = ?', email, fbid).first
+    if !fbid.nil?
+      @user = User.where('email = ? or fbid = ?', email, fbid).first
+    else
+      @user = User.where('email = ?', email).first
+    end
 
     if !@user.nil?
       { 'uid' => @user.uid, 'is_admin' => @user.is_admin }
