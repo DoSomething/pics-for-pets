@@ -60,7 +60,7 @@ class SessionsController < ApplicationController
             render :new
           end
         else
-          flash[:error] = "Oh no! Something went wrong.  Try again."
+          flash[:error] = "Invalid username / password"
           render :new
         end
       end
@@ -76,7 +76,7 @@ class SessionsController < ApplicationController
           render :new
         end
       else
-        flash.now[:error] = 'Oh no! Something went wrong while registering you.  Try again?'
+        flash.now[:error] = "A user with that account already exists."
         render :new
       end
     end
