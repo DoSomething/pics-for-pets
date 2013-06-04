@@ -123,10 +123,11 @@ class PostsController < ApplicationController
       end
     elsif params[:run] == 'my'
       user_id = session[:drupal_user_id]
-      var += 'mypets-' + user_id
+      var += 'mypets-' + user_id.to_s
+
       @p = @p.where('shares.uid = ? OR posts.uid = ?', user_id, user_id)
       @count = Rails.cache.fetch var + '-count' do
-        @count
+        @total
           .joins('LEFT JOIN shares ON shares.post_id = posts.id')
           .where('shares.uid = ? OR posts.uid = ?', user_id, user_id)
           .count
