@@ -50,19 +50,16 @@ class User < ActiveRecord::Base
     end
   end
 
-  def self.login(session, uid, roles = nil)
+  def self.login(session, uid, username, password, roles = nil)
     if self.exists? uid
-      if roles.nil?
-        if self.admin? uid
-          roles = { 1 => 'administrator', 2 => 'authenticated user' }
-        else
-          roles = { 1 => 'authenticated user' }
-        end
+      response = Services::Auth.login(username, password)
+      if response.code == 200 && response.kind_of?(Hash)
+        session[:drupal_user_id]   = response['user']['uid']
+        session[:drupal_user_role] = response['user']['roles']
+        @@logged_in = true
+      else
+        @@logged_in = false
       end
-
-      session[:drupal_user_id]   = uid
-      session[:drupal_user_role] = roles
-      @@logged_in = true
     end
   end
 

@@ -36,9 +36,9 @@ class SessionsController < ApplicationController
 
     if form == 'login'
       if @user = User.exists?(nil, username)
-        User.login(session, @user['uid'])
+        User.login(session, @user['uid'], username, password)
         if User.logged_in?
-          flash[:message] = 'super! - you\'ve logged in successfully' + " #{response}"
+          flash[:message] = "You've logged in successfully!"
           redirect_to :root
         else
           flash[:message] = 'Oh no! Something went wrong with your login.  Try again.'
@@ -55,22 +55,22 @@ class SessionsController < ApplicationController
           })
 
           if @user.save
-            User.login(session, response['user']['uid'])
+            User.login(session, response['user']['uid'], username, password)
             if User.logged_in?
-              flash[:message] = 'super! - you\'ve logged in successfully' + " #{response}"
+              flash[:message] = "You've logged in succesfully!"
               redirect_to :root
             end
           end
         else
           # you are drunk; go home
-          flash.now[:error] = 'wtf? try again -- user login failed' + " #{response}"
+          flash.now[:error] = "Oh no! Something went wrong.  Try again."
           render :new
         end
       end
     elsif form == 'register'
       @user = User.register(password, email, first, last, cell, "#{month}/#{day}/#{year}")
       if User.registered?
-        User.login(session, @user.id)
+        User.login(session, @user.id, email, password)
         if User.logged_in?
           flash.now[:message] = 'Super! You\'ve registered successfully' + " #{response}"
           redirect_to :root
