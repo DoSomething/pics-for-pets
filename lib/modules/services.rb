@@ -8,11 +8,11 @@ module Services
     base_uri 'www.dosomething.org:443' # Force HTTPS connection via port 443
 
     def self.login(username, password)
-      post('/rest/user/login.json', :body => { :username => username, :password => password })
+      post('/rest/user/login.json?' + Time.now.to_i.to_s, :body => { :username => CGI.escape(username), :password => CGI.escape(password) })
     end
 
     def self.logout(username, password)
-      post('/rest/user/logout.json', :body => { :username => username, :password => password })
+      post('/rest/user/logout.json?' + Time.now.to_i.to_s, :body => { :username => CGI.escape(username), :password => CGI.escape(password) })
     end
 
     def self.authenticate(session, uid, roles={})
@@ -22,7 +22,7 @@ module Services
 
     def self.register(password, email, first, last, cell, month, day, year)
       birthday = "#{month}/#{day}/#{year}"
-      post('/rest/user/register.json', :body => {
+      post('/rest/user/register.json?' + Time.now.to_i.to_s, :body => {
         'profile_main[field_user_first_name][und][0][value]' => first,
         'profile_main[field_user_last_name][und][0][value]' => last,
         'mail' => email,

@@ -35,48 +35,48 @@ class SessionsController < ApplicationController
     # @TODO - KEEP FIELDS POPULATED WHEN CONTROLLER ERRORS OUT
 
     if form == 'login'
-      if res = ruby_user_exists(username, nil)
-        roles = { 1 => 'authenticated user' }
-        if res['is_admin']
-          roles = { 1 => 'administrator', 2 => 'authenticated user' }
+      if @user = User.exists?(nil, username)
+        User.login(session, @user['uid'], username, password)
+        if User.logged_in?
+          flash[:message] = "You've logged in successfully!"
+          redirect_to :root
+        else
+          flash[:error] = 'Oh no! Something went wrong with your login.  Try again.'
+          render :new
         end
-
-        Services::Auth.authenticate(session, res['uid'], roles)
-        flash[:message] = 'super! - you\'ve logged in successfully' + " #{response}"
-        redirect_to :root
       else
-        response = Services::Auth.login(username, password)
-        if response.code == 200 && response.kind_of?(Hash)
-          if ruby_add_user(username, 0, response['user']['uid'], response['user']['roles'].values.include?('administrator'))
-            Services::Auth.authenticate(session, response['user']['uid'], response['user']['roles'])
-            flash[:message] = 'super! - you\'ve logged in successfully' + " #{response}"
+        User.create({
+          :email => username,
+          :fbid => 0,
+        }, username, password)
+
+        if User.created?
+          User.login(session, response['user']['uid'], username, password)
+          if User.logged_in?
+            flash[:message] = "You've logged in succesfully!"
             redirect_to :root
+          else
+            flash[:error] = "Oh no! Something went wrong with your login.  Try again."
+            render :new
           end
         else
-          # you are drunk; go home
-          flash.now[:error] = 'wtf? try again -- user login failed' + " #{response}"
+          flash[:error] = "Invalid username / password"
           render :new
         end
       end
     elsif form == 'register'
-      response = Services::Auth.register(password, email, first, last, cell, month, day, year)
-      if response.code == 200 && response.kind_of?(Hash)
-        response = Services::Auth.login(email, password)
-        if response.code == 200 && response.kind_of?(Hash)
-          if ruby_add_user(email, 0, response['user']['uid'], response['user']['roles'].values.include?('administrator'))
-            # super -- proceed
-            Services::Auth.authenticate(session, response['user']['uid'], response['user']['roles'])
-            flash[:message] = 'super! - you\'ve registered successfully' + " #{response}"
-            redirect_to :root
-          end
+      @user = User.register(password, email, 0, first, last, cell, "#{month}/#{day}/#{year}")
+      if User.registered?
+        User.login(session, @user.uid, email, password)
+        if User.logged_in?
+          flash.now[:message] = 'Super! You\'ve registered successfully' + " #{response}"
+          redirect_to :root
         else
-          # you are drunk; go home
-          flash.now[:error] = 'wtf? try again -- user login post reg failed' + " #{response}"
+          flash.now[:error] = 'Oh no! Something went wrong while logging you in.  Try again?'
           render :new
         end
       else
-        # you are drunk; go home
-        flash.now[:error] = "failed to register: #{response[0]}"
+        flash.now[:error] = "A user with that account already exists."
         render :new
       end
     end
@@ -97,5 +97,4 @@ class SessionsController < ApplicationController
     reset_session
     redirect_to :login, :flash => { :message => 'logout successful' }
   end
-
 end
