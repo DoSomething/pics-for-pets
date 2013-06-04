@@ -72,10 +72,17 @@ class User < ActiveRecord::Base
 
   def self.create(parameters, username, password)
     response = Services::Auth.login(username, password)
-    @user = User.new(parameters)
+    if response.code == 200 && response.kind_of?(Hash)
+      parameters[:uid] = response['user']['uid'],
+      parameters[:is_admin] = response['user']['roles'].values.include?('administrator')
 
-    if @user.save
-      @@created = true
+      @user = User.new(parameters)
+
+      if @user.save
+        @@created = true
+      else
+        @@created = false
+      end
     else
       @@created = false
     end

@@ -1,3 +1,6 @@
+<% if flash[:message] %><div><p class="message"><%= h flash[:message] %></p></div><% end %>
+<% if flash[:error] %><div><p class="error"><%= h flash[:error] %></p></div><% end %>
+
 <div class="gate">
   <header>
     <img class="logo-ds" src="/images/logo-ds.png" alt="DoSomething.org logo">

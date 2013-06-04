@@ -41,15 +41,13 @@ class SessionsController < ApplicationController
           flash[:message] = "You've logged in successfully!"
           redirect_to :root
         else
-          flash[:message] = 'Oh no! Something went wrong with your login.  Try again.'
+          flash[:error] = 'Oh no! Something went wrong with your login.  Try again.'
           render :new
         end
       else
         User.create({
           :email => username,
           :fbid => 0,
-          :uid => response['user']['uid'],
-          :is_admin => response['user']['roles'].values.include?('administrator')
         }, username, password)
 
         if User.created?
@@ -58,11 +56,11 @@ class SessionsController < ApplicationController
             flash[:message] = "You've logged in succesfully!"
             redirect_to :root
           else
-            flash[:message] = "Oh no! Something went wrong with your login.  Try again."
+            flash[:error] = "Oh no! Something went wrong with your login.  Try again."
             render :new
           end
         else
-          flash[:message] = "Oh no! Something went wrong.  Try again."
+          flash[:error] = "Oh no! Something went wrong.  Try again."
           render :new
         end
       end
@@ -74,11 +72,11 @@ class SessionsController < ApplicationController
           flash.now[:message] = 'Super! You\'ve registered successfully' + " #{response}"
           redirect_to :root
         else
-          flash.now[:message] = 'Oh no! Something went wrong while logging you in.  Try again?'
+          flash.now[:error] = 'Oh no! Something went wrong while logging you in.  Try again?'
           render :new
         end
       else
-        flash.now[:message] = 'Oh no! Something went wrong while registering you.  Try again?'
+        flash.now[:error] = 'Oh no! Something went wrong while registering you.  Try again?'
         render :new
       end
     end
