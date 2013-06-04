@@ -45,13 +45,13 @@ class SessionsController < ApplicationController
           render :new
         end
       else
-        User.create({
+        @user = User.create({
           :email => username,
           :fbid => 0,
         }, username, password)
 
         if User.created?
-          User.login(session, response['user']['uid'], username, password)
+          User.login(session, @user.uid, username, password)
           if User.logged_in?
             flash[:message] = "You've logged in succesfully!"
             redirect_to :root
