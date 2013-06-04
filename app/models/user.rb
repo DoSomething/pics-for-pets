@@ -47,11 +47,13 @@ class User < ActiveRecord::Base
           @@registered = true
           @user
         rescue
+          @@registered = false
           @@errors.push 'There was an error with creating your account.'
         end
       end
     else
       @@errors.push response[0]
+      @@registered = false
     end
   end
 
