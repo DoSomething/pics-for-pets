@@ -1,5 +1,6 @@
 class PostsController < ApplicationController
   include Services
+  helper ApplicationHelper
 
   before_filter :is_not_authenticated
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found

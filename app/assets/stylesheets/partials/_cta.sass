@@ -3,11 +3,15 @@
 .cta
   background: $cta-sbg
 
+  .section-container
+    width: 600px
+    padding: 1em 0
+    overflow: hidden
+
   .btn /* @TODO - why is the padding off? this should be inherited */
-    display: inline-block
-    margin: 0 0 0 2em
+    float: left
+    clear: none
     padding: 0.35em 0px 0px
 
-  .section-container
-    padding: 1em
-    width: 470px
+  .btn.secondary
+    float: right
