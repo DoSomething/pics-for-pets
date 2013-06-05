@@ -42,8 +42,7 @@ class Post < ActiveRecord::Base
     end
   end
 
-  after_save :touch_cache
-  after_create :update_img
+  after_save :touch_cache, :update_img
   def touch_cache
     # We need to clear all caches -- Every cache depends on the one before it.
     Rails.cache.clear
