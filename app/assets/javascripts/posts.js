@@ -34,6 +34,7 @@ $(function() {
           $share_elm.text(++$share_count);
           $.post('/shares', { 'share': { 'post_id': $id } }, function(res) {});
         }
+        $('html,body').animate({ scrollTop: $('.id-' + $id).offset().top }, 'fast');
       });
       return false;
     });
