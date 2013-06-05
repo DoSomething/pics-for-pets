@@ -19,7 +19,7 @@
 
   <%= form_for(:session, :url => sessions_path, :html => { :class => 'form form-login', :id => 'login-form' }) do |f| %>
     <%= link_to image_tag('/images/facebook.png'), '/auth/facebook' %>
-    <%= f.label :username %>
+    <%= f.label 'Email / User name' %>
     <%= f.text_field :username %>
     <%= f.label :password %>
     <%= f.password_field :password %>

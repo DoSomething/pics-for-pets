@@ -29,11 +29,20 @@ module PostsHelper
 
 	  text
   end
-  def self.image_writer(path, the_top_text, the_bottom_text)
+  def self.image_writer(path, meme_text, meme_position)
   	path = Rails.root.to_s + path
   	path = path.gsub(/\?.*/i, '')
 
     font_path = Rails.root.to_s + '/DINComp-Medium.ttf'
+
+    the_top_text = the_bottom_text = ''
+    if !meme_text.empty?
+      if meme_position == 'top'
+        the_top_text = meme_text
+      elsif meme_position == 'bottom'
+        the_bottom_text = meme_text
+      end
+    end
 
     if !the_top_text.empty?
       top_text = self.find_break_points(the_top_text)

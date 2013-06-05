@@ -1,8 +1,9 @@
 class Post < ActiveRecord::Base
-  attr_accessible :uid, :adopted, :bottom_text, :creation_time,
+  attr_accessible :uid, :adopted, :creation_time,
   	:flagged, :image, :name, :promoted,
   	:share_count, :shelter, :state,
-  	:story, :top_text, :animal_type, :update_time
+  	:story, :animal_type, :update_time,
+    :meme_text, :meme_position
 
   validates :name,    :presence => true
   validates :shelter, :presence => true
@@ -27,11 +28,8 @@ class Post < ActiveRecord::Base
     self.name = self.name.gsub(/\<[^\>]+\>/, '')
     self.shelter = self.shelter.gsub(/\<[^\>]+\>/, '')
 
-    if !self.top_text.nil?
-      self.top_text = self.top_text.gsub(/\<[^\>]+\>/, '')
-    end
-    if !self.bottom_text.nil?
-      self.bottom_text = self.bottom_text.gsub(/\<[^\>]+\>/, '')
+    if !self.meme_text.empty?
+      self.meme_text = self.meme_text.gsub(/\<[^\>]+\>/, '')
     end
   end
 
@@ -56,7 +54,7 @@ class Post < ActiveRecord::Base
     image = '/public' + image.gsub(/\?.*/, '')
 
     if File.exists? Rails.root.to_s + image
-      PostsHelper.image_writer(image, @post.top_text, @post.bottom_text)
+      PostsHelper.image_writer(image, @post.meme_text, @post.meme_position)
     end
   end
 end

@@ -95,6 +95,6 @@ class SessionsController < ApplicationController
 
   def destroy
     reset_session
-    redirect_to :login, :flash => { :message => 'logout successful' }
+    redirect_to :login, :flash => { :message => 'Log out successful' }
   end
 end
