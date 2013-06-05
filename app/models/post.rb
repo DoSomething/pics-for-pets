@@ -44,9 +44,19 @@ class Post < ActiveRecord::Base
     end
   end
 
-  after_save :touch_cache
+  after_save :touch_cache, :update_img
   def touch_cache
     # We need to clear all caches -- Every cache depends on the one before it.
     Rails.cache.clear
+  end
+
+  def update_img
+    @post = Post.find(self.id)
+    image = @post.image.url(:gallery)
+    image = '/public' + image.gsub(/\?.*/, '')
+
+    if File.exists? Rails.root.to_s + image
+      PostsHelper.image_writer(image, @post.top_text, @post.bottom_text)
+    end
   end
 end

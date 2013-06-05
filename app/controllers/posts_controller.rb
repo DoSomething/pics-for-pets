@@ -241,14 +241,16 @@ class PostsController < ApplicationController
   # POST /posts
   # POST /posts.json
   def create
-    render :status => :forbidden unless authenticated?
+    if request.format.symbol != :json || authenticated?
+      render :status => :forbidden unless authenticated?
+      params[:post][:uid] = session[:drupal_user_id]
+    end
 
-    params[:post][:uid] = session[:drupal_user_id]
     @post = Post.new(params[:post])
 
     respond_to do |format|
       if @post.save
-        format.html { redirect_to alter_image_path(@post) }
+        format.html { redirect_to show_post_path(@post) }
         format.json { render json: @post, status: :created, location: @post }
       else
         format.html { render action: "new" }
