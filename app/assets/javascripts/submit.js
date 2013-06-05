@@ -1,6 +1,6 @@
 $(document).ready(function() {
   handle_text_change = function(field) {
-    var elm = $('#post_meme_position').val() + '_text';
+    var elm;
 
     $('#' + field).data('val', $('#' + field).val());
     $('#' + field).change(function() {
@@ -8,6 +8,7 @@ $(document).ready(function() {
     });
 
     $('#' + field).keyup(function() {
+      elm = $('#post_meme_position').val() + '_text';
       if ($('#' + field).val() !== $('#' + field).data('val')) {
         $('#' + field).data('val', $('#' + field).val());
         if ($('#' + field).val() !== "") {
