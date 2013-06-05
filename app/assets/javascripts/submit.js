@@ -37,6 +37,9 @@ $(document).ready(function() {
   };
 
   $('#post_image').change(function() {
+    $('#upload-preview span.text').hide();
+    $('#upload-preview span.loading').show();
+
     var file_data = $("#post_image").prop("files")[0];
     var form_data = new FormData();
     form_data.append("file", file_data);

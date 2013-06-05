@@ -22,7 +22,9 @@ $(document).ready(function() {
             if (running < count) {
               in_view();
             }
-            // @Todo: throbber end
+            else {
+              $('.inview').remove();
+            }
           });
       }
       else {
@@ -35,7 +37,9 @@ $(document).ready(function() {
           if (running < count) {
             in_view();
           }
-          // @Todo: throbber end
+          else {
+            $('.inview').remove();
+          }
         });
       }
     });

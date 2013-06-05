@@ -22,8 +22,11 @@
         <div>Adopt me because...</div>
         <div class="yours"></div>
       </div>
-      <div id="placeholder_text">Upload an image and it will appear here.</div>
-      <div id="bottom_text" class="text-pos">
+      <div id="placeholder_text">
+        <span class="text">Upload an image and it will appear here.</span>
+        <span class="loading"><%= image_tag '/images/loading.gif', :alt => 'Loading...' %></span>
+      </div>
+      <div id="bottom_text">
         <div>Adopt me because...</div>
         <div class="yours"></div>
       </div>
