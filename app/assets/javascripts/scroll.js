@@ -5,6 +5,11 @@ $(document).ready(function() {
 
   function in_view() {
     $('.inview').bind('inview', function(event, visible) {
+      if (count <= 10) {
+        $('.inview').remove();
+        return false;
+      }
+
       // Page + 1
       page++;
 

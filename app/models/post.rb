@@ -28,7 +28,7 @@ class Post < ActiveRecord::Base
     self.name = self.name.gsub(/\<[^\>]+\>/, '')
     self.shelter = self.shelter.gsub(/\<[^\>]+\>/, '')
 
-    if !self.meme_text.empty?
+    if !self.meme_text.nil?
       self.meme_text = self.meme_text.gsub(/\<[^\>]+\>/, '')
     end
   end
@@ -42,7 +42,8 @@ class Post < ActiveRecord::Base
     end
   end
 
-  after_save :touch_cache, :update_img
+  after_save :touch_cache
+  after_create :update_img
   def touch_cache
     # We need to clear all caches -- Every cache depends on the one before it.
     Rails.cache.clear
