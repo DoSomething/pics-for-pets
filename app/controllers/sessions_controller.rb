@@ -33,6 +33,7 @@ class SessionsController < ApplicationController
     # @TODO - ACCEPTABLE RESPONSE TO USER WHO FAILS TO LOG IN
     # @TODO - STOP REDIRECTING TO /SESSIONS
     # @TODO - KEEP FIELDS POPULATED WHEN CONTROLLER ERRORS OUT
+    # @TODO - DATE VALIDATION ON BIRTHDAY
 
     if form == 'login'
       if @user = User.exists?(nil, username)
@@ -95,6 +96,6 @@ class SessionsController < ApplicationController
 
   def destroy
     reset_session
-    redirect_to :login, :flash => { :message => 'logout successful' }
+    redirect_to :login
   end
 end
