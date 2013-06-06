@@ -1,5 +1,7 @@
 // MIXINS
 // -----
+$med: 550px
+
 @mixin border-bottom-subtle
   border-bottom: $subtle-border
 
@@ -29,8 +31,8 @@
   border: none
   padding: 0.5em
   +border-radius(3px)
-  abbr
-    display: none
+  @media only screen and (max-width: $med)
+    width: 95%
 
 @function em-calc($target)
   @return ($target/16)*1em

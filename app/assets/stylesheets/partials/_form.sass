@@ -1,4 +1,6 @@
 // @TODO - THIS FILE WAS THROWN TO TOGETHER, REFACTOR, MOVE INTO A PARTIAL, ETC.
+$med: 550px
+
 .form-item-top-text,
 .form-item-bottom-text
   display: none
@@ -8,8 +10,11 @@
   display: block
   width: 450px
   height: 450px
-  border: 4px dashed #fff
   margin: 2em auto
+  background-image: url(/images/bg-upload.png)
+  +border-radius(3px)
+  @media only screen and (max-width: $first)
+    width: 100%
 
   #top_text,
   #bottom_text
