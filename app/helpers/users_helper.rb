@@ -2,7 +2,11 @@ module UsersHelper
   include Services
 
   def ruby_user_exists(email, fbid)
-    @user = User.where('email = ? or fbid = ?', email, fbid).first
+    if !fbid.nil?
+      @user = User.where('email = ? or fbid = ?', email, fbid).first
+    else
+      @user = User.where('email = ?', email).first
+    end
 
     if !@user.nil?
       { 'uid' => @user.uid, 'is_admin' => @user.is_admin }
@@ -13,22 +17,24 @@ module UsersHelper
 
   def drupal_user_exists(email)
     response = Services::Auth.check_exists(email)
-    if response.first['uid']
-      # The user exists.  Are they an admin?
-      is_admin = Services::Auth.check_admin(email)
-      roles = { 1 => 'authenticated user'}
+    if !response.first.nil?
+      if !response.first['uid'].nil?
+        # The user exists.  Are they an admin?
+        is_admin = Services::Auth.check_admin(email)
+        roles = { 1 => 'authenticated user'}
 
-      validates_admin = false
-      if !is_admin.first.nil?
-        validates_admin = true
-        # Fake the admin array.
-        if !is_admin.first['uid'].nil?
-          roles = { 1 => 'administrator', 2 => 'authenticated user' }
+        validates_admin = false
+        if !is_admin.first.nil?
+          validates_admin = true
+          # Fake the admin array.
+          if !is_admin.first['uid'].nil?
+            roles = { 1 => 'administrator', 2 => 'authenticated user' }
+          end
         end
-      end
 
-      Services::Auth.authenticate(session, response.first['uid'], roles)
-      { 'uid' => response.first['uid'], 'is_admin' => validates_admin }
+        Services::Auth.authenticate(session, response.first['uid'], roles)
+        { 'uid' => response.first['uid'], 'is_admin' => validates_admin }
+      end
     else
       false
     end

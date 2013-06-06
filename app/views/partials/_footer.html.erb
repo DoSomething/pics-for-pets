@@ -1,29 +1,34 @@
-<footer class="footer-help">
-  <div class="section-container">
-   <p class="help">Questions? E-mail Hilary at <a href="mailto:picsforpets@dosomething.org">picsforpets@dosomething.org</a></p>
-  </div>
-</footer>
-<footer class="footer-sponsor">
-  <div class="section-container">
-   <p class="sponsor">Sponsored by:</p>
-   <%= image_tag '/images/logo-petfinder.png', :class => 'logo-sponsor', :alt => 'Pet Finder Logo' %>
-  </div>
-</footer>
+<% cache 'footer' do %>
 
-<div id="fb-root"></div>
-<script type="text/javascript">
- window.fbAsyncInit = function() {
-   FB.init({
-     appId: "105775762330",
-     status: true,
-     cookie: true,
-     xfbml: true,
-   });
- };
- (function() {
-   var e = document.createElement('script');
-   e.async = true;
-   e.src = document.location.protocol + '//connect.facebook.net/en_US/all.js';
-   document.getElementById('fb-root').appendChild(e);
- }());
-</script>
+  <footer class="footer-help">
+    <div class="section-container">
+     <p class="help">Questions? E-mail Hilary at <a href="mailto:picsforpets@dosomething.org">picsforpets@dosomething.org</a></p>
+    </div>
+  </footer>
+  <footer class="footer-sponsor">
+    <div class="section-container">
+     <p class="sponsor">Sponsored by:</p>
+     <img alt="Pet Finder Logo" class="logo-sponsor" src="/images/logo-petfinder.png" />
+    </div>
+  </footer>
+
+  <div id="fb-root"></div>
+  <script type="text/javascript">
+   window.fbAsyncInit = function() {
+     FB.init({
+       appId: "<%= fb_app_id %>",
+       status: true,
+       cookie: true,
+       xfbml: true,
+     });
+   };
+   (function() {
+     var e = document.createElement('script');
+     e.async = true;
+     e.src = document.location.protocol + '//connect.facebook.net/en_US/all.js';
+     document.getElementById('fb-root').appendChild(e);
+   }());
+  </script>
+
+<% end %>
+

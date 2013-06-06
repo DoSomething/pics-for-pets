@@ -24,6 +24,8 @@ CreateAndShare::Application.routes.draw do
   match 'autoimg' => 'posts#autoimg'
   match 'alterimg/:id' => 'posts#alterimg', :as => :alter_image
   match 'flag/:id' => 'posts#flag', :as => :flag
+  get 'submit/guide' => 'users#intent', :as => :intent
+  match 'sessions' => redirect('/login')
 
   # FACEBOOK AUTH
   match 'auth/:provider/callback' => 'sessions#fboauth'

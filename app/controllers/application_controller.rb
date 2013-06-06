@@ -10,8 +10,7 @@ class ApplicationController < ActionController::Base
   end
 
   def is_not_authenticated
-    unless authenticated? || request.format.symbol == :json
-      flash[:error] = "you need to log in, kid"
+    unless authenticated? || request.format.symbol == :json || params[:bypass] === true
       redirect_to :login
       false
     end
@@ -24,5 +23,11 @@ class ApplicationController < ActionController::Base
       false
       # TODO - SHOULD WE LOG USERS OUT WHEN THEY LAND HERE? SESSION SHOULD BE EMPTY AT THIS POINT
     end
+  end
+
+  alias :std_redirect_to :redirect_to
+  def redirect_to(*args)
+    flash.keep
+    std_redirect_to *args
   end
 end

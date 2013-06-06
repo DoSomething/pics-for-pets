@@ -1,3 +1,6 @@
+<% if flash[:message] %><div><p class="message"><%= h flash[:message] %></p></div><% end %>
+<% if flash[:error] %><div><p class="error"><%= h flash[:error] %></p></div><% end %>
+
 <div class="gate">
   <header>
     <img class="logo-ds" src="/images/logo-ds.png" alt="DoSomething.org logo">
@@ -15,6 +18,7 @@
   </aside>
 
   <%= form_for(:session, :url => sessions_path, :html => { :class => 'form form-login', :id => 'login-form' }) do |f| %>
+    <%= link_to image_tag('/images/facebook.png'), '/auth/facebook' %>
     <%= f.label :username %>
     <%= f.text_field :username %>
     <%= f.label :password %>
@@ -24,6 +28,7 @@
   <% end %>
 
   <%= simple_form_for(:session, :url => sessions_path, :html => { :class => 'form form-registration right', :id => 'registration-form' }) do |f| %>
+    <%= link_to image_tag('/images/facebook.png'), '/auth/facebook' %>
     <%= f.input :first, wrapper_html: { class: 'form-item-first-name' } %>
     <%= f.input :last, wrapper_html: { class: 'form-item-last-name' } %>
     <%= f.input :email, wrapper_html: { class: 'form-item-email' } %>
@@ -39,7 +44,7 @@
 
   <footer>
     <p>
-      Clicking "Finish" won't sell your soul, but it means you agree to our <a href="/about/terms-of-service">terms of service</a> &amp; <a href="/about/privacy">privacy policy</a> &amp; to receive our weekly update.
+      Clicking "Finish" won't sell your soul, but it means you agree to our <a href="http://www.dosomething.org/about/terms-of-service">terms of service</a> &amp; <a href="http://www.dosomething.org/about/privacy">privacy policy</a> &amp; to receive our weekly update.
     </p>
   </footer>
 </div>

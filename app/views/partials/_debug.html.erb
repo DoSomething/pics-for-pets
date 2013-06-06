@@ -4,8 +4,6 @@
     <% if admin? %><h1 class="message">admin</h1><% end %>
     <% if !authenticated? %><h1 class="error">not authenticated</h1><% end %>
     <% if authenticated? %><h1 class="message">authenticated</h1><% end %>
-    <% if flash[:message] %><div><p class="message"><%= h flash[:message] %></p></div><% end %>
-    <% if flash[:error] %><div><p class="error"><%= h flash[:error] %></p></div><% end %>
     <p>uid: <span><%= session[:drupal_user_id]  %></span></p>
     <p>status: <span><%= session[:drupal_user_role] %></span></p>
   </div>
