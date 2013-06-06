@@ -1,6 +1,10 @@
 // FILTERS
 //--------
+$large: 1000px
+$med: 550px
+
 .filters
+  display: none
   background: $filters-sbg
   label
     display: inline-block
@@ -9,6 +13,8 @@
     color: $off-black
     margin: 0.3em 0 0 0
     padding: 0
+    @media only screen and (max-width: $med)
+      display: none
   select
     margin: 0.6em 2em 0.2em 0.5em
   label, select
@@ -24,3 +30,6 @@
     margin: 0
     padding: 0.2em 0.5em 0.1em
     clear: none
+    @media only screen and (max-width: 400px)
+      float: left
+      margin: 10px 0 0 10px

@@ -1,7 +1,7 @@
 // HEADER
 // ------
 $large: 1000px
-$med: 550px
+$med: 700px
 
 .header
   background-color: $header-sbg
@@ -40,8 +40,10 @@ img.header-pics-mobile
 
 img.header-ds-logo /* additional DS logo for lower screen resolutions */
   position: absolute
+  z-index: 2
+  height: 173px
   top: -35px
   left: 0
-  height: 45%
-  z-index: 2
+  @media only screen and (max-width: $med)
+    height: 45%
 
