@@ -4,7 +4,8 @@ def build_post
   post = Post.new
     post.uid = 778374
     post.adopted = false
-    post.bottom_text = 'Bottom text'
+    post.meme_text = 'Bottom text'
+    post.meme_position = 'bottom'
     post.flagged = false
     post.image = File.new(Rails.root + 'spec/mocks/ruby.png')
     post.name = 'Spot the test'
@@ -14,7 +15,7 @@ def build_post
     post.state = 'PA'
     post.story = "This is a story"
     post.animal_type = 'cat'
-  post.save!
+  post.save
 
   post
 end
