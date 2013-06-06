@@ -8,15 +8,18 @@
 </head>
 <body>
 
-<%= render 'layouts/debug' %>
+<% if Rails.env.development? %><%= render 'partials/debug' %><% end %>
 
-<%= render 'header' %>
-<%= render 'cta' %>
-<%= render 'filters' %>
+<%= render 'partials/header' %>
+<% unless params[:controller].eql?('static_pages') %>
+  <%= render 'partials/cta' %>
+  <%= render 'partials/filters' %>
+<% end %>
 
 <%= yield %>
 
-<%= render 'footer' %>
+<%= render 'partials/footer' %>
+<%= render 'partials/friend_selector' %>
 
 </body>
 </html>

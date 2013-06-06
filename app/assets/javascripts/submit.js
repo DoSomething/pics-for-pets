@@ -1,23 +1,21 @@
 $(document).ready(function() {
-  handle_text_change = function(field, elm, inverse) {
+  handle_text_change = function(field) {
+    var elm;
+
     $('#' + field).data('val', $('#' + field).val());
     $('#' + field).change(function() {
       $('#' + elm + ' .yours').text($(this).val());
     });
 
     $('#' + field).keyup(function() {
+      elm = $('#post_meme_position').val() + '_text';
       if ($('#' + field).val() !== $('#' + field).data('val')) {
         $('#' + field).data('val', $('#' + field).val());
         if ($('#' + field).val() !== "") {
-          if ($('#' + elm).css('visibility') !== "visible") {
-            $('#' + elm).css('visibility', 'visible');
-          }
-
-          $('.' + inverse).hide();
+          $('#' + elm).show().css('visibility', 'visible');
         }
         else {
-          $('#' + elm).css('visibility', 'hidden');
-          $('.' + inverse).show();
+          $('.text-pos').hide();
         }
 
         $(this).change();
@@ -30,17 +28,24 @@ $(document).ready(function() {
     var img = $('<img />');
     img.attr('src', '/system/tmp/' + filename);
     img.css({ 'width': '450px', 'height': '450px', 'position': 'absolute', 'z-index': 0 });
-    $('#upload-preview span').hide();
+    $('#upload-preview').removeClass('loading');
     img.appendTo('#upload-preview');
 
-    handle_text_change('post_top_text', 'top_text', 'post_bottom_text');
-    handle_text_change('post_bottom_text', 'bottom_text', 'post_top_text');
+    handle_text_change('post_meme_text');
 
-    $('#form-item-top-text, #form-item-bottom-text').show();
+    $('.form-item-meme-text, .form-item-meme-position').show();
   };
 
   $('#post_image').change(function() {
     var file_data = $("#post_image").prop("files")[0];
+    if (!file_data.type.match(/image\/(jpeg|gif|png)/)) {
+      $('#image_error').show();
+      return false;
+    }
+
+    $('#upload-preview span.text').hide();
+    $('#upload-preview').addClass('loading');
+
     var form_data = new FormData();
     form_data.append("file", file_data);
     $.ajax({
@@ -58,5 +63,16 @@ $(document).ready(function() {
         }
       }
     });
+  });
+
+  $('#post_meme_position').change(function() {
+    var e = $(this).val();
+    var val = $('#post_meme_text').val();
+
+    $('.text-pos').hide();
+    $('#' + e + '_text').find('.yours').text(val);
+    if (val !== "") {
+      $('#' + e + '_text').show().css('visibility', 'visible');
+    }
   });
 });

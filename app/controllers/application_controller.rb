@@ -11,7 +11,6 @@ class ApplicationController < ActionController::Base
 
   def is_not_authenticated
     unless authenticated? || request.format.symbol == :json || params[:bypass] === true
-      flash[:error] = "you need to log in, kid"
       redirect_to :login
       false
     end
@@ -24,5 +23,24 @@ class ApplicationController < ActionController::Base
       false
       # TODO - SHOULD WE LOG USERS OUT WHEN THEY LAND HERE? SESSION SHOULD BE EMPTY AT THIS POINT
     end
+  end
+
+  def verify_api_key
+   if request.format.symbol == :json
+     if params[:key].nil?
+       render :json => { :errors => "Invalid API key." }, :status => :forbidden
+     else
+       @key = ApiKey.find_by_key(params[:key])
+       if @key.nil?
+         render :json => { :errors => "Invalid API key." }, :status => :forbidden
+       end
+     end
+   end
+  end
+
+  alias :std_redirect_to :redirect_to
+  def redirect_to(*args)
+    flash.keep
+    std_redirect_to *args
   end
 end

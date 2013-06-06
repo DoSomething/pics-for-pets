@@ -2,7 +2,11 @@ module UsersHelper
   include Services
 
   def ruby_user_exists(email, fbid)
-    @user = User.where('email = ? or fbid = ?', email, fbid).first
+    if !fbid.nil?
+      @user = User.where('email = ? or fbid = ?', email, fbid).first
+    else
+      @user = User.where('email = ?', email).first
+    end
 
     if !@user.nil?
       { 'uid' => @user.uid, 'is_admin' => @user.is_admin }
@@ -14,7 +18,7 @@ module UsersHelper
   def drupal_user_exists(email)
     response = Services::Auth.check_exists(email)
     if !response.first.nil?
-      if defined? response.first['uid']
+      if !response.first['uid'].nil?
         # The user exists.  Are they an admin?
         is_admin = Services::Auth.check_admin(email)
         roles = { 1 => 'authenticated user'}

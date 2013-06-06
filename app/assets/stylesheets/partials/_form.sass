@@ -1,6 +1,6 @@
 // @TODO - THIS FILE WAS THROWN TO TOGETHER, REFACTOR, MOVE INTO A PARTIAL, ETC.
-.form-item-top-text,
-.form-item-bottom-text
+.form-item-meme-text,
+.form-item-meme-position
   display: none
 
 #upload-preview
@@ -10,6 +10,9 @@
   height: 450px
   border: 4px dashed #fff
   margin: 2em auto
+
+  &.loading
+    background: url(/images/loading.gif) center center no-repeat
 
   #top_text,
   #bottom_text
@@ -60,21 +63,19 @@
     font-size: 1.2em
     line-height: 1.5em
   input[type="text"], input[type="file"], textarea
-    color: #888
-    width: 435px
-    display: block
-    outline: none
-    border: none
-    padding: 0.5em
-    +border-radius(3px)
-    abbr
-      display: none
+    +input-style-basic
 
   .section-container
     width: 450px
     margin: 2em auto
 
-    .btn
-      width: 6em
-      margin: 1em 0
+  .btn
+    width: 6em
+    margin: 1em 0
 
+.loading
+  display: none
+
+#image_error
+  color: #f7101b
+  display: none
