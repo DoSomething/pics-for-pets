@@ -28,7 +28,7 @@ $(document).ready(function() {
     var img = $('<img />');
     img.attr('src', '/system/tmp/' + filename);
     img.css({ 'width': '450px', 'height': '450px', 'position': 'absolute', 'z-index': 0 });
-    $('#upload-preview span').hide();
+    $('#upload-preview').removeClass('loading');
     img.appendTo('#upload-preview');
 
     handle_text_change('post_meme_text');
@@ -38,7 +38,7 @@ $(document).ready(function() {
 
   $('#post_image').change(function() {
     $('#upload-preview span.text').hide();
-    $('#upload-preview span.loading').show();
+    $('#upload-preview').addClass('loading');
 
     var file_data = $("#post_image").prop("files")[0];
     var form_data = new FormData();
