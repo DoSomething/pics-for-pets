@@ -37,10 +37,15 @@ $(document).ready(function() {
   };
 
   $('#post_image').change(function() {
+    var file_data = $("#post_image").prop("files")[0];
+    if (!file_data.type.match(/image\/(jpeg|gif|png)/)) {
+      $('#image_error').show();
+      return false;
+    }
+
     $('#upload-preview span.text').hide();
     $('#upload-preview').addClass('loading');
 
-    var file_data = $("#post_image").prop("files")[0];
     var form_data = new FormData();
     form_data.append("file", file_data);
     $.ajax({
