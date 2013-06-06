@@ -45,20 +45,33 @@ module Services
 
   # MailChimp (email) methods
   module MailChimp
-  	@mc = Gibbon.new('cdd0ad8955001739ec42519956312bee-us4')
+    @mc = Gibbon.new('cdd0ad8955001739ec42519956312bee-us4')
     def self.subscribe(email, campaign)
-      groups = @mc.listInterestGroupings({ :id => 'f2fab1dfd4' })
-      gid = ''
-      groups.last['groups'].each do |g|
-        if g['name'] == campaign
-          gid = g['bit']
-          break
+      @groups = Rails.cache.fetch 'mailchimp-groups' do
+        gs = {}
+
+        groups = @mc.listInterestGroupings({ :id => 'f2fab1dfd4' })
+        groups.each do |group|
+          group['groups'].each do |g|
+            gs[g['name']] = group['id']
+          end
         end
+
+        gs
       end
 
-      @gid = gid
+      @gid = Rails.cache.fetch 'mailchimp-group-' + campaign do
+        gbit = ''
+
+        if !@groups[campaign].nil?
+          gbit = @groups[campaign]
+        end
+
+        gbit
+      end
+
       @campaign = campaign
-      mv = { 'GROUPINGS' => {'id' => @gid, 'groups' => @campaign } },
+      mv = { 'GROUPINGS' => { 0 => { 'id' => @gid, 'groups' => campaign } } }
       r = @mc.list_subscribe({
       	:id => 'f2fab1dfd4',
       	:email_address => email,
