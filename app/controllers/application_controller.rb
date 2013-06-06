@@ -25,6 +25,17 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def verify_api_key
+   if params[:key].nil?
+     render :json => { :errors => "Invalid API key." }, :status => :forbidden
+   else
+     @key = ApiKey.find_by_key(params[:key])
+     if @key.nil?
+       render :json => { :errors => "Invalid API key." }, :status => :forbidden
+     end
+   end
+  end
+
   alias :std_redirect_to :redirect_to
   def redirect_to(*args)
     flash.keep

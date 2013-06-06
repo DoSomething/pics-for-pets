@@ -2,7 +2,8 @@ class PostsController < ApplicationController
   include Services
   include PostsHelper
 
-  before_filter :is_not_authenticated
+  before_filter :is_not_authenticated, :verify_api_key
+  skip_before_filter :verify_authenticity_token, :if => Proc.new { |c| c.request.format == 'application/json' }
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
 
   def record_not_found
