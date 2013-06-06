@@ -67,7 +67,7 @@ module Services
           gbit = @groups[campaign]
         end
 
-        gbit
+        gbitdefini
       end
 
       @campaign = campaign
