@@ -1,6 +1,33 @@
 // POSTS
 // -----
 $(function() {
+  // INITIALIZE FRIEND SELECTOR
+  TDFriendSelector.init();
+
+  friendselector = TDFriendSelector.newInstance({
+    maxSelection: 1,
+    autoDeselection: true,
+    friendsPerPage: 7,
+    callbackSubmit: function(selected, settings) {
+      friend = parseInt(selected[0]);
+
+      FB.ui({
+        'to': friend,
+        'method': 'feed',
+        'link': document.location.href,
+        'name': 'Want to adopt me?',
+        'caption': 'Pics for Pets',
+        'description': settings['name'] + ' is super cute and deserves a loving home.  Could you be ' + settings['name'] + '\'s new owner?',
+        'picture': settings['picture']
+      }, function(response) {
+        if (response && response.post_id) {
+          settings['share_elm'].text(++settings['share_count']);
+          $.post('/shares', { 'share': { 'post_id': settings['id'] } }, function(res) {});
+        }
+        $('html,body').animate({ scrollTop: $('.id-' + settings['id']).offset().top }, 'fast');
+      });
+    }
+  });
 
   // AUTOMATICALLY RESIZE BTN WIDTHS
   set_width = function(parent, child, width) {
@@ -15,28 +42,21 @@ $(function() {
   load_facebook = function() {
     // Remove previous click event
     $('.facebook-share').unbind('click');
-    $('.facebook-share').click(function() {
+    $('.facebook-share').click(function(e) {
       var $id = $(this).attr('data-id');
       var $name = $(this).parent().parent().find('span.name').text();
       var $picture = document.location.origin + $(this).parent().parent().find('img').attr('src');
       var $share_count = parseInt($(this).parent().find('.share-count').text());
       var $share_elm = $(this).parent().find('.share-count');
 
-      FB.ui({
-        'method': 'feed',
-        'link': document.location.href,
-        'name': 'Want to adopt me?',
-        'caption': 'Pics for Pets',
-        'description': $name + ' is super cute and deserves a loving home.  Could you be ' + $name + '\'s new owner?',
-        'picture': $picture
-      }, function(response) {
-        if (response && response.post_id) {
-          $share_elm.text(++$share_count);
-          $.post('/shares', { 'share': { 'post_id': $id } }, function(res) {});
-        }
-        $('html,body').animate({ scrollTop: $('.id-' + $id).offset().top }, 'fast');
+      e.preventDefault();
+      friendselector.showFriendSelector({
+        'id': $id,
+        'name': $name,
+        'picture': $picture,
+        'share_count': $share_count,
+        'share_elm': $share_elm
       });
-      return false;
     });
   };
 
