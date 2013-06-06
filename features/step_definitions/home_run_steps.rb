@@ -42,6 +42,11 @@ Then /element (.*) should show (.*)/ do |elm, content|
   e.should have_content content
 end
 
+Then /element (.*) should not show (.*)/ do |elm, content|
+  e = find(:css_selector, elm)
+  e.should_not have_content content
+end
+
 When /I fill in (.*) with (.*)/ do |elm, val|
   if val.include? 'mock:'
   	val.gsub(/mock\:/, '')
@@ -59,7 +64,7 @@ When /I fill out the image field/ do
   end
 end
 
-When /I fill out the rest of the form/ do
+When /I fill out the rest of the form and submit/ do
   find(:id, 'post_name').set 'Spot'
   find(:xpath, '//*[@id="post_animal_type"]/option[2]').click
   find(:id, 'post_shelter').set 'Shelter'
