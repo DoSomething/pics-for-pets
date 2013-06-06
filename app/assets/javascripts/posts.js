@@ -57,21 +57,6 @@ $(function() {
         'share_count': $share_count,
         'share_elm': $share_elm
       });
-      //FB.ui({
-      //  'method': 'feed',
-      //  'link': document.location.href,
-      //  'name': 'Want to adopt me?',
-      //  'caption': 'Pics for Pets',
-      //  'description': $name + ' is super cute and deserves a loving home.  Could you be ' + $name + '\'s new owner?',
-      //  'picture': $picture
-      //}, function(response) {
-      //  if (response && response.post_id) {
-      //    $share_elm.text(++$share_count);
-      //    $.post('/shares', { 'share': { 'post_id': $id } }, function(res) {});
-      //  }
-      //  $('html,body').animate({ scrollTop: $('.id-' + $id).offset().top }, 'fast');
-      //});
-      //return false;
     });
   };
 
