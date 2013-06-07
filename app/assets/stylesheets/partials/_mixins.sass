@@ -1,5 +1,7 @@
 // MIXINS
 // -----
+$med: 550px
+
 @mixin border-bottom-subtle
   border-bottom: $subtle-border
 
@@ -15,7 +17,7 @@
   text-transform: uppercase
   line-height: 1.5em
   letter-spacing: 0.05em
-  padding: 1.5em 0 1em
+  padding: 0.5em 0
 
 @mixin border-bottom-divider
   border-bottom: 5px solid #fff
@@ -29,8 +31,8 @@
   border: none
   padding: 0.5em
   +border-radius(3px)
-  abbr
-    display: none
+  @media only screen and (max-width: $med)
+    width: 90%
 
 @function em-calc($target)
   @return ($target/16)*1em

@@ -1,13 +1,31 @@
 // CTA
 // ---
+$large: 1000px
+$med: 700px
+
 .cta
   background: $cta-sbg
 
-  .btn /* @TODO - why is the padding off? this should be inherited */
-    display: inline-block
-    margin: 0 0 0 2em
-    padding: 0.35em 0px 0px
-
   .section-container
-    padding: 1em
-    width: 470px
+    width: 550px
+    padding: 1em 0
+    overflow: hidden
+
+  .btn
+    float: left
+    clear: none
+    padding: 0.35em 0px 0px
+    @media only screen and (max-width: $med)
+      margin: 0 auto
+      float: none
+
+  .btn.secondary
+    float: right
+    @media only screen and (max-width: $med)
+      margin: 3% auto 0
+      float: none
+
+  .btn.solo
+    margin: 0 auto
+    display: block
+    float: none

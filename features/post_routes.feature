@@ -46,13 +46,13 @@ Feature: Test pages
     Then the element .post-list should show Spot the kitten
 
     When I visit /dogs-PA
-    Then the element .post-list should show Oh, no!
+    Then the element .post-list should show We don't have
 
     When I visit /dogs
-    Then the element .post-list should show Oh, no!
+    Then the element .post-list should show We don't have
 
     When I visit /others-PA
-    Then the element .post-list should show Oh, no!
+    Then the element .post-list should show We don't have
 
     When I visit /others
-    Then the element .post-list should show Oh, no!
+    Then the element .post-list should show We don't have
