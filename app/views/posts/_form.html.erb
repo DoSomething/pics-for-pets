@@ -12,7 +12,7 @@
     </div>
   <% end %>
 
-  <% if !@post.image_file_name %> 
+  <% if !@post.image_file_name %>
     <%= f.input :image, required: true, wrapper_html: { class: 'form-item-first-name' } %>
     <%= f.input :top_text, wrapper_html: { class: 'form-item-top-text', id: 'form-item-top-text' } %>
     <%= f.input :bottom_text, wrapper_html: { class: 'form-item-bottom-text', id: 'form-item-bottom-text' } %>
@@ -21,6 +21,7 @@
         <div>Adopt me because...</div>
         <div class="yours"></div>
       </div>
+      <div id="placeholder_text"<p>Upload an image and it will appear here.</p></div> 
       <div id="bottom_text">
         <div>Adopt me because...</div>
         <div class="yours"></div>
