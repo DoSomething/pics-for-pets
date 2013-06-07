@@ -18,7 +18,7 @@
   </aside>
 
   <%= form_for(:session, :url => sessions_path, :html => { :class => 'form form-login', :id => 'login-form' }) do |f| %>
-    <%= link_to image_tag('/images/facebook.png'), '/auth/facebook' %>
+    <div class="facebook-connect"><%= link_to image_tag('/images/facebook.png'), '/auth/facebook' %></div>
     <%= f.label :username %>
     <%= f.text_field :username %>
     <%= f.label :password %>
@@ -28,7 +28,7 @@
   <% end %>
 
   <%= simple_form_for(:session, :url => sessions_path, :html => { :class => 'form form-registration right', :id => 'registration-form' }) do |f| %>
-    <%= link_to image_tag('/images/facebook.png'), '/auth/facebook' %>
+    <div class="facebook-connect"><%= link_to image_tag('/images/facebook.png'), '/auth/facebook' %></div>
     <%= f.input :first, wrapper_html: { class: 'form-item-first-name' } %>
     <%= f.input :last, wrapper_html: { class: 'form-item-last-name' } %>
     <%= f.input :email, wrapper_html: { class: 'form-item-email' } %>
