@@ -18,5 +18,7 @@ config/database.yml
 
 public/system/posts
 public/system/tmp
+public/assets
 
 spec/images/*
+.idea

@@ -8,7 +8,7 @@ connection: &connection
 development:
   <<: *connection
 
-test:
+test: &test
   <<: *connection
   database: create_and_share_test
 
@@ -18,3 +18,6 @@ production:
   pool: 5
   database: create_and_share
 
+
+cucumber:
+  <<: *test

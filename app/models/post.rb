@@ -1,8 +1,9 @@
 class Post < ActiveRecord::Base
-  attr_accessible :uid, :adopted, :bottom_text, :creation_time,
+  attr_accessible :uid, :adopted, :creation_time,
   	:flagged, :image, :name, :promoted,
   	:share_count, :shelter, :state,
-  	:story, :top_text, :animal_type, :update_time
+  	:story, :animal_type, :update_time,
+    :meme_text, :meme_position
 
   validates :name,    :presence => true
   validates :shelter, :presence => true
@@ -26,8 +27,10 @@ class Post < ActiveRecord::Base
   def strip_tags
     self.name = self.name.gsub(/\<[^\>]+\>/, '')
     self.shelter = self.shelter.gsub(/\<[^\>]+\>/, '')
-    self.top_text = self.top_text.gsub(/\<[^\>]+\>/, '')
-    self.bottom_text = self.bottom_text.gsub(/\<[^\>]+\>/, '')
+
+    if !self.meme_text.nil?
+      self.meme_text = self.meme_text.gsub(/\<[^\>]+\>/, '')
+    end
   end
 
   def self.as_csv
@@ -36,6 +39,22 @@ class Post < ActiveRecord::Base
       all.each do |item|
         csv << item.attributes.values_at(*column_names)
       end
+    end
+  end
+
+  after_save :touch_cache, :update_img
+  def touch_cache
+    # We need to clear all caches -- Every cache depends on the one before it.
+    Rails.cache.clear
+  end
+
+  def update_img
+    @post = Post.find(self.id)
+    image = @post.image.url(:gallery)
+    image = '/public' + image.gsub(/\?.*/, '')
+
+    if File.exists? Rails.root.to_s + image
+      PostsHelper.image_writer(image, @post.meme_text, @post.meme_position)
     end
   end
 end

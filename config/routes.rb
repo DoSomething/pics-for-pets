@@ -1,15 +1,19 @@
 CreateAndShare::Application.routes.draw do
-  resources :shares, :only => [:create]
   root :to => 'posts#index'
 
+  # Gate
   resources :sessions, :only => [:new, :create, :destroy]
-
-  match '/login',  to: 'sessions#new', :as => :login
+  match '/login',  to: 'sessions#new',     :as => :login
   match '/logout', to: 'sessions#destroy', :as => :logout
 
-  resources :posts
+  # Static
+  get '/start',   to: 'static_pages#start',   :as => :start
+  get '/gallery', to: 'static_pages#gallery', :as => :gallery
 
-  # TODO - GATE THESE PAGES BY NESTING THE ROUTES
+  resources :posts
+  resources :users, :only => [:create]
+  resources :shares, :only => [:create]
+
   match 'submit' => 'posts#new', :as => :real_submit_path
   match 'mypets' => 'posts#filter', :run => 'my', :as => :mypics
   match ':id' => 'posts#show', :constraints => { :id => /\d+/ }, :as => :show_post
@@ -20,6 +24,12 @@ CreateAndShare::Application.routes.draw do
   match 'autoimg' => 'posts#autoimg'
   match 'alterimg/:id' => 'posts#alterimg', :as => :alter_image
   match 'flag/:id' => 'posts#flag', :as => :flag
+  get 'submit/guide' => 'users#intent', :as => :intent
+  match 'sessions' => redirect('/login')
+
+  # FACEBOOK AUTH
+  match 'auth/:provider/callback' => 'sessions#fboauth'
+  match 'auth/failure' => redirect('/'), :notice => 'Login failed! Try again?'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

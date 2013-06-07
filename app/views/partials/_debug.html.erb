@@ -1,0 +1,11 @@
+<section class="debug">
+  <div class="section-container">
+    <% if !admin? %><h1 class="error">not admin</h1><% end %>
+    <% if admin? %><h1 class="message">admin</h1><% end %>
+    <% if !authenticated? %><h1 class="error">not authenticated</h1><% end %>
+    <% if authenticated? %><h1 class="message">authenticated</h1><% end %>
+    <p>uid: <span><%= session[:drupal_user_id]  %></span></p>
+    <p>status: <span><%= session[:drupal_user_role] %></span></p>
+  </div>
+</section>
+

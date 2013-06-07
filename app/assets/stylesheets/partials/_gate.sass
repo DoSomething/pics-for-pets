@@ -1,5 +1,8 @@
 // GATE
 // ----
+$first: 950px
+$second: 900px
+$third: 700px
 
 #login-form
   display: none
@@ -26,72 +29,86 @@ label
   border: 1px solid #ddd
   +border-radius(2px)
   +box-shadow(#ccc 0px 15px 20px -10px)
-  @media only screen and (max-width: 850px)
-    width: 96%
-    padding: 6% 6% 1% 6%
+
+  @media only screen and (max-width: $second)
+    width: 94%
+    border: none
+    margin: 0
+    padding: 3% 3% 10% 3%
+    overflow: hidden
+
+  @media only screen and (max-width: $third)
+    width: 100%
+    padding: 0 0 10% 0
 
 // CAMPAIGN STAT
 // -------------
 .gate header
   width: 100%
   overflow: hidden
+  @media only screen and (max-width: $first)
+    background: $campaign-main
   h1, h2
-    text-align: right
+    text-align: left
     float: right
-    width: 60%
+    width: 50%
+    @media only screen and (max-width: $first)
+      display: none
   h1
     font-size: 44px
     font-weight: 600
-    margin: 0.4em 0 0 0
     text-transform: uppercase
     color: $campaign-main
   h2
     font-size: 1em
     font-weight: 500
-    margin: 0.5em 0.3em 0 0
 
   .logo-ds
     float: left
     width: 28%
+    @media only screen and (max-width: $first)
+      display: none
 
-  @media only screen and (max-width: 650px)
-    float: none
+  .logo-mobile
+    display: none
+    @media only screen and (max-width: $first)
+      display: block
+      margin: 0 auto
+      width: 80%
+      max-width: 300px
+
+  @media only screen and (max-width: $second)
+    width: 100%
+    padding: 2% 0
     h1
-      margin: 0.5em 0 0 0
       font-size: em-calc(31)
     h2
       margin: 0.1em 0.2em 0 0
       font-size: em-calc(19)
+      font-weight: 400
+
+  @media only screen and (max-width: $third)
+    h1, h2
+      width: 98%
+
     .log-ds
       width: 25%
 
-  @media only screen and (max-width: 530px)
-    h1
-      margin: 0.2em 0 0 0
-
 // HOW IT WORKS
 // ------------
-.gate aside
+.gate aside.desktop
   float: left
   width: 45%
   margin: 13% 0 0 -8%
-  padding: 1em
+  padding: 3%
   position: relative
   background: $campaign-main
+  @media only screen and (max-width: $first)
+    display: none
   h1
     font-size: em-calc(25)
     color: lighten($off-black, 10)
     text-transform: uppercase
-  &:after /* triangle effect */
-    position: absolute
-    right: -29px
-    top: 0
-    content: ""
-    width: 0px
-    height: 0px
-    border-style: solid
-    border-width: 240px 30px 0 0
-    border-color: $campaign-main transparent transparent transparent
   ol
     list-style: decimal
     margin: 0 0 0 1em
@@ -100,20 +117,13 @@ label
     padding: 0.5em 0
     color: #fff
 
-  @media only screen and (max-width: 865px)
-    padding: 1em 1em 1em 7%
-
-  @media only screen and (max-width: 650px)
-    float: none
-    margin: 0
-    padding: 3%
-    width: 95%
-    background: none
-    +box-shadow(none)
-    &:after
-      border: none
-    h2
-      color: $off-black
+.gate aside.mobile
+  display: none
+  h2
+    font-size: 1.2em
+    padding: 1em
+  @media only screen and (max-width: $first)
+    display: block
 
 // FOOTER
 // ------
@@ -130,6 +140,10 @@ label
     text-align: center
   a
     text-decoration: underline
+  @media only screen and (max-width: $third)
+    width: 90%
+    padding: 0
+    left: 5%
 
 // LOGIN & REG. FORMS
 // ------------------
@@ -139,9 +153,13 @@ label
   padding: 0
   width: 100%
   box-shadow: none
-  margin: 0 0 2% 0
+  margin: 3% 0
   float: right
   width: 50%
+  @media only screen and (max-width: $first)
+    width: 96%
+    margin: 2%
+    float: left
   label
     text-transform: lowercase
     font-weight: 400
@@ -155,9 +173,6 @@ label
     width: 6em
     float: left
     margin: 0.5em 0 1em 0
-
-  .under-13-field
-    padding: 0
 
   .form-item-parent-email
     margin: 0.5em 0 0 0
@@ -176,7 +191,7 @@ label
     width: 40%
 
   .form-item-last-name
-    width: 50%
+    width: 48%
     margin: 0 0 0 10%
 
   #edit-birthday
@@ -206,10 +221,17 @@ label
     font-size: 14px
     color: #222
 
-  @media only screen and (max-width: 650px)
+  @media only screen and (max-width: $third)
     float: none
-    margin: 5% auto
     width: 95%
+
+    .facebook-connect
+      clear: both
+      width: 100%
+      img
+        display: block
+        margin: 0 auto
+        width: 60%
 
   @media only screen and (max-width: 500px)
     margin: 8% auto 4%
@@ -233,7 +255,7 @@ label
 .gate input[type="number"],
 .gate input[type="password"]
   height: 2.5em
-  width: 100%
+  width: 96%
   margin: 0.3em 0 0.5em 0
   background: #fafafa
   border: none
