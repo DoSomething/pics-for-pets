@@ -30,10 +30,11 @@ label
   +border-radius(2px)
   +box-shadow(#ccc 0px 15px 20px -10px)
 
-  @media only screen and (max-width: $second)
+  @media only screen and (max-width: $first)
     width: 88%
+    max-width: 400px
     border: none
-    margin: 0 auto
+    margin: 2% auto
     padding: 3% 3% 10% 3%
     overflow: hidden
     min-height: 200px
@@ -126,7 +127,7 @@ label
 // ------
 .gate footer
   clear: both
-  width: 95%
+  width: 88%
   padding: 3% 0 0 0
   position: absolute
   bottom: 1.5em
@@ -137,10 +138,6 @@ label
     text-align: center
   a
     text-decoration: underline
-  @media only screen and (max-width: $third)
-    width: 90%
-    padding: 0
-    left: 5%
 
 // LOGIN & REG. FORMS
 // ------------------
@@ -157,7 +154,7 @@ label
     width: 96%
     margin: 0 2%
     float: left
-    padding: 0 0 20% 0
+    padding: 0 0 10% 0
   label
     text-transform: lowercase
     font-weight: 400
@@ -171,7 +168,7 @@ label
     width: 6em
     float: left
     margin: 0.5em 0 1em 0
-    @media only screen and (max-width: $second)
+    @media only screen and (max-width: $first)
       clear: both
       max-width: 300px
       display: block
@@ -225,14 +222,14 @@ label
     font-size: 14px
     color: #222
 
-  @media only screen and (max-width: $second)
+  @media only screen and (max-width: $first)
     float: none
     width: 95%
 
     .facebook-connect
       clear: both
       width: 100%
-      margin: 0 0 2% 0
+      margin: 5% 0
       img
         display: block
         margin: 0 auto
