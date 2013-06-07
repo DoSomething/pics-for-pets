@@ -2,9 +2,9 @@
 //--------
 $large: 1000px
 $med: 550px
+$second: 800px
 
 .filters
-  display: none
   background: $filters-sbg
   label
     display: inline-block
@@ -13,7 +13,7 @@ $med: 550px
     color: $off-black
     margin: 0.3em 0 0 0
     padding: 0
-    @media only screen and (max-width: $med)
+    @media only screen and (max-width: $second)
       display: none
   select
     margin: 0.6em 2em 0.2em 0.5em
@@ -25,6 +25,9 @@ $med: 550px
     width: 750px
     padding: 1em 0
     overflow: hidden
+    @media only screen and (max-width: 800px)
+      width: 94%
+      padding: 1em 3%
 
   .btn
     margin: 0
