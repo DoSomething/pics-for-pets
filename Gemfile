@@ -35,7 +35,7 @@ group :development, :test do
   gem 'capybara'
   gem 'selenium-webdriver'
   gem 'headless'
-  gem 'cucumber-rails'
+  gem 'cucumber-rails', :require => false
   gem 'database_cleaner'
 end
 
