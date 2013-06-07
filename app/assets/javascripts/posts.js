@@ -29,6 +29,16 @@ $(function() {
     }
   });
 
+  // AUTOMATICALLY FORM IMAGE SIZE ON RESIZE
+  maintain_ratio = function(target) {
+    $target = $(target);
+    $target.height($target.width());
+    $(window).resize(function(){
+      $target.height($target.width());
+    });
+  }
+  maintain_ratio('#upload-preview');
+
   // AUTOMATICALLY RESIZE BTN WIDTHS
   set_width = function(parent, child, width) {
     $(parent).each(function() {

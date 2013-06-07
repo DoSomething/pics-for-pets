@@ -1,0 +1,4 @@
+<section class="utility-bar">
+  <% if Rails.env.development? %><%= link_to 'debug', '#', { :id => 'debug' } %><% end %>
+  <%= link_to 'logout', :logout, { :class => 'logout' } %>
+</section>

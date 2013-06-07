@@ -28,4 +28,37 @@ module ApplicationHelper
       (user_id && (!shares.nil? && shares.count > 0 || !posts.nil? && posts.count > 0))
     end
   end
+ 
+  # Make the URL human redable
+  def make_legible(path)
+
+    query = path.gsub(/\//, '')
+
+    if path.match(/-/)
+      # there is a pet type
+      query = query.split('-')
+      state = query[1]
+      type = query[0]
+
+      get_states.each do |name, abbr|
+        if abbr == state
+          state = name
+        end
+      end
+
+      "#{type} in #{state} yet"
+    elsif
+      # there is just a state
+      state = query
+
+      get_states.each do |name, abbr|
+        if abbr == state
+          state = name
+        end
+      end
+
+      "anything in #{state} yet" 
+    end
+  end
+
 end
