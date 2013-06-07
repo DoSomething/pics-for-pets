@@ -2,7 +2,8 @@ class PostsController < ApplicationController
   include Services
   include PostsHelper
 
-  before_filter :is_not_authenticated
+  before_filter :is_not_authenticated, :verify_api_key
+  skip_before_filter :verify_authenticity_token, :if => Proc.new { |c| c.request.format == 'application/json' }
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
 
   def record_not_found
@@ -241,14 +242,16 @@ class PostsController < ApplicationController
   # POST /posts
   # POST /posts.json
   def create
-    render :status => :forbidden unless authenticated?
+    if request.format.symbol != :json || authenticated?
+      render :status => :forbidden unless authenticated?
+      params[:post][:uid] = session[:drupal_user_id]
+    end
 
-    params[:post][:uid] = session[:drupal_user_id]
     @post = Post.new(params[:post])
 
     respond_to do |format|
       if @post.save
-        format.html { redirect_to alter_image_path(@post) }
+        format.html { redirect_to show_post_path(@post) }
         format.json { render json: @post, status: :created, location: @post }
       else
         format.html { render action: "new" }

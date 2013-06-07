@@ -1,8 +1,8 @@
 // @TODO - THIS FILE WAS THROWN TO TOGETHER, REFACTOR, MOVE INTO A PARTIAL, ETC.
 $med: 550px
 
-.form-item-top-text,
-.form-item-bottom-text
+.form-item-meme-text,
+.form-item-meme-position
   display: none
 
 #upload-preview
@@ -19,6 +19,9 @@ $med: 550px
     @media only screen and (max-width: $first)
       width: 100% !important
       height: 100% !important
+
+  &.loading
+    background: url(/images/loading.gif) center center no-repeat
 
   #top_text,
   #bottom_text
@@ -85,4 +88,11 @@ $med: 550px
   input.boolean
     float: left
     margin: 5px 10px 0 0
+
+.loading
+  display: none
+
+#image_error
+  color: #f7101b
+  display: none
 

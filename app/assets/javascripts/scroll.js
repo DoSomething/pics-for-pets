@@ -5,6 +5,11 @@ $(document).ready(function() {
 
   function in_view() {
     $('.inview').bind('inview', function(event, visible) {
+      if (count <= 10) {
+        $('.inview').remove();
+        return false;
+      }
+
       // Page + 1
       page++;
 
@@ -22,7 +27,9 @@ $(document).ready(function() {
             if (running < count) {
               in_view();
             }
-            // @Todo: throbber end
+            else {
+              $('.inview').remove();
+            }
           });
       }
       else {
@@ -35,7 +42,9 @@ $(document).ready(function() {
           if (running < count) {
             in_view();
           }
-          // @Todo: throbber end
+          else {
+            $('.inview').remove();
+          }
         });
       }
     });

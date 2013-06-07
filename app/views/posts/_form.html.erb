@@ -12,17 +12,21 @@
     </div>
   <% end %>
 
-  <% if !@post.image_file_name %>
-    <%= f.input :image, required: true, wrapper_html: { class: 'form-item-first-name' } %>
-    <%= f.input :top_text, wrapper_html: { class: 'form-item-top-text', id: 'form-item-top-text' } %>
-    <%= f.input :bottom_text, wrapper_html: { class: 'form-item-bottom-text', id: 'form-item-bottom-text' } %>
+  <% if !@post.image_file_name %> 
+    <%= f.input :image, required: true, wrapper_html: { class: 'form-item-first-name' }, input_html: { accept: 'image/jpeg,image/gif,image/png' } %>
+    <div id="image_error">Invalid file type.</div>
+    <%= f.input :meme_text, required: false, label: "Adopt me because... (optional)", wrapper_html: { class: 'form-item-meme-text', id: 'form-item-meme-text' } %>
+    <%= f.input :meme_position, required: false, label: "Text position", wrapper_html: { class: 'form-item-meme-position' }, :as => :select, :collection => [['Top', 'top'], ['Bottom', 'bottom']], include_blank: false, :selected => 'top' %>
+
     <div id="upload-preview">
-      <div id="top_text">
+      <div id="top_text" class="text-pos">
         <div>Adopt me because...</div>
         <div class="yours"></div>
       </div>
-      <div id="placeholder_text"<p>Upload an image and it will appear here.</p></div> 
-      <div id="bottom_text">
+      <div id="placeholder_text">
+        <span class="text">Upload an image and it will appear here.</span>
+      </div>
+      <div id="bottom_text" class="text-pos">
         <div>Adopt me because...</div>
         <div class="yours"></div>
       </div>
@@ -34,10 +38,10 @@
   <% end %>
   <%= f.input :name, label: "What is the animal's name?", wrapper_html: { class: 'form-item-cell' } %>
   <%= f.input :animal_type, wrapper_html: { class: 'form-item-pass' }, :as => :select, :collection => [['Cat', 'cat'], ['Dog', 'dog'], ['Other', 'other']], prompt: 'Choose a type', include_blank: false %>
-  <%= f.input :shelter, label: "What shelter is this animal at?", wrapper_html: { class: 'form-item-day' } %>
-  <%= f.input :state, label: "What state is the shelter in?", wrapper_html: { class: 'form-type-month' }, :as => :select, :collection => get_states, prompt: 'Choose a state', include_blank: false %>
-  <%= f.input :story, label: "Does this pet have a compelling story? Write it here.", required: false, wrapper_html: { class: 'form-item-year' } %>
+  <%= f.input :shelter, label: "What's the name of this animal's shelter?", wrapper_html: { class: 'form-item-day' } %>
+  <%= f.input :state, label: "What state is this shelter in?", wrapper_html: { class: 'form-type-month' }, :as => :select, :collection => get_states, prompt: 'Choose a state', include_blank: false %>
   <% if admin? %>
+    <%= f.input :story, label: "Does this pet have a compelling story? Write it here.", required: false, wrapper_html: { class: 'form-item-year' } %>
     <%= f.input :adopted, label: 'Adopted', :as => :boolean %>
     <%= f.input :flagged, label: 'Flagged', :as => :boolean %>
     <%= f.input :promoted, label: 'Promoted', :as => :boolean %>
