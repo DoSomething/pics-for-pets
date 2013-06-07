@@ -2,10 +2,10 @@
 // -----
 $(function() {
   var $login_form = $('#login-form');
-  var $login_link = $('#login-link');
+  var $login_link = $('.login-link');
 
   var $reg_form = $('#registration-form');
-  var $reg_link = $('#registration-link');
+  var $reg_link = $('.registration-link');
 
   $login_link.click(function() {
     $reg_form.hide();
