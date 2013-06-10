@@ -1,25 +1,75 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>We're sorry, but something went wrong (500)</title>
+  <title>Something went wrong! | Do Something</title>
   <style type="text/css">
-    body { background-color: #fff; color: #666; text-align: center; font-family: arial, sans-serif; }
-    div.dialog {
-      width: 25em;
-      padding: 0 4em;
-      margin: 4em auto 0 auto;
-      border: 1px solid #ccc;
-      border-right-color: #999;
-      border-bottom-color: #999;
+    body { 
+      background-color: #eee; 
+      color: #666; 
+      text-align: center; 
+      font-family: arial, sans-serif; 
     }
-    h1 { font-size: 100%; color: #f00; line-height: 1.5em; }
+    div.dialog {
+      width: 28em;
+      height: 26em;
+      background-color:#fff;
+      position:absolute;
+      left: 50%;
+      top: 50%;
+      margin: -15em 0 0 -15em;
+      border: 1px solid rgb(221, 221, 221);
+      border-radius: 2px;
+      -webkit-box-shadow: rgb(204, 204, 204) 0px 15px 20px -10px;
+      box-shadow: rgb(204, 204, 204) 0px 15px 20px -10px;
+    }
+    div.info{
+      background-color:#6AC8C5;
+      width: 36em;
+      position:absolute;
+      margin: 0em 0 0 -4em;
+      padding: 2em 0 1em 0;
+      border: 1px solid rgb(221, 221, 221);
+    }
+    div.help{
+      position:absolute;
+      bottom:1em;
+      width: 28em;
+    }
+    h1 { 
+      font-size: 32pt;
+      line-height: .5em;
+      color: #383735; 
+    }
+    h2{
+      line-height: .75em;
+      color:#999;
+    }
+    p{
+      margin: 0 auto;
+      color:#999;
+      font-size:8pt;
+      width:36em;
+    }
+    a:link, a:visited, a:active{
+      color:#4E7ABC;
+    }
   </style>
 </head>
 
 <body>
   <!-- This file lives in public/500.html -->
   <div class="dialog">
-    <h1>We're sorry, but something went wrong.</h1>
+    <h2>500 Internal Server Error.</h2>
+    <div class="info">
+      <a href="http://pics.dosomething.org/"><img src="images/logo-mobile.png"/></a>
+      <h1>It's not you. It's us.</h1>
+    </div>
+    <div class="help">
+      <p>Still can't find what you're looking for and need to contact us?
+        Text QUESTION to 38383 or send us an email to <a href="mailto:helpme@dosomething.org">helpme@dosomething.org</a>
+      </p>
+    </div>
+
   </div>
 </body>
 </html>
