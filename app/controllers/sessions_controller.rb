@@ -46,7 +46,7 @@ class SessionsController < ApplicationController
         User.login(session, @user['uid'], username, password)
         if User.logged_in?
           # Success!
-          if username.scan(/^([^\s]+)((?:[-a-z0-9]\.)[a-z]{2,})$/i)
+          if username.match(/\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i)
             # We can't send mobile commons if we don't have their cell phone #
             handle_mc(username, nil)
           end
@@ -71,7 +71,11 @@ class SessionsController < ApplicationController
           # Try to log in...
           User.login(session, @user.uid, username, password)
           if User.logged_in?
-            handle_mc(username, cell)
+
+            if username.match(/\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i)
+              # We can't send mobile commons if we don't have their cell phone #
+              handle_mc(username, nil)
+            end
             # It worked!
             flash[:message] = "You've logged in succesfully!"
             redirect_to :root
