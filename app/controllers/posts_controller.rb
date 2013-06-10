@@ -194,20 +194,29 @@ class PostsController < ApplicationController
 
   # Automatically uploads an image for the form.
   def autoimg
-    path = params[:file].tempfile.path()
-    name = params[:file].original_filename
-    dir = 'public/system/tmp'
+    valid_types = ['image/jpeg', 'image/gif', 'image/png']
+    file = params[:file]
 
-    if !File.exists? path
-      render json: { 'success' => false }
+    # Make tripl-y sure that we're upload a valid file.
+    if !valid_types.include?(file.content_type)
+      render json: { :success => false, :reason => 'Not a valid file.' }
     else
-      if File.exists? dir and File.exists? path
-        newfile = File.join(dir, name)
-        File.open(newfile, 'wb') { |f| f.write(params[:file].tempfile.read()) }
-      end
-    end
+      # We good? We good.
+      path = file.tempfile.path()
+      name = file.original_filename
+      dir = 'public/system/tmp'
 
-    render json: { 'success' => true, 'filename' => name }
+      if !File.exists? path
+        render json: { 'success' => false }
+      else
+        if File.exists? dir and File.exists? path
+          newfile = File.join(dir, name)
+          File.open(newfile, 'wb') { |f| f.write(file.tempfile.read()) }
+        end
+      end
+
+      render json: { :success => true, :filename => name }
+    end
   end
 
   # GET /alterimg/1

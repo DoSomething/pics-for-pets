@@ -61,6 +61,9 @@ $(document).ready(function() {
         if (res.success === true) {
           change_upload(res.filename);
         }
+        else {
+          $('#image_error').text(res.reason).show();
+        }
       }
     });
   });
