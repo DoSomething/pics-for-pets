@@ -46,6 +46,11 @@ class SessionsController < ApplicationController
         User.login(session, @user['uid'], username, password)
         if User.logged_in?
           # Success!
+          if username.scan(/^([^\s]+)((?:[-a-z0-9]\.)[a-z]{2,})$/i)
+            # We can't send mobile commons if we don't have their cell phone #
+            handle_mc(username, nil)
+          end
+
           flash[:message] = "You've logged in successfully!"
           redirect_to :root
         else
@@ -66,6 +71,7 @@ class SessionsController < ApplicationController
           # Try to log in...
           User.login(session, @user.uid, username, password)
           if User.logged_in?
+            handle_mc(username, cell)
             # It worked!
             flash[:message] = "You've logged in succesfully!"
             redirect_to :root
@@ -93,10 +99,13 @@ class SessionsController < ApplicationController
         # Are they logged in?
         if User.logged_in?
           # Yep!
+          handle_mc(email, cell)
+
           flash.now[:message] = 'Super! You\'ve registered successfully' + " #{response}"
           redirect_to :root
         else
           # Nope.
+          handle_mc(email, cell)
           flash.now[:error] = 'Oh no! Something went wrong while logging you in.  Try again?'
           redirect_to :login
         end
