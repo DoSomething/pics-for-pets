@@ -3,5 +3,5 @@
   <div class="share"><a href="#" class="facebook-share btn share medium" data-id="<%= @post.id %>"><span>Facebook</span></a><span class="share-count"><%= @post.share_count %></span></div>
   <div class="image"><%= image_tag @post.image(:gallery) %></div>
   <div class="name-loc"><span class="name"><%= @post.name %></span>, <%= @post.state %></div>
-  <div class="adopt-me">Adopt <%= @post.name %> at <%= link_to @post.shelter + ', ' + @post.state, 'http://www.petfinder.com/awo/index.cgi?location=' + @post.state + '&keyword=' + @post.shelter, :target => '_blank' %></div>
+  <div class="adopt-me">Adopt <%= @post.name %> at <%= link_to @post.shelter + ', ' + (!@post.city.nil? ? (@post.city + ', ') : '') + @post.state, 'http://www.petfinder.com/awo/index.cgi?location=' + @post.state + '&keyword=' + @post.shelter, :target => '_blank' %></div>
 </div>

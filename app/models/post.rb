@@ -1,7 +1,8 @@
 class Post < ActiveRecord::Base
   attr_accessible :uid, :adopted, :creation_time,
+
   	:flagged, :image, :name, :promoted,
-  	:share_count, :shelter, :state,
+  	:share_count, :shelter, :state, :city,
   	:story, :animal_type, :update_time,
     :meme_text, :meme_position,
     :crop_x, :crop_y, :crop_w, :crop_h
@@ -12,6 +13,7 @@ class Post < ActiveRecord::Base
   validates :name,    :presence => true
   validates :shelter, :presence => true
   validates :animal_type,    :presence => true
+  validates :city,    :presence => true
   validates :state,   :presence => true,
                       :length => { :maximum => 2 }
   validates :shelter, :presence => true

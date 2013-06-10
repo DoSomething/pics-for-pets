@@ -3,7 +3,6 @@ module Paperclip
     def transformation_command
       target = @attachment.instance
       if target.cropping?
-        p "crop"
         target.cropped = true
         original_geo = target.image_geometry(:original)
         if original_geo.width > original_geo.height

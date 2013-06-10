@@ -23,7 +23,7 @@ $(document).ready(function() {
     });
   };
 
-  function remove_crop(e) {
+  remove_crop = function(e) {
     if(e)
       e.preventDefault();
     $("#crop-container").remove();
@@ -31,50 +31,29 @@ $(document).ready(function() {
     $("body").off("keydown");
   }
 
-  function reset_img(e) {
+  reset_img = function(e) {
     e.preventDefault();
     $("#post_image").wrap('<form>').closest('form').get(0).reset();
     $("#post_image").unwrap();
+    $('#upload-preview span.text').show();
+    $('#upload-preview').removeClass('loading');
     remove_crop();
   }
 
-  function crop_upload(filename) {
+  crop_upload = function(filename) {
     //append necessary html and style
+    $('#upload-preview span.text').hide();
+    $('#upload-preview').addClass('loading');
     var overlay = $("<div></div>");
-    overlay.css({
-      position: "fixed",
-      top: 0,
-      left: 0,
-      height: "100%",
-      width: "100%",
-      background: "rgba(0,0,0,0.7)",
-      zIndex: "999"
-    });
     overlay.attr("id", "crop-overlay");
     overlay.appendTo("body");
     var container = $("<div></div>");
     container.attr("id", "crop-container");
-    container.css({
-      position: "fixed",
-      top: "50%",
-      left: "50%",
-      "max-height": "80%",
-      "max-width": "80%",
-      overflow: "scroll",
-      background: "white",
-      border: "2em solid white",
-      "border-radius": "1em",
-      transform: "translate(-50%, -50%)",
-      "-ms-transform": "translate(-50%, -50%)",
-      "-webkit-transform": "translate(-50%, -50%)",
-      zIndex: "1000"
-    });
     container.appendTo("body");
     var header = $('<h2>Squarify your image!</h2>');
     header.appendTo("#crop-container");
     var img_container = $("<div></div>");
     img_container.attr("id", "crop-img-container");
-    img_container.css({ padding: "5px" });
     img_container.appendTo("#crop-container");
     var img = $('<img />');
     img.load(function() {
@@ -85,23 +64,11 @@ $(document).ready(function() {
     });
     img.attr('src', '/system/tmp/' + filename);
     img.appendTo('#crop-img-container');
-    var crop_button = $("<a href='#' class='btn'>Crop</a>");
-    crop_button.css({
-      clear: "none",
-      "float": "left",
-      margin: "0.5em 0",
-      width: "46%",
-      marginLeft: "2%"
-    });
+    var crop_button = $("<a href='#' class='btn primary'>Crop</a>");
+    crop_button.attr("id", "crop-button");
     crop_button.appendTo('#crop-container');
     var cancel_button = $("<a href='#' class='btn secondary'>Cancel</a>");
-    cancel_button.css({
-      clear: "none",
-      "float": "right",
-      margin: "0.5em 0",
-      width: "46%",
-      marginRight: "2%"
-    });
+    cancel_button.attr("id", "cancel-button");
     cancel_button.appendTo('#crop-container');
 
     //add appropriate handlers
@@ -121,7 +88,7 @@ $(document).ready(function() {
     });
 
     //add crop ability
-    function update_crop(coords) {
+    update_crop = function(coords) {
       $("#crop_x").val(coords.x);
       $("#crop_y").val(coords.y);
       $("#crop_w").val(coords.w);
@@ -146,9 +113,6 @@ $(document).ready(function() {
       transform: "scale(" + (450 / $("#crop_w").val()) +")",
       marginLeft: (225 - $("#crop_w").val() / 2) + "px",
       marginTop: (225 - $("#crop_h").val() / 2) + "px",
-      zIndex: 0,
-      position: "absolute",
-      overflow: "hidden"
     });
     img_container.appendTo('#upload-preview');
     var img = $('<img />');
@@ -177,9 +141,6 @@ $(document).ready(function() {
         return false;
       }
 
-      $('#upload-preview span.text').hide();
-      $('#upload-preview').addClass('loading');
-
       var form_data = new FormData();
       form_data.append("file", file_data);
       $.ajax({
@@ -197,6 +158,10 @@ $(document).ready(function() {
           }
         }
       });
+    }
+    else {
+      $('#upload-preview span.text').show();
+      $('#upload-preview').removeClass('loading');
     }
   });
 

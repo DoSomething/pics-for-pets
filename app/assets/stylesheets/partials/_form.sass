@@ -95,3 +95,50 @@ $med: 550px
 #image_error
   color: #f7101b
   display: none
+
+//crop styles
+
+#crop-overlay
+  position: fixed
+  top: 0
+  left: 0
+  height: 100%
+  width: 100%
+  background: rgba(0,0,0,0.7)
+  zIndex: 999
+
+#crop-container
+  position: fixed
+  top: 50%
+  left: 50%
+  max-height: 80%
+  max-width: 80%
+  overflow: scroll
+  background: white
+  border: 2em solid white
+  border-radius: 1em
+  transform: translate(-50%, -50%)
+  -ms-transform: translate(-50%, -50%)
+  -webkit-transform: translate(-50%, -50%)
+  z-index: 1000
+
+@mixin popup-button($side)
+  clear: none
+  float: $side
+  margin: 0.5em 0
+  width: 46%
+  margin-#{$side}: 2%
+
+#crop-button
+  @include popup-button(left)
+
+#cancel-button
+  @include popup-button(right)
+
+#crop-img-container
+  padding: 5px
+
+#preview-img-container
+  position: absolute
+  overflow: hidden
+  z-index: 0
