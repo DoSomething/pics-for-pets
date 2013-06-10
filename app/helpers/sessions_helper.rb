@@ -2,6 +2,9 @@ module SessionsHelper
   include UsersHelper
   include Services
 
+  # Handles Facebook authentication.
+  # @param hash auth
+  #   A hash of data returned from Facebook.
   def handle_auth(auth)
     ##
     # Returned from Facebook (actual keys):
@@ -13,10 +16,10 @@ module SessionsHelper
     # birthday
     ##
 
-    # CHECK USERS TO SEE IF E/FBID EXISTS
-    if res = ruby_user_exists(auth['email'], auth['id'])
+    # CHECK USERS TO SEE IF FBID EXISTS
+    if res = User.exists?(nil, auth['email'])
       roles = { 1 => 'authenticated user' }
-      if res['is_admin']
+      if User.admin?(res['uid'])
         roles = { 1 => 'administrator', 2 => 'authenticated user' }
       end
 

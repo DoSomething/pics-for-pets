@@ -32,6 +32,11 @@ module ApplicationHelper
   end
  
   # Make the URL human redable
+  # @param string path (request.path)
+  #   The path that should be made legible.  Should follow these standards:
+  #   - /(cat|dog|other)s?
+  #   - /[A-Z]{2}
+  #   - /(cat|dog|other)s?-[A-Z]{2}
   def make_legible(path = request.path)
     # Get the path minus leading slash.
     query = path[1..-1] if path[0] == '/'
