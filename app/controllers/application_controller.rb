@@ -3,12 +3,17 @@ class ApplicationController < ActionController::Base
 
   include ApplicationHelper
 
+  # Confirms that the user is authenticated.  Redirects to root (/) if so.
+  # See SessionsController, line 5
   def is_authenticated
     if authenticated?
       redirect_to :root
     end
   end
 
+  # Checks if a user is *not* authenticated.  This is bypassed by using the JSON format,
+  # or sending a :bypass parameter through the route (not applicable for standard users --
+  # :bypass needs to be sent directly from code.)
   def is_not_authenticated
     unless authenticated? || request.format.symbol == :json || params[:bypass] === true
       redirect_to :login
@@ -16,6 +21,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  # Checks if a user is an administrator.
   def admin
     unless admin?
       flash[:error] = "error: this page is available to admin only - login below"
@@ -25,19 +31,26 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  # Verifies an API key for GET/POST/etc. requests.  Must be a valid API key found in the
+  # api_keys table.
   def verify_api_key
-   if request.format.symbol == :json
-     if params[:key].nil?
-       render :json => { :errors => "Invalid API key." }, :status => :forbidden
-     else
-       @key = ApiKey.find_by_key(params[:key])
-       if @key.nil?
-         render :json => { :errors => "Invalid API key." }, :status => :forbidden
-       end
-     end
-   end
+    # Confirm that it's a json request.  This is irrelevant otherwise.
+    if request.format.symbol == :json
+      # We must have a key, either way.  If no key, pass forbidden response.
+      if params[:key].nil?
+        render :json => { :errors => "Invalid API key." }, :status => :forbidden
+      else
+        # Find by key
+        @key = ApiKey.find_by_key(params[:key])
+        if @key.nil?
+          # Throw error if no key found.
+          render :json => { :errors => "Invalid API key." }, :status => :forbidden
+        end
+      end
+    end
   end
 
+  # Fixes a bug with the flashbag.
   alias :std_redirect_to :redirect_to
   def redirect_to(*args)
     flash.keep
