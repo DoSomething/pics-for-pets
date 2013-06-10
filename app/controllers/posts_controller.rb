@@ -8,14 +8,6 @@ class PostsController < ApplicationController
   # Ignores xsrf in favor of API keys for JSON requests.
   skip_before_filter :verify_authenticity_token, :if => Proc.new { |c| c.request.format == 'application/json' }
 
-  # Handy little method that renders the "not found" message, instead of an error.
-  rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
-
-  # Not found message.
-  def record_not_found
-    render 'not_found'
-  end
-
   # GET /posts
   # GET /posts.json
   def index

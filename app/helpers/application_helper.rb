@@ -32,34 +32,35 @@ module ApplicationHelper
   end
  
   # Make the URL human redable
-  def make_legible(path)
+  def make_legible(path = request.path)
+    # Get the path minus leading slash.
+    query = path[1..-1] if path[0] == '/'
 
-    query = path.gsub(/\//, '')
-
-    if path.match(/-/)
-      # there is a pet type
+    # Dual filter -- animal & state
+    if path.match(/(cat|dog|other)s?-[A-Z]{2}/)
       query = query.split('-')
       state = query[1]
       type = query[0]
 
       states = get_states
-      state = states[state.to_sym]
+      state = states[state.to_sym] || 'that state'
 
       "any #{type} in #{state} yet"
+    # State
     elsif path.match(/[A-Z]{2}/)
       # there is just a state
       states = get_states
 
-      state = states[query.to_sym]
+      state = states[query.to_sym] || 'that state'
 
       "anything in #{state} yet" 
+    # cat / dog / other
     elsif path.match(/(cat|dog|other)s?/)
       animal = query
       animal << 's' unless animal[-1, 1] == 's'
 
-      "any #{animal.titleize} yet"
+      "any #{animal} yet"
 
     end
   end
-
 end

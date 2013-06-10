@@ -3,6 +3,14 @@ class ApplicationController < ActionController::Base
 
   include ApplicationHelper
 
+  # Handy little method that renders the "not found" message, instead of an error.
+  rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
+
+  # Not found message.
+  def record_not_found
+    render 'not_found'
+  end
+
   # Confirms that the user is authenticated.  Redirects to root (/) if so.
   # See SessionsController, line 5
   def is_authenticated

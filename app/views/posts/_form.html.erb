@@ -40,7 +40,7 @@
   <%= f.input :animal_type, wrapper_html: { class: 'form-item-animal-type' }, :as => :select, :collection => [['Cat', 'cat'], ['Dog', 'dog'], ['Other', 'other']], prompt: 'Choose a type', include_blank: false %>
   <%= f.input :shelter, label: "What's the name of this animal's shelter?", wrapper_html: { class: 'form-item-shelter' } %>
   <%= f.input :city, label: "What city is this shelter in?", wrapper_html: { class: 'form-item-city' } %>
-  <%= f.input :state, label: "What state is this shelter in?", wrapper_html: { class: 'form-item-state' }, :as => :select, :collection => get_states, prompt: 'Choose a state', include_blank: false %>
+  <%= f.input :state, label: "What state is this shelter in?", wrapper_html: { class: 'form-item-state' }, :as => :select, :collection => get_states.invert, prompt: 'Choose a state', include_blank: false %>
   <% if admin? %>
     <%= f.input :story, label: "Does this pet have a compelling story? Write it here.", required: false, wrapper_html: { class: 'form-item-story' } %>
     <%= f.input :adopted, label: 'Adopted', :as => :boolean %>
