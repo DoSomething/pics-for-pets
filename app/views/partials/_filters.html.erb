@@ -19,7 +19,7 @@
       <option value="">All States</option>
       <%
         states = get_states
-        states.each do |state, key|
+        states.each do |key, state|
       %>
         <option value="<%= key %>"<%= ' selected="selected"' if params[:state] == key %>><%= state %></option>
       <% end %>
