@@ -1,0 +1,44 @@
+// START
+.start
+  img
+    width: 100%
+  h1, h2, p, li, label /* @TODO SET ALL FONTS TO WHITE; USE VARIABLE FOR COLOR */
+    color: #fff
+  h2 /* @TODO - MOVE THIS BACK UP TO A MIXIN; STANDARDIZE H2s ACROSS APP  */
+    letter-spacing: 0.01em
+    text-transform: uppercase
+    border-top: 6px solid #fff
+    padding: 0.5em 0 0 0
+    margin: 1em 0 0 0
+  li
+    list-style: disc
+    padding: 0.25em 0 0.25em 0.5em
+    margin: 0 0 0 1em
+  label
+    text-transform: uppercase
+    font-weight: 500
+    letter-spacing: 0.1em
+  input[type="number"]
+    +input-style-basic
+    display: inline-block
+    width: 3.5em !important
+    font-size: 1.1em
+    margin: 0 3em
+    padding: 0.4em 0.5em 1em
+    @media only screen and (max-width: 550px)
+      margin: 0 0.5em
+
+  .section-container
+    padding: 1em 0 0 0
+
+  .btn
+    display: inline-block
+    @media only screen and (max-width: 550px)
+      width: 95% !important
+      margin: 5% auto
+      display: block
+
+  .btn.secondary
+    @media only screen and (max-width: 550px)
+      width: 70% !important
+      margin: 5% auto 0

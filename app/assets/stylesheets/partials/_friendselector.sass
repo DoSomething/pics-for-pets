@@ -1,0 +1,179 @@
+#TDFriendSelector
+  display: none
+  width: 100%
+  padding: 10px 0 0
+  position: absolute
+  left: 0
+  top: 0
+  z-index: 1000
+  color: #333
+  font-family: "lucida grande", tahoma, verdana, arial, sans-serif
+  font-size: 11px
+
+  a, a:active, a:hover, a:visited
+    text-decoration: none
+    color: #3B5998
+
+  p, ul, li
+    margin: 0
+    padding: 0
+
+  li
+    list-style-type: none
+
+  .TDFriendSelector_clearfix:before,
+  .TDFriendSelector_clearfix:after
+    content: ""
+    display: table
+  .TDFriendSelector_clearfix:after
+    clear: both
+
+  .TDFriendSelector_clearfix
+    zoom: 1
+
+  .TDFriendSelector_dialog
+    width: 392px
+    padding: 10px
+    margin: 0 auto
+    position: relative
+    background: rgba(82, 82, 82, 0.7)
+    +border-radius(8px)
+
+  .TDFriendSelector_dialog
+    #TDFriendSelector_buttonClose
+      position: absolute
+      right: 18px
+      top: 15px
+      font-size: 16px
+
+    #TDFriendSelector_buttonClose,
+    #TDFriendSelector_buttonClose:active,
+    #TDFriendSelector_buttonClose:hover,
+    #TDFriendSelector_buttonClose:visited
+      color: #FFFFFF
+
+    .TDFriendSelector_form
+      border: 1px solid #3B5998
+
+    .TDFriendSelector_header
+      padding: 7px 10px
+      background: #6D84B4
+      color: #FFF
+      font-size: 14px
+      font-weight: bold
+
+      p
+        color: #fff
+        font-size: 11pt
+
+    .TDFriendSelector_content
+      background: #FFF
+      
+      p
+        padding: 10px
+        font-size: 11pt
+
+    .TDFriendSelector_searchContainer
+      margin-top: 10px
+      padding: 10px
+      background: #f1f1f1
+      border: solid #cacaca
+      border-width: 1px 0
+
+      .TDFriendSelector_selectedCountContainer
+        font-weight: bold
+        float: left
+        padding: 3px 0
+
+      #TDFriendSelector_searchField
+        float: right
+
+    .TDFriendSelector_friendsContainer
+      margin: 10px 0 0
+
+      .TDFriendSelector_friend
+        display: block
+        padding: 5px 10px
+        margin-bottom: 2px
+        border-bottom: 1px solid #cacaca
+        cursor: pointer
+
+        .TDFriendSelector_friendAvatar
+          float: left
+          height: 50px
+          width: 50px
+
+        .TDFriendSelector_friendName
+          float: left
+          font-size: 14px
+          font-weight: bold
+          padding: 17px 0 17px 20px
+          position: relative
+          width: 280px
+
+        .TDFriendSelector_friendSelect
+          display: none
+          position: absolute
+          right: 0
+          top: 19px
+          text-align: right
+          color: #666
+          font-size: 10px
+          font-weight: normal
+
+      .TDFriendSelector_friend:hover .TDFriendSelector_friendSelect
+        display: block
+
+      .TDFriendSelector_friend.TDFriendSelector_friendSelected
+        background: #f0f0f0
+
+      .TDFriendSelector_friend.TDFriendSelector_friendDisabled
+        cursor: default
+        +opacity(50)
+
+      .TDFriendSelector_friend.TDFriendSelector_friendDisabled:hover .TDFriendSelector_friendSelect
+        display: none
+
+      .TDFriendSelector_friend.TDFriendSelector_friendFiltered
+        display: none
+
+    .TDFriendSelector_footer
+      padding: 8px 10px
+      background: #F2F2F2
+      border-top: 1px solid #CCC
+
+      #TDFriendSelector_pagePrev,
+      #TDFriendSelector_pageNext
+        float: left
+        height: 21px
+        width: 22px
+        overflow: hidden
+        text-indent: -999em
+        background: transparent url(/images/tdfriendselector.png) no-repeat 0 0
+
+      #TDFriendSelector_pagePrev
+        background-position: -44px 0
+        margin-right: 2px
+
+      #TDFriendSelector_pageNext
+        margin-right: 6px
+
+      #TDFriendSelector_pagePrev.TDFriendSelector_disabled
+        background-position: -66px 0
+        cursor: default
+
+      #TDFriendSelector_pageNext.TDFriendSelector_disabled
+        background-position: -22px 0
+        cursor: default
+
+      .TDFriendSelector_pageNumberContainer
+        float: left
+        padding: 4px 0 0
+
+      #TDFriendSelector_buttonOK
+        float: right
+        background: #3B5998
+        color: #FFF
+        padding: 4px 20px 5px 20px
+        border: 1px solid
+        border-color: #D9DFEA #0E1F5B #0E1F5B #D9DFEA

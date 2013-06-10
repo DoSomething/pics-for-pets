@@ -12,6 +12,10 @@ gem 'simple_form'
 gem 'therubyracer'
 
 gem 'gibbon'
+gem 'omniauth-facebook'
+gem 'newrelic_rpm'
+
+gem 'dalli'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -30,6 +34,9 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'capybara'
   gem 'selenium-webdriver'
+  gem 'headless'
+  gem 'cucumber-rails', :require => false
+  gem 'database_cleaner'
 end
 
 gem 'jquery-rails'

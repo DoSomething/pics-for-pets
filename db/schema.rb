@@ -11,7 +11,13 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130529164516) do
+ActiveRecord::Schema.define(:version => 20130610145920) do
+
+  create_table "api_keys", :force => true do |t|
+    t.string   "key"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "posts", :force => true do |t|
     t.string   "image"
@@ -35,13 +41,36 @@ ActiveRecord::Schema.define(:version => 20130529164516) do
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
     t.integer  "uid"
+    t.string   "meme_text"
+    t.string   "meme_position"
+    t.string   "city"
   end
+
+  create_table "sessions", :force => true do |t|
+    t.string   "session_id", :null => false
+    t.text     "data"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "sessions", ["session_id"], :name => "index_sessions_on_session_id"
+  add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
 
   create_table "shares", :force => true do |t|
     t.integer  "uid"
     t.integer  "post_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+  end
+
+  create_table "users", :force => true do |t|
+    t.integer  "fbid",       :limit => 8
+    t.integer  "uid",        :limit => 8
+    t.string   "email"
+    t.datetime "created_at",              :null => false
+    t.datetime "updated_at",              :null => false
+    t.boolean  "is_admin"
+    t.boolean  "intent"
   end
 
 end

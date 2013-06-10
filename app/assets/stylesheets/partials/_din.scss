@@ -1,0 +1,42 @@
+/*
+ *
+ *  DIN FONT IMPORTS
+ *
+ */
+
+/* LIGHT */
+@font-face {
+  font-family: "din";
+  src: url('/assets/DINWeb-Light.eot');
+  src: url('/assets/DINWeb-Light.eot?iefix') format('eot'), url('/assets/DINWeb-Light.woff') format('woff');
+  font-style: normal;
+  font-weight: 200;
+}
+
+/* REGULAR */
+@font-face {
+  font-family: "din";
+  src: url('/assets/DINWeb.eot');
+  src: url('/assets/DINWeb.eot?iefix') format('eot'), url('/assets/DINWeb.woff') format('woff');
+  font-style: normal;
+  font-weight: false;
+}
+
+/* MEDIUM */
+@font-face {
+  font-family: "din";
+  src: url('/assets/DINWeb-Medium.eot');
+  src: url('/assets/DINWeb-Medium.eot?iefix') format('eot'), url('/assets/DINWeb-Medium.woff') format('woff');
+  font-style: normal;
+  font-weight: 500;
+}
+
+/* BOLD */
+@font-face {
+  font-family: "din";
+  src: url('/assets/DINWeb-Bold.eot');
+  src: url('/assets/DINWeb-Bold.eot?iefix') format('eot'), url('/assets/DINWeb-Bold.woff') format('woff');
+  font-style: normal;
+  font-weight: 600;
+}
+
