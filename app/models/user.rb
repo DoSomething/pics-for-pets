@@ -83,6 +83,13 @@ class User < ActiveRecord::Base
   end
 
   # Create a user within the rails environment.
+  #
+  # @param Hash parameters
+  #   A hash of parameters to send to User.new (creates the user within rails)
+  # @param string username
+  #   The username (or email) of the person to create.
+  # @param string password
+  #   The password of the person to create.
   def self.create(parameters, username, password)
     response = Services::Auth.login(username, password)
     if response.code == 200 && response.kind_of?(Hash)
@@ -108,6 +115,11 @@ class User < ActiveRecord::Base
   end
 
   # Does a user already exist within the rails database?
+  #
+  # @param integer uid
+  #   The user ID of the person to check against.
+  # @param string email (nil)
+  #   The (optional) email of the person to check.
   def self.exists?(uid, email = nil)
     if !uid.nil?
       @c = User.find_by_uid(uid)
