@@ -18,6 +18,7 @@ module SessionsHelper
 
     # CHECK USERS TO SEE IF FBID EXISTS
     if res = ruby_user_exists(auth['email'], auth['id'])
+      roles = { 1 => 'authenticated user' }
       if res['is_admin']
         roles = { 1 => 'administrator', 2 => 'authenticated user' }
       end
