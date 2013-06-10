@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130606151830) do
+ActiveRecord::Schema.define(:version => 20130610145920) do
 
   create_table "api_keys", :force => true do |t|
     t.string   "key"
@@ -43,6 +43,7 @@ ActiveRecord::Schema.define(:version => 20130606151830) do
     t.integer  "uid"
     t.string   "meme_text"
     t.string   "meme_position"
+    t.string   "city"
   end
 
   create_table "sessions", :force => true do |t|
