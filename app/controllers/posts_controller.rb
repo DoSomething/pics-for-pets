@@ -192,6 +192,24 @@ class PostsController < ApplicationController
     end
   end
 
+  # Automatically uploads an image for the form.
+  def autoimg
+    path = params[:file].tempfile.path()
+    name = params[:file].original_filename
+    dir = 'public/system/tmp'
+
+    if !File.exists? path
+      render json: { 'success' => false }
+    else
+      if File.exists? dir and File.exists? path
+        newfile = File.join(dir, name)
+        File.open(newfile, 'wb') { |f| f.write(params[:file].tempfile.read()) }
+      end
+    end
+
+    render json: { 'success' => true, 'filename' => name }
+  end
+
   # GET /alterimg/1
   # Alters image by adding top and bottom text, within semi-transparent block.
   def alterimg
