@@ -1,16 +1,7 @@
 module PostsHelper
-  def cache_list_add(item)
-    @cache_list = Rails.cache.read 'cache-list'
-    if !@cache_list.is_a? Array
-      @cache_list = []
-    end
-
-    if !@cache_list.include? item
-      @cache_list.push item
-      Rails.cache.write 'cache-list', @cache_list
-    end
-  end
-
+  # Finds the break points in a string, given 450px width.  Denotes those breakpoints with '||'
+  # @param string text
+  #   The string that should be broken.
   def self.find_break_points(text)
 	  count = position = 0
 	  text.scan(/./).each do |c|
@@ -29,6 +20,14 @@ module PostsHelper
 
 	  text
   end
+
+  # Writes text to an image.
+  # @param string path
+  #   The path to the image that should have text written on it.
+  # @param string meme_text
+  #   The text that should be written on the image.
+  # @param string meme_position
+  #   The position (top or bottom) that the text should be placed on the image.
   def self.image_writer(path, meme_text, meme_position)
   	path = Rails.root.to_s + path
   	path = path.gsub(/\?.*/i, '')
@@ -44,6 +43,7 @@ module PostsHelper
       end
     end
 
+    # Top text
     if !the_top_text.empty?
       top_text = self.find_break_points(the_top_text)
       top_text = 'Adopt me because...||' + top_text
@@ -72,14 +72,16 @@ module PostsHelper
             -annotate +0-0 "''' + top_text + '''" \
         ''' + path + '''
       '''
-      end
+    end
 
-      if !the_bottom_text.empty?
-        bottom_text = self.find_break_points(the_bottom_text)
-        bottom_text = 'Adopt me because...||' + bottom_text
-        bottom_joined = bottom_text.split('||')
-        bottom_text = bottom_joined.join("\n")
-        bottom_height = (bottom_joined.count * 25) + 10
+    # Bottom text
+    if !the_bottom_text.empty?
+      bottom_text = self.find_break_points(the_bottom_text)
+      bottom_text = 'Adopt me because...||' + bottom_text
+      bottom_joined = bottom_text.split('||')
+      bottom_text = bottom_joined.join("\n")
+      bottom_height = (bottom_joined.count * 25) + 10
+
       # Bottom text box
       system '''
         convert ''' + path + ''' \
@@ -101,15 +103,6 @@ module PostsHelper
             -annotate +0-0 "''' + bottom_text + '''" \
         ''' + path + '''
       '''
-    end
-  end
-
-  module Scripts
-    def self.count
-      Post.all.count
-    end
-    def self.latest
-      Post.where(:filter => false).limit(10).last!.created_at
     end
   end
 end
