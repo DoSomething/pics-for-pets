@@ -57,7 +57,17 @@ class User < ActiveRecord::Base
     end
   end
 
-  def self.login(session, uid, username, password, roles = nil)
+  # Log in a user if they exist.
+  #
+  # @param object session
+  #   The session object, so we can log the user in.
+  # @param integer uid
+  #   The user ID to log in.
+  # @param string username
+  #   The username (or email) of the person trying to log in.
+  # @param string password
+  #   The password of the user.
+  def self.login(session, uid, username, password)
     if @exists = self.exists?(uid)
       response = Services::Auth.login(username, password)
       if response.code == 200 && response.kind_of?(Hash)
@@ -72,6 +82,7 @@ class User < ActiveRecord::Base
     end
   end
 
+  # Create a user within the rails environment.
   def self.create(parameters, username, password)
     response = Services::Auth.login(username, password)
     if response.code == 200 && response.kind_of?(Hash)
@@ -91,9 +102,12 @@ class User < ActiveRecord::Base
     end
   end
 
+  # Did it successfully create?
   def self.created?
   	@@created || false
   end
+
+  # Does a user already exist within the rails database?
   def self.exists?(uid, email = nil)
     if !uid.nil?
       @c = User.find_by_uid(uid)
@@ -107,16 +121,24 @@ class User < ActiveRecord::Base
       { 'uid' => @c.uid }
     end
   end
+
+  # Is the user an administrator?
   def self.admin?(uid)
     u = User.find_by_uid(uid)
     !u.is_admin.nil?
   end
+
+  # Is the user logged in? (this is set to true from the login method)
   def self.logged_in?
     @@logged_in || false
   end
+
+  # Is the user registered? (this is set to true from the register method)
   def self.registered?
     @@registered || false
   end
+
+  # Was there an error while setting up everything?
   def self.error?
     if @errors.nil?
       false
