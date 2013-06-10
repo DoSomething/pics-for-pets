@@ -197,24 +197,27 @@ class PostsController < ApplicationController
     valid_types = ['image/jpeg', 'image/gif', 'image/png']
     file = params[:file]
 
-    # Make tripl-y sure that we're upload a valid file.
+    # Make tripl-y sure that we're uploading a valid file.
     if !valid_types.include?(file.content_type)
       render json: { :success => false, :reason => 'Not a valid file.' }
     else
-      # We good? We good.
+      # Basic variables.
       path = file.tempfile.path()
       name = file.original_filename
       dir = 'public/system/tmp'
 
+      # This shouldn't happen.
       if !File.exists? path
-        render json: { 'success' => false }
+        render json: { :success => false, :reason => "Your file didn't upload properly.  Try again." }
       else
+        # Write the file to the tmp directory.
         if File.exists? dir and File.exists? path
           newfile = File.join(dir, name)
           File.open(newfile, 'wb') { |f| f.write(file.tempfile.read()) }
         end
       end
 
+      # Render success.
       render json: { :success => true, :filename => name }
     end
   end
