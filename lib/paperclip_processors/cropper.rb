@@ -5,11 +5,7 @@ module Paperclip
       if target.cropping?
         target.cropped = true
         original_geo = target.image_geometry(:original)
-        if original_geo.width > original_geo.height
-          ratio = original_geo.height / 450
-        else
-          ratio = original_geo.width / 450
-        end
+        ratio = original_geo.width / target.crop_dim_w.to_i
         super.unshift(" -crop #{(target.crop_w.to_i * ratio).round}x#{(target.crop_h.to_i * ratio).round}+#{(target.crop_x.to_i * ratio).round}+#{(target.crop_y.to_i * ratio).round}")
       else
         super

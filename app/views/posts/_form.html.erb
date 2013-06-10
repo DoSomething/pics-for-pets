@@ -25,7 +25,7 @@
     <%= f.input :meme_position, required: false, label: "Text position", wrapper_html: { class: 'form-item-meme-position' }, :as => :select, :collection => [['Top', 'top'], ['Bottom', 'bottom']], include_blank: false, :selected => 'top' %>
 
     <!-- #hidden fields for cropping -->
-    <% for attribute in [:crop_x, :crop_y, :crop_w, :crop_h] %>
+    <% for attribute in [:crop_x, :crop_y, :crop_w, :crop_h, :crop_dim_w] %>
     <%= f.hidden_field attribute, :id => attribute %>
     <% end %>
 
