@@ -13,6 +13,7 @@ def build_post
     post.share_count = 0
     post.shelter = 'Cats'
     post.state = 'PA'
+    post.city = 'Pittsburgh'
     post.story = "This is a story"
     post.animal_type = 'cat'
   post.save
