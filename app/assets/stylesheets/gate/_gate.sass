@@ -1,0 +1,33 @@
+// GATE
+// ----
+$first: 950px
+$second: 900px
+$third: 700px
+
+// Base gate styling
+body
+  background: $gate-page-bg
+  width: 100%
+
+.gate
+  position: relative
+  float: none
+  min-height: 900px
+  width: 800px
+  margin: 2% auto
+  padding: 3% 3% 1% 3%
+  background-color: $gate-sbg-color
+  background-image: url($gate-sbg-image)
+  border: 1px solid #ddd
+  +border-radius(2px)
+  +box-shadow(#ccc 0px 15px 20px -10px)
+
+  @media only screen and (max-width: $first)
+    width: 88%
+    max-width: 400px
+    border: none
+    margin: 2% auto
+    padding: 3% 3% 10% 3%
+    overflow: hidden
+    min-height: 200px
+

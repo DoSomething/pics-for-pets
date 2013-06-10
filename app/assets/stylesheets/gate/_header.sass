@@ -1,0 +1,53 @@
+// HEADER
+// ------
+.gate header
+  width: 100%
+  overflow: hidden
+  h1, h2
+    text-align: left
+    float: right
+    width: 50%
+    @media only screen and (max-width: $first)
+      display: none
+  h1
+    font-size: 44px
+    font-weight: 600
+    text-transform: uppercase
+    color: $campaign-main
+  h2
+    font-size: 1em
+    font-weight: 500
+
+  .logo-ds
+    float: left
+    width: 28%
+    @media only screen and (max-width: $first)
+      display: none
+
+  .logo-mobile
+    display: none
+    @media only screen and (max-width: $first)
+      display: block
+      margin: 0 auto
+      width: 80%
+      max-width: 300px
+
+  // Header
+  @media only screen and (max-width: $first)
+    background: $campaign-main
+    width: 100%
+    padding: 20px 0
+    h1
+      font-size: em-calc(31)
+    h2
+      margin: 0.1em 0.2em 0 0
+      font-size: em-calc(19)
+      font-weight: 400
+
+  @media only screen and (max-width: $third)
+    h1, h2
+      width: 98%
+
+    .log-ds
+      width: 25%
+
