@@ -11,17 +11,22 @@
  *= require_self
  */
 
-// General-use libraries and partials
+// General-use libraries and globals
 @import 'compass/css3'
-@import 'partials/reset'
+@import 'globals/reset'
 
 // Variables, mixins and general classes
-@import 'partials/din'
-@import 'partials/variables'
-@import 'partials/mixins'
-@import 'partials/typography'
-@import 'partials/buttons'
-@import 'partials/base'
+@import 'globals/din'
+@import 'globals/variables'
+@import 'globals/mixins'
+@import 'globals/typography'
+@import 'globals/buttons'
+@import 'globals/base'
 
 // Gate styles
-@import 'partials/gate'
+@import 'gate/gate'
+@import 'gate/header'
+@import 'gate/notifications'
+@import 'gate/aside'
+@import 'gate/forms'
+@import 'gate/footer'
