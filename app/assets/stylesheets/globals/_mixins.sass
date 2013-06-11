@@ -37,3 +37,10 @@ $med: 550px
 @function em-calc($target)
   @return ($target/16)*1em
 
+@mixin popup-button($side)
+  clear: none
+  float: $side
+  margin: 5px 0 0 0
+  width: 46%
+  height: 20%
+  margin-#{$side}: 2%

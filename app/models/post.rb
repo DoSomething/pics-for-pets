@@ -1,9 +1,13 @@
 class Post < ActiveRecord::Base
   attr_accessible :uid, :adopted, :creation_time,
-    :flagged, :image, :name, :promoted,
-    :share_count, :shelter, :state, :city,
-    :story, :animal_type, :update_time,
-    :meme_text, :meme_position
+
+  	:flagged, :image, :name, :promoted,
+  	:share_count, :shelter, :state, :city,
+  	:story, :animal_type, :update_time,
+    :meme_text, :meme_position,
+    :crop_x, :crop_y, :crop_w, :crop_h, :crop_dim_w
+
+  attr_accessor :crop_x, :crop_y, :crop_w, :crop_h, :cropped, :crop_dim_w
 
   validates :name,    :presence => true
   validates :shelter, :presence => true
@@ -13,7 +17,7 @@ class Post < ActiveRecord::Base
                       :length => { :maximum => 2 }
   validates :shelter, :presence => true
 
-  has_attached_file :image, :styles => { :gallery => '450x450!' }, :default_url => '/images/:style/default.png'
+  has_attached_file :image, :styles => { :gallery => '450x450!' }, :default_url => '/images/:style/default.png', :processors => [:cropper]
   validates_attachment :image, :presence => true, :content_type => { :content_type => ['image/jpeg', 'image/png', 'image/gif'] }
 
   has_many :shares
@@ -57,5 +61,23 @@ class Post < ActiveRecord::Base
     if File.exists? Rails.root.to_s + image
       PostsHelper.image_writer(image, @post.meme_text, @post.meme_position)
     end
+  end
+
+  after_save :reprocess_image, :if => :cropping?
+  def cropping?
+    if self.cropped.nil?
+      !self.crop_x.blank? && !self.crop_y.blank? && !self.crop_w.blank? && !self.crop_h.blank?
+    end
+  end
+
+  def image_geometry(style = :original)
+    @geometry ||= {}
+    @geometry[style] ||= Paperclip::Geometry.from_file(image.path(style))
+  end
+
+  private
+
+  def reprocess_image
+    image.reprocess!
   end
 end
