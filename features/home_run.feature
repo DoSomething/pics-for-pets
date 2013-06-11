@@ -3,7 +3,7 @@ Feature: Home run
 
   Scenario: Show the login form
     When I visit /
-    Then the page should show Not a DoSomething.org member?
+    Then the page should show Need an account?
     When I click on register
     Then the page should show Already have an account?
 

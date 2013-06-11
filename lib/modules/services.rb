@@ -50,7 +50,11 @@ module Services
       @groups = Rails.cache.fetch 'mailchimp-groups' do
         gs = {}
 
-        groups = @mc.listInterestGroupings({ :id => 'f2fab1dfd4' })
+        begin
+          groups = @mc.listInterestGroupings({ :id => 'f2fab1dfd4' })
+        rescue
+          retry
+        end
         groups.each do |group|
           group['groups'].each do |g|
             gs[g['name']] = group['id']

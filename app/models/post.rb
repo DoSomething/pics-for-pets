@@ -18,10 +18,11 @@ class Post < ActiveRecord::Base
   validates :shelter, :presence => true
 
   has_attached_file :image, :styles => { :gallery => '450x450!' }, :default_url => '/images/:style/default.png', :processors => [:cropper]
-  validates_attachment :image, :presence => true, :content_type => { :content_type => ['image/jpeg', 'image/png', 'image/gif'] }
+  validates_attachment :image, :presence => true, :content_type => { :content_type => ['image/jpeg', 'image/png', 'image/gif'] }, :size => { :in => 0..1024.kilobytes }
 
   has_many :shares
 
+  # The number of elements to show per "page" in the infinite scroll.
   def self.per_page
     10
   end
@@ -38,6 +39,7 @@ class Post < ActiveRecord::Base
     end
   end
 
+  # Allows export-as-csv
   def self.as_csv
     CSV.generate do |csv|
       csv << column_names
@@ -47,12 +49,14 @@ class Post < ActiveRecord::Base
     end
   end
 
+  # Clears cache after a new post.
   after_save :touch_cache, :update_img
   def touch_cache
     # We need to clear all caches -- Every cache depends on the one before it.
     Rails.cache.clear
   end
 
+  # Writes text to image.
   def update_img
     @post = Post.find(self.id)
     image = @post.image.url(:gallery)

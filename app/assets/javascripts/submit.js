@@ -171,6 +171,9 @@ $(document).ready(function() {
           if (res.success === true) {
             crop_upload(res.filename);
           }
+          else {
+            $('#image_error').text(res.reason).show();
+          }
         }
       });
     }
