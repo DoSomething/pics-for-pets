@@ -14,7 +14,7 @@ $(function() {
       FB.ui({
         'to': friend,
         'method': 'feed',
-        'link': document.location.href,
+        'link': 'http://pics.dosomething.org/' + settings['id'],
         'name': 'Want to adopt me?',
         'caption': 'Pics for Pets',
         'description': settings['name'] + ' is super cute and deserves a loving home.  Could you be ' + settings['name'] + '\'s new owner?',

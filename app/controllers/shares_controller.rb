@@ -1,7 +1,9 @@
 class SharesController < ApplicationController
   # POST /shares
-  # POST /shares.json
   def create
+    # Fail if you're not authenticated.
+    render :status => :forbidden unless authenticated?
+
     # Note: we can't put this in a model.  Models can't access the session variable.
     params[:share][:uid] = session[:drupal_user_id]
     @share = Share.new(params[:share])

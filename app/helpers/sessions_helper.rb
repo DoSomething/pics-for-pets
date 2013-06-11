@@ -2,6 +2,9 @@ module SessionsHelper
   include UsersHelper
   include Services
 
+  # Handles Facebook authentication.
+  # @param hash auth
+  #   A hash of data returned from Facebook.
   def handle_auth(auth)
     ##
     # Returned from Facebook (actual keys):
@@ -13,7 +16,7 @@ module SessionsHelper
     # birthday
     ##
 
-    # CHECK USERS TO SEE IF E/FBID EXISTS
+    # CHECK USERS TO SEE IF FBID EXISTS
     if res = ruby_user_exists(auth['email'], auth['id'])
       roles = { 1 => 'authenticated user' }
       if res['is_admin']
@@ -50,6 +53,25 @@ module SessionsHelper
           false
         end
       end
+    end
+  end
+
+  # Sends MailChimp / Mobile Commons messages to a user.
+  #
+  # @param string email
+  #   The email to send the message to.
+  # @param string mobile
+  #   A valid phone number to send a txt to.
+  ##
+  def handle_mc(email = nil, mobile = nil)
+    if !email.nil?
+      # MailChimp PicsforPets2013
+      Services::MailChimp.subscribe(email, 'PicsforPets2013')
+    end
+
+    if !mobile.nil?
+      # Mobile Commons 158551
+      Services::MobileCommons.subscribe(mobile, 158551)
     end
   end
 end
