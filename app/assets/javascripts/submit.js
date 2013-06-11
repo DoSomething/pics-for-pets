@@ -180,6 +180,8 @@ $(document).ready(function() {
     $('#upload-preview span').hide();
     img.appendTo('#preview-img-container');
 
+    $('#upload-preview').removeClass('loading');
+
     handle_text_change('post_meme_text');
 
     $('.form-item-meme-text, .form-item-meme-position').show();
