@@ -9,6 +9,7 @@ CreateAndShare::Application.routes.draw do
   # Static
   get '/start',   to: 'static_pages#start',   :as => :start
   get '/gallery', to: 'static_pages#gallery', :as => :gallery
+  get '/faq',     to: 'static_pages#faq',     :as => :faq
 
   resources :posts
   resources :users, :only => [:create]
