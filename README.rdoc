@@ -2,6 +2,8 @@
 
 This is Pics for Pets, built with Ruby on Rails.  Started off as a 20% project.  Completed by Maxwell Watson and Michael Chittenden.
 
+Available at http://pics.dosomething.org.
+
            ____,'`-, 
       _,--'   ,/::.; 
    ,-'       ,/::,' `---.___        ___,_ 
