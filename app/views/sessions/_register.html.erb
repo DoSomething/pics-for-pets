@@ -1,0 +1,15 @@
+<%= simple_form_for(:session, :url => sessions_path, :html => { :class => 'form form-registration right', :id => 'registration-form' }) do |f| %>
+  <div class="facebook-connect"><%= link_to image_tag('/images/facebook.png'), '/auth/facebook' %></div>
+  <%= f.input :first, wrapper_html: { class: 'form-item-first-name' } %>
+  <%= f.input :last, wrapper_html: { class: 'form-item-last-name' } %>
+  <%= f.input :email, wrapper_html: { class: 'form-item-email' } %>
+  <%= f.input :cell, wrapper_html: { class: 'form-item-cell' } %>
+  <%= f.input :password, wrapper_html: { class: 'form-item-pass' } %>
+  <%= f.label 'birthday' %>
+  <%= f.input :month, label: false, placeholder: 'MM', wrapper_html: { class: 'form-item-month' } %>
+  <%= f.input :day, label: false, placeholder: 'DD', wrapper_html: { class: 'form-item-day' } %>
+  <%= f.input :year, label: false, placeholder: 'YYYY', wrapper_html: { class: 'form-item-year' } %>
+  <%= f.submit 'submit', :name => 'form', :value => 'register', :class => 'btn primary large' %>
+  <p>Already have an account? <%= link_to 'log in', '#', :class => 'login-link' %></p>
+<% end %>
+

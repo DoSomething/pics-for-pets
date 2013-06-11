@@ -25,6 +25,7 @@ end
 When /I fill out the rest of the form and submit/ do
   find(:id, 'post_name').set 'Spot'
   find(:xpath, '//*[@id="post_animal_type"]/option[2]').click
+  find(:id, 'post_city').set 'Pittsburgh'
   find(:id, 'post_shelter').set 'Shelter'
   find(:xpath, '//*[@id="post_state"]/option[16]').click
 
@@ -44,6 +45,7 @@ Given /there is a post/ do
     post.share_count = 0
     post.shelter = 'Cats'
     post.state = 'PA'
+    post.city = 'Pittsburgh'
     post.story = "This is a story"
     post.animal_type = 'cat'
   post.save
