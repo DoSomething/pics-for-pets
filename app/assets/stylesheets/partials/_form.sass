@@ -13,12 +13,12 @@ $med: 550px
   margin: 2em auto
   border: 5px dashed #fff
   +border-radius(3px)
+  #preview-img-container
+    position: absolute
+    overflow: hidden
+    z-index: 0
   @media only screen and (max-width: $first)
     width: 95%
-  img
-    @media only screen and (max-width: $first)
-      width: 100% !important
-      height: 100% !important
 
   &.loading
     background: url(/images/loading.gif) center center no-repeat
@@ -118,25 +118,9 @@ $med: 550px
   -ms-transform: translate(-50%, -50%)
   -webkit-transform: translate(-50%, -50%)
   z-index: 1000
-
-@mixin popup-button($side)
-  clear: none
-  float: $side
-  margin: 5px 0 0 0
-  width: 46%
-  height: 20%
-  margin-#{$side}: 2%
-
-#crop-button
-  @include popup-button(left)
-
-#cancel-button
-  @include popup-button(right)
-
-#crop-img-container
-  padding: 5px
-
-#preview-img-container
-  position: absolute
-  overflow: hidden
-  z-index: 0
+  #crop-button
+    @include popup-button(left)
+  #cancel-button
+    @include popup-button(right)
+  #crop-img-container
+    padding: 5px

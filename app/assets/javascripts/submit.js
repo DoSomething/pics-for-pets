@@ -117,9 +117,19 @@ $(document).ready(function() {
       height: $("#crop_h").val(),
       transform: "scale(" + (preview_size / $("#crop_w").val()) +")",
       marginLeft: (Math.round(preview_size / 2) - $("#crop_w").val() / 2) + "px",
-      marginTop: (Math.round(preview_size / 2) - $("#crop_h").val() / 2) + "px",
+      marginTop: (Math.round(preview_size / 2) - $("#crop_h").val() / 2) + "px"
     });
     img_container.appendTo('#upload-preview');
+    $(window).resize(function() {
+      preview_size = $("#upload-preview").height();
+      img_container.css({
+        width: $("#crop_w").val(),
+        height: $("#crop_h").val(),
+        transform: "scale(" + (preview_size / $("#crop_w").val()) +")",
+        marginLeft: (Math.round(preview_size / 2) - $("#crop_w").val() / 2) + "px",
+        marginTop: (Math.round(preview_size / 2) - $("#crop_h").val() / 2) + "px"
+      });
+    });
     var img = $('<img />');
     img.attr('src', '/system/tmp/' + filename);
     img.css({
