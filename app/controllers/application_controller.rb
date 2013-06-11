@@ -24,6 +24,7 @@ class ApplicationController < ActionController::Base
   # :bypass needs to be sent directly from code.)
   def is_not_authenticated
     unless authenticated? || request.format.symbol == :json || params[:bypass] === true
+      session[:source] = request.path
       redirect_to :login
       false
     end
@@ -33,6 +34,7 @@ class ApplicationController < ActionController::Base
   def admin
     unless admin?
       flash[:error] = "error: this page is available to admin only - login below"
+      session[:source] = request.path
       redirect_to :login
       false
       # TODO - SHOULD WE LOG USERS OUT WHEN THEY LAND HERE? SESSION SHOULD BE EMPTY AT THIS POINT
