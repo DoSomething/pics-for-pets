@@ -13,12 +13,14 @@ Feature: Crop image
 	When I click id crop-button
 	Then the page should not have element #crop-overlay, #crop-container
 	And the page should have element #preview-img-container
+	And image field should be set to ruby.png
 
 	@javascript
 	Scenario Outline: Cancel upload
 	When I open the crop popup
 	And <action>
 	Then the page should not have element #crop-overlay, #crop-container, #preview-img-container
+	And image field should not be set
 
 	Examples:
 	| action |
