@@ -7,6 +7,7 @@ class SessionsController < ApplicationController
   layout 'gate'
 
   def new
+    @source = session[:source]
   end
 
   # GET /login
@@ -52,7 +53,9 @@ class SessionsController < ApplicationController
           end
 
           flash[:message] = "You've logged in successfully!"
-          redirect_to :root
+          source = session[:source] || :root
+          session[:source] = nil
+          redirect_to source
         else
           # Login fail
           flash[:error] = 'Invalid username / password'
@@ -78,7 +81,9 @@ class SessionsController < ApplicationController
             end
             # It worked!
             flash[:message] = "You've logged in succesfully!"
-            redirect_to :root
+            source = session[:source] || :root
+            session[:source] = nil
+            redirect_to source
           else
             # Nope...
             flash[:error] = "Invalid username / password"
@@ -104,9 +109,10 @@ class SessionsController < ApplicationController
         if User.logged_in?
           # Yep!
           handle_mc(email, cell)
-
           flash.now[:message] = 'Super! You\'ve registered successfully' + " #{response}"
-          redirect_to :root
+          source = session[:source] || :root
+          session[:source] = nil
+          redirect_to source
         else
           # Nope.
           handle_mc(email, cell)
@@ -130,7 +136,9 @@ class SessionsController < ApplicationController
     if handle_auth(auth)
       # It worked.  Bring 'em home.
       flash[:message] = "You are now connected through Facebook!"
-      redirect_to :root
+      source = session[:source] || :root
+      session[:source] = nil
+      redirect_to source
     else
       # No work.  Let's ask them to register by other means.
       flash.now[:error] = 'Auth failed! Please try again, or try registering through the form below.'

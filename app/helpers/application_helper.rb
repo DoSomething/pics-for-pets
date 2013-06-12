@@ -65,7 +65,9 @@ module ApplicationHelper
       animal << 's' unless animal[-1, 1] == 's'
 
       "any #{animal} yet"
-
+    # Front page
+    elsif path == '/' || path == ''
+      "anything yet"
     end
   end
 end

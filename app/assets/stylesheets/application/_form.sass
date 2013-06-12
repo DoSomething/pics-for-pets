@@ -105,7 +105,7 @@ $med: 550px
   height: 100%
   width: 100%
   background: rgba(0,0,0,0.7)
-  zIndex: 999
+  z-index: 999
 
 #crop-container
   position: fixed
@@ -117,6 +117,7 @@ $med: 550px
   transform: translate(-50%, -50%)
   -ms-transform: translate(-50%, -50%)
   -webkit-transform: translate(-50%, -50%)
+  -moz-transform: translate(-50%, -50%)
   z-index: 1000
   #crop-button
     @include popup-button(left)

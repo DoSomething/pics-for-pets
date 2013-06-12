@@ -2,9 +2,6 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.13'
 
-# Bundle edge Rails instead:
-# gem 'rails', :git => 'git://github.com/rails/rails.git'
-
 gem 'pg'
 gem 'paperclip'
 gem 'httparty'
@@ -37,6 +34,14 @@ group :development, :test do
   gem 'headless'
   gem 'cucumber-rails', :require => false
   gem 'database_cleaner'
+  gem 'rb-fsevent', :require => false if RUBY_PLATFORM =~ /darwin/i
+  gem 'guard-rspec'
+  gem 'guard-cucumber'
+  gem 'guard-livereload'
+  gem 'rack-livereload'
+  #gem 'guard-compass'
+  gem 'spork'
+  #gem 'guard-spork'
 end
 
 gem 'jquery-rails'

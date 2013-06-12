@@ -59,7 +59,10 @@ $(document).ready(function() {
     img.attr('src', '/system/tmp/' + filename);
     img.appendTo('#crop-img-container');
     img.load(function() {
-      img.css({height: ($(window).height() - header.height() - $("#crop-button").height() - 125) + "px"});
+      img.css({
+        height: ($(window).height() - header.height() - $("#crop-button").height() - 125) + "px",
+        width: "auto"
+      });
       if(img.width() > $(window).width() - 120)
         img.css({
           width: ($(window).width() - 120) + "px",
@@ -67,7 +70,7 @@ $(document).ready(function() {
         });
       $("#crop_dim_w").val(img.width());
       var cropbox_dim = img.width() > img.height() ? img.height() : img.width();
-      
+
       //add crop ability
       update_crop = function(coords) {
         $("#crop_x").val(coords.x);
@@ -76,11 +79,47 @@ $(document).ready(function() {
         $("#crop_h").val(coords.h);
       }
 
+      var jcrop_api;
+
       img.Jcrop({
         onChange: update_crop,
         onSelect: update_crop,
         setSelect: [0, 0, cropbox_dim, cropbox_dim],
         aspectRatio: 1
+      }, function() {
+        jcrop_api = this;
+      });
+
+      $(window).resize(function() {
+        var old_width = img.width();
+        var old_x = $("#crop_x").val();
+        var old_y = $("#crop_y").val();
+        var old_w = $("#crop_w").val();
+        var old_h = $("#crop_h").val();
+        jcrop_api.destroy();
+        img.css({
+          height: ($(window).height() - header.height() - $("#crop-button").height() - 125) + "px",
+          width: "auto"
+        });
+        if(img.width() > $(window).width() - 120)
+          img.css({
+            width: ($(window).width() - 120) + "px",
+            height: "auto"
+          });
+        $("#crop_dim_w").val(img.width());
+        var ratio = img.width() / old_width;
+        var new_x = Math.round(old_x * ratio);
+        var new_y = Math.round(old_y * ratio);
+        var new_w = Math.round(old_w * ratio);
+        var new_h = Math.round(old_h * ratio);
+        img.Jcrop({
+          onChange: update_crop,
+          onSelect: update_crop,
+          setSelect: [new_x, new_y, new_x + new_w, new_y + new_h],
+          aspectRatio: 1
+        }, function() {
+          jcrop_api = this;
+        });
       });
     });
     var crop_button = $("<a href='#' class='btn primary'>Crop</a>");
@@ -140,6 +179,8 @@ $(document).ready(function() {
     });
     $('#upload-preview span').hide();
     img.appendTo('#preview-img-container');
+
+    $('#upload-preview').removeClass('loading');
 
     handle_text_change('post_meme_text');
 
