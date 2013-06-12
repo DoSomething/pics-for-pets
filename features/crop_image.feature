@@ -1,13 +1,27 @@
 Feature: Crop image
 	We need to be able to crop uploaded images into 1:1 aspect ratio
 
-	@javascript
-	Scenario: Upload image
+	Background:
 	Given I am logged in
-	When I visit /submit
-	And I open the crop popup
+	And I visit /submit
+
+	@javascript
+	Scenario: Successfully crop a picture
+	When I open the crop popup
 	Then the page should show Squarify your image!
 
 	When I click id crop-button
 	Then the page should not have element #crop-overlay, #crop-container
 	And the page should have element #preview-img-container
+
+	@javascript
+	Scenario Outline: Cancel upload
+	When I open the crop popup
+	And <action>
+	Then the page should not have element #crop-overlay, #crop-container, #preview-img-container
+
+	Examples:
+	| action |
+	| I click id cancel-button |
+	| I click id crop-overlay |
+	| I send escape to "body" |
