@@ -73,8 +73,10 @@ $(function() {
     $('.facebook-share').click(function(e) {
       $fbid = FB.getUserID();
       if ($fbid == "") {
-        FB.login(function() {
-          self.handle_facebook_click($(this), e);
+        FB.login(function(response) {
+          if (response.authResponse) {
+            self.handle_facebook_click($(this), e);
+          }
         });
 
         return false;
