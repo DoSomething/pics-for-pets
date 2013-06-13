@@ -41,7 +41,7 @@ group :development, :test do
   gem 'rack-livereload'
   #gem 'guard-compass'
   gem 'spork'
-  #gem 'guard-spork'
+  gem 'guard-spork'
 end
 
 gem 'jquery-rails'
