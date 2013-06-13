@@ -10,7 +10,7 @@
     <div id="error_explanation">
       <h2><%= pluralize(@post.errors.count, "error") %> prohibited this post from being saved:</h2>
 
-      <ul>
+      <ul id="errors">
       <% @post.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
       <% end %>
@@ -18,7 +18,7 @@
     </div>
   <% end %>
 
-  <% if !@post.image_file_name %> 
+  <% if !@post.image_file_name or @post.errors.any? %>
     <%= f.input :image, required: true, wrapper_html: { class: 'form-item-first-name' }, input_html: { accept: 'image/jpeg,image/gif,image/png' } %>
     <div id="image_error">Invalid file type.</div>
     <%= f.input :meme_text, required: false, label: "Adopt me because... (optional)", wrapper_html: { class: 'form-item-meme-text', id: 'form-item-meme-text' } %>
