@@ -13,12 +13,12 @@ $med: 550px
   margin: 2em auto
   border: 5px dashed #fff
   +border-radius(3px)
+  #preview-img-container
+    position: absolute
+    overflow: hidden
+    z-index: 0
   @media only screen and (max-width: $first)
     width: 95%
-  img
-    @media only screen and (max-width: $first)
-      width: 100% !important
-      height: 100% !important
 
   &.loading
     background: url(/images/loading.gif) center center no-repeat
@@ -96,3 +96,32 @@ $med: 550px
   color: #f7101b
   display: none
 
+//crop styles
+
+#crop-overlay
+  position: fixed
+  top: 0
+  left: 0
+  height: 100%
+  width: 100%
+  background: rgba(0,0,0,0.7)
+  z-index: 999
+
+#crop-container
+  position: fixed
+  top: 50%
+  left: 50%
+  background: white
+  border: 25px solid white
+  border-radius: 10px
+  transform: translate(-50%, -50%)
+  -ms-transform: translate(-50%, -50%)
+  -webkit-transform: translate(-50%, -50%)
+  -moz-transform: translate(-50%, -50%)
+  z-index: 1000
+  #crop-button
+    @include popup-button(left)
+  #cancel-button
+    @include popup-button(right)
+  #crop-img-container
+    padding: 5px

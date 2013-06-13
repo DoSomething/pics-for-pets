@@ -1,3 +1,9 @@
+<!-- #hidden fields for cropping -->
+<% content_for(:head) do %>
+  <%= stylesheet_link_tag 'jquery.Jcrop.min' %>
+  <%= javascript_include_tag 'jquery.Jcrop.min' %>
+<% end %>
+
 <h2>tell us about your animal</h2>
 <%= simple_form_for(@post, :html => { :multipart => true, :class => "form form-submit right" }) do |f| %>
   <% if @post.errors.any? %>
@@ -17,6 +23,11 @@
     <div id="image_error">Invalid file type.</div>
     <%= f.input :meme_text, required: false, label: "Adopt me because... (optional)", wrapper_html: { class: 'form-item-meme-text', id: 'form-item-meme-text' } %>
     <%= f.input :meme_position, required: false, label: "Text position", wrapper_html: { class: 'form-item-meme-position' }, :as => :select, :collection => [['Top', 'top'], ['Bottom', 'bottom']], include_blank: false, :selected => 'top' %>
+
+    <!-- #hidden fields for cropping -->
+    <% for attribute in [:crop_x, :crop_y, :crop_w, :crop_h, :crop_dim_w] %>
+    <%= f.hidden_field attribute, :id => attribute %>
+    <% end %>
 
     <div id="upload-preview">
       <div id="top_text" class="text-pos">
