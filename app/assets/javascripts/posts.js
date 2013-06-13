@@ -36,7 +36,7 @@ $(function() {
     $(window).resize(function(){
       $target.height($target.width());
     });
-  }
+  };
   maintain_ratio('#upload-preview');
 
   // AUTOMATICALLY RESIZE BTN WIDTHS
@@ -50,14 +50,12 @@ $(function() {
 
   // ABSTRACTS FACEBOOK CLICK FOR INFINITE SCROLL
   load_facebook = function() {
-    // Remove previous click event
-    $('.facebook-share').unbind('click');
-    $('.facebook-share').click(function(e) {
-      var $id = $(this).attr('data-id');
-      var $name = $(this).parent().parent().find('span.name').text();
-      var $picture = document.location.origin + $(this).parent().parent().find('img').attr('src');
-      var $share_count = parseInt($(this).parent().find('.share-count').text());
-      var $share_elm = $(this).parent().find('.share-count');
+    handle_facebook_click = function(elm, e) {
+      var $id = elm.attr('data-id');
+      var $name = elm.parent().parent().find('span.name').text();
+      var $picture = document.location.origin + elm.parent().parent().find('img').attr('src');
+      var $share_count = parseInt(elm.parent().find('.share-count').text());
+      var $share_elm = elm.parent().find('.share-count');
 
       e.preventDefault();
       friendselector.showFriendSelector({
@@ -67,6 +65,22 @@ $(function() {
         'share_count': $share_count,
         'share_elm': $share_elm
       });
+    };
+
+    var $fbid;
+    // Remove previous click event
+    $('.facebook-share').unbind('click');
+    $('.facebook-share').click(function(e) {
+      $fbid = FB.getUserID();
+      if ($fbid == "") {
+        FB.login(function() {
+          self.handle_facebook_click($(this), e);
+        });
+
+        return false;
+      }
+
+      self.handle_facebook_click($(this), e);
     });
   };
 
@@ -101,4 +115,3 @@ $(function() {
 
   // END
 });
-
