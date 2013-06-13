@@ -23,12 +23,10 @@ module ApplicationHelper
   # Did the user already submit something?
   def already_submitted?
     user_id = session[:drupal_user_id]
-    Rails.cache.fetch 'already-submitted-' + user_id.to_s do
-      posts = Post.where(:uid => user_id)
-      shares = Share.where(:uid => user_id)
+    posts = Post.where(:uid => user_id)
+    shares = Share.where(:uid => user_id)
 
-      (user_id && (!shares.nil? && shares.count > 0 || !posts.nil? && posts.count > 0))
-    end
+    (user_id && (!shares.nil? && shares.count > 0 || !posts.nil? && posts.count > 0))
   end
  
   # Make the URL human redable
