@@ -16,6 +16,10 @@ module UsersHelper
   end
 
   def drupal_user_exists(email)
+    if email.nil?
+      false
+    end
+
     response = Services::Auth.check_exists(email)
     if !response.first.nil?
       if !response.first['uid'].nil?
