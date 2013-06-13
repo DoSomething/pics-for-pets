@@ -191,7 +191,7 @@ $(document).ready(function() {
       img.appendTo('#preview-img-container');
     }
     else {
-      img.css({ 'width': '450px', 'height': '450px', 'position': 'absolute', 'z-index': 0 });
+      img.css({ 'width': '100%', 'height': '100%', 'position': 'absolute', 'z-index': 0 });
       img.appendTo('#upload-preview');
     }
 
@@ -212,6 +212,8 @@ $(document).ready(function() {
         return false;
       }
 
+      $('#upload-preview span').hide();
+      $('#upload-preview').addClass('loading');
       var form_data = new FormData();
       form_data.append("file", file_data);
       $.ajax({
@@ -240,6 +242,7 @@ $(document).ready(function() {
     }
     else {
       $('#form-item-meme-text, #form-item-meme-position, #top_text, #bottom_text').hide();
+      $('#upload-preview img').remove();
       $('#upload-preview span.text').show();
       $('#upload-preview').removeClass('loading');
     }
