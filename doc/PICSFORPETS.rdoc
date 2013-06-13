@@ -3,3 +3,5 @@
 Campaign to save animals from being euthanized in animal shelters.  Save the kitties!
 
 Built by Maxwell Watson and Michael Chittenden.
+
+Available at http://pics.dosomething.org

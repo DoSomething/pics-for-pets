@@ -20,6 +20,7 @@ When /I fill out the image field/ do
     find(:id, 'post_image').set Rails.root.to_s + '/spec/mocks/ruby.png'
     find(:id, 'post_image').click
   end
+  find(:id, 'crop-button').click
 end
 
 When /I fill out the rest of the form and submit/ do
