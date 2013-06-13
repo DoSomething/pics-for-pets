@@ -10,7 +10,7 @@
     <div id="error_explanation">
       <h2><%= pluralize(@post.errors.count, "error") %> prohibited this post from being saved:</h2>
 
-      <ul>
+      <ul id="errors">
       <% @post.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
       <% end %>
@@ -18,7 +18,7 @@
     </div>
   <% end %>
 
-  <% if !@post.image_file_name %> 
+  <% if !@post.image_file_name or @post.errors.any? %>
     <%= f.input :image, required: true, wrapper_html: { class: 'form-item-first-name' }, input_html: { accept: 'image/jpeg,image/gif,image/png' } %>
     <div id="image_error">Invalid file type.</div>
     <%= f.input :meme_text, required: false, label: "Adopt me because... (optional)", wrapper_html: { class: 'form-item-meme-text', id: 'form-item-meme-text' } %>
@@ -47,11 +47,11 @@
       <%= image_tag @post.image.url(:gallery) %>
     </div>
   <% end %>
-  <%= f.input :name, label: "What is the animal's name?", wrapper_html: { class: 'form-item-name' } %>
-  <%= f.input :animal_type, wrapper_html: { class: 'form-item-animal-type' }, :as => :select, :collection => [['Cat', 'cat'], ['Dog', 'dog'], ['Other', 'other']], prompt: 'Choose a type', include_blank: false %>
-  <%= f.input :shelter, label: "What's the name of this animal's shelter?", wrapper_html: { class: 'form-item-shelter' } %>
-  <%= f.input :city, label: "What city is this shelter in?", wrapper_html: { class: 'form-item-city' } %>
-  <%= f.input :state, label: "What state is this shelter in?", wrapper_html: { class: 'form-item-state' }, :as => :select, :collection => get_states.invert, prompt: 'Choose a state', include_blank: false %>
+  <%= f.input :name, required: true, label: "What is the animal's name?", wrapper_html: { class: 'form-item-name' } %>
+  <%= f.input :animal_type, required: true, wrapper_html: { class: 'form-item-animal-type' }, :as => :select, :collection => [['Cat', 'cat'], ['Dog', 'dog'], ['Other', 'other']], prompt: 'Choose a type', include_blank: false %>
+  <%= f.input :shelter, required: true, label: "What's the name of this animal's shelter?", wrapper_html: { class: 'form-item-shelter' } %>
+  <%= f.input :city, required: true, label: "What city is this shelter in?", wrapper_html: { class: 'form-item-city' } %>
+  <%= f.input :state, required: true, label: "What state is this shelter in?", wrapper_html: { class: 'form-item-state' }, :as => :select, :collection => get_states.invert, prompt: 'Choose a state', include_blank: false %>
   <% if admin? %>
     <%= f.input :story, label: "Does this pet have a compelling story? Write it here.", required: false, wrapper_html: { class: 'form-item-story' } %>
     <%= f.input :adopted, label: 'Adopted', :as => :boolean %>

@@ -34,7 +34,12 @@ module SessionsHelper
       # REGISTER USER
       else
         password = (0...50).map{ ('a'..'z').to_a[rand(26)] }.join
-        date = Date.strptime(auth['birthday'], '%m/%d/%Y')
+        if auth['birthday'].nil?
+          date = Date.parse('5th October 2000')
+        else
+          date = Date.strptime(auth['birthday'], '%m/%d/%Y')
+        end
+
         response = Services::Auth.register(password, auth['email'], auth['first_name'], auth['last_name'], '', date.month, date.day, date.year)
         if response.code == 200 && response.kind_of?(Hash)
           response = Services::Auth.login(auth['email'], password)
