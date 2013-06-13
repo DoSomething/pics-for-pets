@@ -23,6 +23,9 @@ $(document).ready(function() {
     });
   };
 
+  //crop upload helpers
+
+  //removes the overlay and popup
   remove_crop = function(e) {
     if(e)
       e.preventDefault();
@@ -32,6 +35,7 @@ $(document).ready(function() {
     $(window).off("resize");
   }
 
+  //resets the image field to nothing
   reset_img = function(e) {
     e.preventDefault();
     $("#post_image").wrap('<form>').closest('form').get(0).reset();
@@ -41,6 +45,7 @@ $(document).ready(function() {
     remove_crop();
   }
 
+  //modal crop popup
   crop_upload = function(filename) {
     //append necessary html and style
     var overlay = $("<div></div>");
@@ -56,7 +61,9 @@ $(document).ready(function() {
     img_container.appendTo("#crop-container");
     var img = $('<img />');
     img.attr('src', '/system/tmp/' + filename);
+    img.appendTo('#crop-img-container');
     img.load(function() {
+      //scale image to always fit in the window
       img.css({
         height: ($(window).height() - header.height() - $("#crop-button").height() - 125) + "px",
         width: "auto"
@@ -65,11 +72,13 @@ $(document).ready(function() {
         img.css({
           width: ($(window).width() - 120) + "px",
           height: "auto"
-        });
+      });
+      
+      //set the crop_dim_w used to calculate the ratio to crop correctly with paperclip
       $("#crop_dim_w").val(img.width());
       var cropbox_dim = img.width() > img.height() ? img.height() : img.width();
 
-      //add crop ability
+      //updates hidden fields so paperclip knows what part to crop
       update_crop = function(coords) {
         $("#crop_x").val(coords.x);
         $("#crop_y").val(coords.y);
@@ -77,8 +86,8 @@ $(document).ready(function() {
         $("#crop_h").val(coords.h);
       }
 
+      //initialize jcrop
       var jcrop_api;
-
       img.Jcrop({
         onChange: update_crop,
         onSelect: update_crop,
@@ -88,6 +97,7 @@ $(document).ready(function() {
         jcrop_api = this;
       });
 
+      //responsive for crop popup
       $(window).resize(function() {
         var old_width = img.width();
         var old_x = $("#crop_x").val();
@@ -120,7 +130,6 @@ $(document).ready(function() {
         });
       });
     });
-    img.appendTo('#crop-img-container');
     var crop_button = $("<a href='#' class='btn primary'>Crop</a>");
     crop_button.attr("id", "crop-button");
     crop_button.appendTo('#crop-container');
@@ -128,7 +137,7 @@ $(document).ready(function() {
     cancel_button.attr("id", "cancel-button");
     cancel_button.appendTo('#crop-container');
 
-    //add appropriate handlers
+    //add appropriate handlers for buttons
     crop_button.click(function(e) {
       remove_crop(e);
       change_upload(filename, img.width(), img.height());
@@ -145,6 +154,7 @@ $(document).ready(function() {
     });
   }
 
+  //load the upload preview image
   change_upload = function(filename, width, height) {
     $('#upload-box').find('span').hide();
     var preview_size = $("#upload-preview").width();
@@ -158,6 +168,8 @@ $(document).ready(function() {
       marginTop: (Math.round(preview_size / 2) - $("#crop_h").val() / 2) + "px"
     });
     img_container.appendTo('#upload-preview');
+
+    //responsive for upload preview image
     $(window).resize(function() {
       preview_size = $("#upload-preview").width();
       img_container.css({
@@ -169,6 +181,7 @@ $(document).ready(function() {
       });
     });
     maintain_ratio('#upload-preview');
+
     var img = $('<img />');
     img.attr('src', '/system/tmp/' + filename);
     img.css({
@@ -177,20 +190,22 @@ $(document).ready(function() {
       marginLeft: "-" + $("#crop_x").val() + "px",
       marginTop: "-" + $("#crop_y").val() + "px"
     });
-    $('#upload-preview span').hide();
     img.appendTo('#preview-img-container');
-
-    $('#upload-preview').removeClass('loading');
+    img.load(function () {
+      $('#upload-preview span').hide();
+      $('#upload-preview').removeClass('loading');
+    });
 
     handle_text_change('post_meme_text');
 
     $('.form-item-meme-text, .form-item-meme-position').show();
   };
 
+  //respond when someone picks a new image
   $('#post_image').change(function() {
     $("#preview-img-container").remove();
 
-
+    //make sure we don't try to crop a nonexistent photo
     if ($(this).val() !== "") {
       $('#upload-preview span.text').hide();
       $('#upload-preview').addClass('loading');
