@@ -23,6 +23,17 @@ $(document).ready(function() {
     });
   };
 
+  $('#post_meme_position').change(function() {
+    var e = $(this).val();
+    var val = $('#post_meme_text').val();
+
+    $('.text-pos').hide();
+    $('#' + e + '_text').find('.yours').text(val);
+    if (val !== "") {
+      $('#' + e + '_text').show().css('visibility', 'visible');
+    }
+  });
+
   //crop upload helpers
 
   //removes the overlay and popup
@@ -62,6 +73,10 @@ $(document).ready(function() {
     var img = $('<img />');
     img.attr('src', '/system/tmp/' + filename);
     img.appendTo('#crop-img-container');
+    //hide until image is loaded and positioned
+    overlay.css("display", "hidden");
+    container.css("display", "hidden");
+    img.hide();
     img.load(function() {
       //scale image to always fit in the window
       img.css({
@@ -73,7 +88,10 @@ $(document).ready(function() {
           width: ($(window).width() - 120) + "px",
           height: "auto"
       });
-      
+      //show once everything is loaded
+      img.show();
+      overlay.css("display", "block");
+      container.css("display", "block");
       //set the crop_dim_w used to calculate the ratio to crop correctly with paperclip
       $("#crop_dim_w").val(img.width());
       var cropbox_dim = img.width() > img.height() ? img.height() : img.width();
@@ -237,20 +255,10 @@ $(document).ready(function() {
       });
     }
     else {
+      $('#post_meme_text').val("");
       $('#form-item-meme-text, #form-item-meme-position, #top_text, #bottom_text').hide();
       $('#upload-preview span.text').show();
       $('#upload-preview').removeClass('loading');
-    }
-  });
-
-  $('#post_meme_position').change(function() {
-    var e = $(this).val();
-    var val = $('#post_meme_text').val();
-
-    $('.text-pos').hide();
-    $('#' + e + '_text').find('.yours').text(val);
-    if (val !== "") {
-      $('#' + e + '_text').show().css('visibility', 'visible');
     }
   });
 });
