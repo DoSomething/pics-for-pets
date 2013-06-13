@@ -1,4 +1,12 @@
 $(document).ready(function() {
+  var $mobile = false;
+
+  (function() {
+    if(/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)) {
+      $mobile = true;
+    }
+  })();
+
   handle_text_change = function(field) {
     var elm;
 
@@ -44,7 +52,7 @@ $(document).ready(function() {
     $("#crop-overlay").remove();
     $("body").off("keydown");
     $(window).off("resize");
-  }
+  };
 
   //resets the image field to nothing
   reset_img = function(e) {
@@ -54,7 +62,7 @@ $(document).ready(function() {
     $('#upload-preview span.text').show();
     $('#upload-preview').removeClass('loading');
     remove_crop();
-  }
+  };
 
   //modal crop popup
   crop_upload = function(filename) {
@@ -170,7 +178,7 @@ $(document).ready(function() {
       if((e.which) == 27)
         reset_img(e);
     });
-  }
+  };
 
   //load the upload preview image
   change_upload = function(filename, width, height) {
@@ -233,6 +241,8 @@ $(document).ready(function() {
         return false;
       }
 
+      $('#upload-preview span').hide();
+      $('#upload-preview').addClass('loading');
       var form_data = new FormData();
       form_data.append("file", file_data);
       $.ajax({
@@ -246,7 +256,12 @@ $(document).ready(function() {
         complete: function(response) {
           res = $.parseJSON(response.responseText);
           if (res.success === true) {
-            crop_upload(res.filename);
+            if (!$mobile) {
+              crop_upload(res.filename);
+            }
+            else {
+              change_upload(res.filename, 450, 450);
+            }
           }
           else {
             $('#image_error').text(res.reason).show();
@@ -257,6 +272,7 @@ $(document).ready(function() {
     else {
       $('#post_meme_text').val("");
       $('#form-item-meme-text, #form-item-meme-position, #top_text, #bottom_text').hide();
+      $('#upload-preview img').remove();
       $('#upload-preview span.text').show();
       $('#upload-preview').removeClass('loading');
     }
