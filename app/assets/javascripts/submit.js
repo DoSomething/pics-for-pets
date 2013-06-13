@@ -1,4 +1,12 @@
 $(document).ready(function() {
+  var $mobile = false;
+
+  (function() {
+    if(/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)) {
+      $mobile = true;
+    }
+  })();
+
   handle_text_change = function(field) {
     var elm;
 
@@ -29,7 +37,7 @@ $(document).ready(function() {
     $("#crop-container").remove();
     $("#crop-overlay").remove();
     $("body").off("keydown");
-  }
+  };
 
   reset_img = function(e) {
     e.preventDefault();
@@ -38,7 +46,7 @@ $(document).ready(function() {
     $('#upload-preview span.text').show();
     $('#upload-preview').removeClass('loading');
     remove_crop();
-  }
+  };
 
   crop_upload = function(filename) {
     //append necessary html and style
@@ -144,23 +152,18 @@ $(document).ready(function() {
       if((e.which) == 27)
         reset_img(e);
     });
-  }
+  };
 
   change_upload = function(filename, width, height) {
     $('#upload-box').find('span').hide();
-    var preview_size = $("#upload-preview").height();
-    var img_container = $("<div></div>")
-    img_container.attr("id", "preview-img-container");
-    img_container.css({
-      width: $("#crop_w").val(),
-      height: $("#crop_h").val(),
-      transform: "scale(" + (preview_size / $("#crop_w").val()) +")",
-      marginLeft: (Math.round(preview_size / 2) - $("#crop_w").val() / 2) + "px",
-      marginTop: (Math.round(preview_size / 2) - $("#crop_h").val() / 2) + "px"
-    });
-    img_container.appendTo('#upload-preview');
-    $(window).resize(function() {
-      preview_size = $("#upload-preview").height();
+    var img = $('<img />');
+    img.attr('src', '/system/tmp/' + filename);
+    $('#upload-preview span').hide();
+
+    if (!$mobile) {
+      var preview_size = $("#upload-preview").height();
+      var img_container = $("<div></div>")
+      img_container.attr("id", "preview-img-container");
       img_container.css({
         width: $("#crop_w").val(),
         height: $("#crop_h").val(),
@@ -168,17 +171,29 @@ $(document).ready(function() {
         marginLeft: (Math.round(preview_size / 2) - $("#crop_w").val() / 2) + "px",
         marginTop: (Math.round(preview_size / 2) - $("#crop_h").val() / 2) + "px"
       });
-    });
-    var img = $('<img />');
-    img.attr('src', '/system/tmp/' + filename);
-    img.css({
-      width: width + "px",
-      height: height + "px",
-      marginLeft: "-" + $("#crop_x").val() + "px",
-      marginTop: "-" + $("#crop_y").val() + "px"
-    });
-    $('#upload-preview span').hide();
-    img.appendTo('#preview-img-container');
+      img_container.appendTo('#upload-preview');
+      $(window).resize(function() {
+        preview_size = $("#upload-preview").height();
+        img_container.css({
+          width: $("#crop_w").val(),
+          height: $("#crop_h").val(),
+          transform: "scale(" + (preview_size / $("#crop_w").val()) +")",
+          marginLeft: (Math.round(preview_size / 2) - $("#crop_w").val() / 2) + "px",
+          marginTop: (Math.round(preview_size / 2) - $("#crop_h").val() / 2) + "px"
+        });
+      });
+      img.css({
+        width: width + "px",
+        height: height + "px",
+        marginLeft: "-" + $("#crop_x").val() + "px",
+        marginTop: "-" + $("#crop_y").val() + "px"
+      });
+      img.appendTo('#preview-img-container');
+    }
+    else {
+      img.css({ 'width': '450px', 'height': '450px', 'position': 'absolute', 'z-index': 0 });
+      img.appendTo('#upload-preview');
+    }
 
     $('#upload-preview').removeClass('loading');
 
@@ -189,7 +204,6 @@ $(document).ready(function() {
 
   $('#post_image').change(function() {
     $("#preview-img-container").remove();
-
 
     if ($(this).val() !== "") {
       var file_data = $("#post_image").prop("files")[0];
@@ -211,7 +225,12 @@ $(document).ready(function() {
         complete: function(response) {
           res = $.parseJSON(response.responseText);
           if (res.success === true) {
-            crop_upload(res.filename);
+            if (!$mobile) {
+              crop_upload(res.filename);
+            }
+            else {
+              change_upload(res.filename, 450, 450);
+            }
           }
           else {
             $('#image_error').text(res.reason).show();
