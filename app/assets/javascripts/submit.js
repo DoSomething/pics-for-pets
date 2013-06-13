@@ -221,6 +221,8 @@ $(document).ready(function() {
 
   //respond when someone picks a new image
   $('#post_image').change(function() {
+    $('#post_meme_text').val("");
+    $(".text-pos").hide();
     $("#preview-img-container").remove();
 
     //make sure we don't try to crop a nonexistent photo
@@ -255,7 +257,6 @@ $(document).ready(function() {
       });
     }
     else {
-      $('#post_meme_text').val("");
       $('#form-item-meme-text, #form-item-meme-position, #top_text, #bottom_text').hide();
       $('#upload-preview span.text').show();
       $('#upload-preview').removeClass('loading');
