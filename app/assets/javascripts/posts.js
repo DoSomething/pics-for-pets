@@ -77,7 +77,7 @@ $(function() {
           if (response.authResponse) {
             self.handle_facebook_click($(this), e);
           }
-        });
+        }, { 'scope': 'email' });
 
         return false;
       }
