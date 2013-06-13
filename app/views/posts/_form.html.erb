@@ -26,7 +26,7 @@
 
     <!-- #hidden fields for cropping -->
     <% for attribute in [:crop_x, :crop_y, :crop_w, :crop_h, :crop_dim_w] %>
-    <%= f.hidden_field attribute, :id => attribute %>
+    <%= f.text_field attribute, :id => attribute %>
     <% end %>
 
     <div id="upload-preview">

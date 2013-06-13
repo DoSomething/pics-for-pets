@@ -29,6 +29,7 @@ $(document).ready(function() {
     $("#crop-container").remove();
     $("#crop-overlay").remove();
     $("body").off("keydown");
+    $(window).off("resize");
   }
 
   reset_img = function(e) {
@@ -42,8 +43,6 @@ $(document).ready(function() {
 
   crop_upload = function(filename) {
     //append necessary html and style
-    $('#upload-preview span.text').hide();
-    $('#upload-preview').addClass('loading');
     var overlay = $("<div></div>");
     overlay.attr("id", "crop-overlay");
     overlay.appendTo("body");
@@ -57,7 +56,6 @@ $(document).ready(function() {
     img_container.appendTo("#crop-container");
     var img = $('<img />');
     img.attr('src', '/system/tmp/' + filename);
-    img.appendTo('#crop-img-container');
     img.load(function() {
       img.css({
         height: ($(window).height() - header.height() - $("#crop-button").height() - 125) + "px",
@@ -122,6 +120,7 @@ $(document).ready(function() {
         });
       });
     });
+    img.appendTo('#crop-img-container');
     var crop_button = $("<a href='#' class='btn primary'>Crop</a>");
     crop_button.attr("id", "crop-button");
     crop_button.appendTo('#crop-container');
@@ -148,7 +147,7 @@ $(document).ready(function() {
 
   change_upload = function(filename, width, height) {
     $('#upload-box').find('span').hide();
-    var preview_size = $("#upload-preview").height();
+    var preview_size = $("#upload-preview").width();
     var img_container = $("<div></div>")
     img_container.attr("id", "preview-img-container");
     img_container.css({
@@ -160,7 +159,7 @@ $(document).ready(function() {
     });
     img_container.appendTo('#upload-preview');
     $(window).resize(function() {
-      preview_size = $("#upload-preview").height();
+      preview_size = $("#upload-preview").width();
       img_container.css({
         width: $("#crop_w").val(),
         height: $("#crop_h").val(),
@@ -169,6 +168,7 @@ $(document).ready(function() {
         marginTop: (Math.round(preview_size / 2) - $("#crop_h").val() / 2) + "px"
       });
     });
+    maintain_ratio('#upload-preview');
     var img = $('<img />');
     img.attr('src', '/system/tmp/' + filename);
     img.css({
@@ -192,6 +192,8 @@ $(document).ready(function() {
 
 
     if ($(this).val() !== "") {
+      $('#upload-preview span.text').hide();
+      $('#upload-preview').addClass('loading');
       var file_data = $("#post_image").prop("files")[0];
       if (!file_data.type.match(/image\/(jpeg|gif|png)/)) {
         $('#image_error').show();
