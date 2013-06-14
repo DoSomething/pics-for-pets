@@ -66,6 +66,8 @@ module ApplicationHelper
     # Front page
     elsif path == '/' || path == ''
       "anything yet"
+    elsif path == '/mypets'
+      "anything by you yet"
     end
   end
 end
