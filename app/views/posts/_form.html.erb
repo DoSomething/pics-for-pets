@@ -11,6 +11,7 @@
       <h2><%= pluralize(@post.errors.count, "error") %> prohibited this post from being saved:</h2>
 
       <ul id="errors">
+        <% p @post.errors %>
       <% @post.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
       <% end %>
@@ -18,14 +19,14 @@
     </div>
   <% end %>
 
-  <% if !@post.image_file_name or @post.errors.any? %>
+  <% if !@post.image_file_name or (@post.errors.any? and @post.errors.has_key?('image')) %>
     <%= f.input :image, required: true, wrapper_html: { class: 'form-item-first-name' }, input_html: { accept: 'image/jpeg,image/gif,image/png' } %>
     <div id="image_error">Invalid file type.</div>
     <%= f.input :meme_text, required: false, label: "Adopt me because... (optional)", wrapper_html: { class: 'form-item-meme-text', id: 'form-item-meme-text' } %>
     <%= f.input :meme_position, required: false, label: "Text position", wrapper_html: { class: 'form-item-meme-position', id: 'form-item-meme-position' }, :as => :select, :collection => [['Top', 'top'], ['Bottom', 'bottom']], include_blank: false, :selected => 'top' %>
 
     <!-- #hidden fields for cropping -->
-    <% for attribute in [:crop_x, :crop_y, :crop_w, :crop_h, :crop_dim_w] %>
+    <% for attribute in [:crop_x, :crop_y, :crop_w, :crop_h, :crop_dim_w, :original_width, :original_height] %>
     <%= f.hidden_field attribute, :id => attribute %>
     <% end %>
 
@@ -43,8 +44,28 @@
       </div>
     </div>
   <% else %>
+    <%= f.input :meme_text, required: false, label: "Adopt me because... (optional)", wrapper_html: { class: 'form-item-meme-text', id: 'form-item-meme-text' } %>
+    <%= f.input :meme_position, required: false, label: "Text position", wrapper_html: { class: 'form-item-meme-position', id: 'form-item-meme-position' }, :as => :select, :collection => [['Top', 'top'], ['Bottom', 'bottom']], include_blank: false, :selected => 'top' %>
+
     <div id="upload-preview">
-      <%= image_tag @post.image.url(:gallery) %>
+      <!-- #hidden fields for cropping -->
+      <% for attribute in [:crop_x, :crop_y, :crop_w, :crop_h, :crop_dim_w, :original_height, :original_width] %>
+      <%= f.hidden_field attribute, :id => attribute %>
+      <% end %>
+
+      <% if ['edit', 'update'].include? params[:action] %>
+        <%= image_tag @post.image.url(:gallery) %>
+      <% else %>
+        <div id="top_text" class="text-pos">
+          <div>Adopt me because...</div>
+          <div class="yours"></div>
+        </div>
+        <%= image_tag '/system/tmp/' + @post.image.original_filename %>
+        <div id="bottom_text" class="text-pos">
+          <div>Adopt me because...</div>
+          <div class="yours"></div>
+        </div>
+      <% end %>
     </div>
   <% end %>
   <%= f.input :name, required: true, label: "What is the animal's name?", wrapper_html: { class: 'form-item-name' } %>

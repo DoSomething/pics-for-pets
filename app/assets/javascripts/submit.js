@@ -110,7 +110,7 @@ $(document).ready(function() {
         $("#crop_y").val(coords.y);
         $("#crop_w").val(coords.w);
         $("#crop_h").val(coords.h);
-      }
+      };
 
       //initialize jcrop
       var jcrop_api;
@@ -182,9 +182,12 @@ $(document).ready(function() {
 
   //load the upload preview image
   change_upload = function(filename, width, height) {
+    $('#original_height').val(height);
+    $('#original_width').val(width);
+
     $('#upload-box').find('span').hide();
     var preview_size = $("#upload-preview").width();
-    var img_container = $("<div></div>")
+    var img_container = $("<div></div>");
     img_container.attr("id", "preview-img-container");
     img_container.css({
       width: $("#crop_w").val(),
@@ -276,6 +279,19 @@ $(document).ready(function() {
       $('#upload-preview img').remove();
       $('#upload-preview span.text').show();
       $('#upload-preview').removeClass('loading');
+    }
+  });
+
+  // Probably viewing errors.  Make sure to show the original image.
+  $(document).ready(function() {
+    if ($('#upload-preview img').length > 0) {
+      var $img = $('#upload-preview img');
+      var $src = $img.attr('src').replace(/\\/g,'/').replace( /.*\//, '' );
+      var $width = $('#original_width').val();
+      var $height = $('#original_height').val();
+
+      $('#upload-preview img').remove();
+      change_upload($src, $width, $height);
     }
   });
 });
