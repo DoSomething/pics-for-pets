@@ -37,8 +37,9 @@
     div.help{
       position:absolute;
       bottom:1em;
-      margin: 0 1em 0 1em;
-      width:90%  
+      margin: 0 auto;
+      padding: 0 1em 0 1em;
+      background-color:blue;
     }
     h1 { 
       font-size: 32pt;
@@ -62,6 +63,9 @@
     }
 
     @media only screen and (max-width: 590px) {
+      body{
+        margin:0;
+      }
       div.dialog, div.info, div.help, #big-logo {
         height: auto;
       }
@@ -87,7 +91,8 @@
         position: relative;
         display: block;
         top: 0;
-
+        margin-bottom:1em;
+        padding:0;
       }
     }
     @media only screen and (max-width: 450px) {
