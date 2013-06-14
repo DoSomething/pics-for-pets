@@ -235,13 +235,14 @@ $(document).ready(function() {
 
     //make sure we don't try to crop a nonexistent photo
     if ($(this).val() !== "") {
-      $('#upload-preview span.text').hide();
-      $('#upload-preview').addClass('loading');
       var file_data = $("#post_image").prop("files")[0];
       if (!file_data.type.match(/image\/(jpeg|gif|png)/)) {
         $('#image_error').show();
         return false;
       }
+
+      $('#upload-preview span.text').hide();
+      $('#upload-preview').addClass('loading');
 
       $('#upload-preview span').hide();
       $('#upload-preview').addClass('loading');

@@ -32,6 +32,13 @@ Feature: Test pages
     Then the page should redirect matching \d+
     Then element .post should show Spot
 
+  Scenario: My Pets
+    Given I am logged in
+    Given there is a post
+
+    When I visit /mypets
+    Then the element .post-list should show Spot the kitten
+
   Scenario: Filters
     Given I am logged in
     Given there is a post

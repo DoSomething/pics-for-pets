@@ -35,7 +35,7 @@ end
 
 Given /there is a post/ do
   post = Post.new
-    post.uid = 778374
+    post.uid = 703718
     post.adopted = false
     post.meme_text = 'Bottom text'
     post.meme_position = 'bottom'
