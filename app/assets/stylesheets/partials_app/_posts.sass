@@ -2,7 +2,7 @@
 // -----
 $first: 600px
 
-.posts
+.posts /* Wrapper for all posts */
   min-height: 500px
   h2, p
     color: $posts-c
@@ -23,7 +23,7 @@ $first: 600px
     @media only screen and (max-width: $first)
       width: 90% !important
 
-.post
+.post /* Wrapper for each individual post */
   width: 470px
   margin: 30px auto
   padding: 15px
@@ -49,6 +49,14 @@ $first: 600px
     margin: 15px 1em 15px 0.5em
     @media only screen and (max-width: $first)
       margin: 0 5% 5% 3%
+  
+  .btn.share /* @TODO - REFACTOR THIS ON MONDAY */
+    @media only screen and (max-width: 500px)
+    font-size: em-calc(12)
+    width: 6em
+
+  .flag
+    margin: 0 0 -50px 0
 
 // POST META-DATA
 // --------------
