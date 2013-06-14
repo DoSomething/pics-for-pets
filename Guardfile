@@ -10,6 +10,18 @@ guard 'livereload' do
   watch(%r{(app|vendor)(/assets/\w+/(.+\.(css|js|html))).*}) { |m| "/assets/#{m[3]}" }
 end
 
+guard 'spork', :cucumber_env => { 'RAILS_ENV' => 'test' }, :rspec_env => { 'RAILS_ENV' => 'test' }, :test_unit => false do
+  watch('config/application.rb')
+  watch('config/environment.rb')
+  watch('config/environments/test.rb')
+  watch(%r{^config/initializers/.+\.rb$})
+  watch('Gemfile')
+  watch('Gemfile.lock')
+  watch('spec/spec_helper.rb') { :rspec }
+  watch('test/test_helper.rb') { :test_unit }
+  watch(%r{features/support/}) { :cucumber }
+end
+
 guard 'cucumber', :all_on_start => false, :all_after_pass => false, :cli => '--drb' do
   watch(%r{^features/.+\.feature$})
   watch(%r{^features/support/.+$})          { 'features' }
