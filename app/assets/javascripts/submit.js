@@ -31,14 +31,30 @@ $(document).ready(function() {
     });
   };
 
+  $('#post_meme_position').change(function() {
+    var e = $(this).val();
+    var val = $('#post_meme_text').val();
+
+    $('.text-pos').hide();
+    $('#' + e + '_text').find('.yours').text(val);
+    if (val !== "") {
+      $('#' + e + '_text').show().css('visibility', 'visible');
+    }
+  });
+
+  //crop upload helpers
+
+  //removes the overlay and popup
   remove_crop = function(e) {
     if(e)
       e.preventDefault();
     $("#crop-container").remove();
     $("#crop-overlay").remove();
     $("body").off("keydown");
+    $(window).off("resize");
   };
 
+  //resets the image field to nothing
   reset_img = function(e) {
     e.preventDefault();
     $("#post_image").wrap('<form>').closest('form').get(0).reset();
@@ -48,10 +64,9 @@ $(document).ready(function() {
     remove_crop();
   };
 
+  //modal crop popup
   crop_upload = function(filename) {
     //append necessary html and style
-    $('#upload-preview span.text').hide();
-    $('#upload-preview').addClass('loading');
     var overlay = $("<div></div>");
     overlay.attr("id", "crop-overlay");
     overlay.appendTo("body");
@@ -66,7 +81,12 @@ $(document).ready(function() {
     var img = $('<img />');
     img.attr('src', '/system/tmp/' + filename);
     img.appendTo('#crop-img-container');
+    //hide until image is loaded and positioned
+    overlay.css("display", "hidden");
+    container.css("display", "hidden");
+    img.hide();
     img.load(function() {
+      //scale image to always fit in the window
       img.css({
         height: ($(window).height() - header.height() - $("#crop-button").height() - 125) + "px",
         width: "auto"
@@ -75,11 +95,16 @@ $(document).ready(function() {
         img.css({
           width: ($(window).width() - 120) + "px",
           height: "auto"
-        });
+      });
+      //show once everything is loaded
+      img.show();
+      overlay.css("display", "block");
+      container.css("display", "block");
+      //set the crop_dim_w used to calculate the ratio to crop correctly with paperclip
       $("#crop_dim_w").val(img.width());
       var cropbox_dim = img.width() > img.height() ? img.height() : img.width();
 
-      //add crop ability
+      //updates hidden fields so paperclip knows what part to crop
       update_crop = function(coords) {
         $("#crop_x").val(coords.x);
         $("#crop_y").val(coords.y);
@@ -87,8 +112,8 @@ $(document).ready(function() {
         $("#crop_h").val(coords.h);
       }
 
+      //initialize jcrop
       var jcrop_api;
-
       img.Jcrop({
         onChange: update_crop,
         onSelect: update_crop,
@@ -98,6 +123,7 @@ $(document).ready(function() {
         jcrop_api = this;
       });
 
+      //responsive for crop popup
       $(window).resize(function() {
         var old_width = img.width();
         var old_x = $("#crop_x").val();
@@ -137,7 +163,7 @@ $(document).ready(function() {
     cancel_button.attr("id", "cancel-button");
     cancel_button.appendTo('#crop-container');
 
-    //add appropriate handlers
+    //add appropriate handlers for buttons
     crop_button.click(function(e) {
       remove_crop(e);
       change_upload(filename, img.width(), img.height());
@@ -154,16 +180,24 @@ $(document).ready(function() {
     });
   };
 
+  //load the upload preview image
   change_upload = function(filename, width, height) {
     $('#upload-box').find('span').hide();
-    var img = $('<img />');
-    img.attr('src', '/system/tmp/' + filename);
-    $('#upload-preview span').hide();
+    var preview_size = $("#upload-preview").width();
+    var img_container = $("<div></div>")
+    img_container.attr("id", "preview-img-container");
+    img_container.css({
+      width: $("#crop_w").val(),
+      height: $("#crop_h").val(),
+      transform: "scale(" + (preview_size / $("#crop_w").val()) +")",
+      marginLeft: (Math.round(preview_size / 2) - $("#crop_w").val() / 2) + "px",
+      marginTop: (Math.round(preview_size / 2) - $("#crop_h").val() / 2) + "px"
+    });
+    img_container.appendTo('#upload-preview');
 
-    if (!$mobile) {
-      var preview_size = $("#upload-preview").height();
-      var img_container = $("<div></div>")
-      img_container.attr("id", "preview-img-container");
+    //responsive for upload preview image
+    $(window).resize(function() {
+      preview_size = $("#upload-preview").width();
       img_container.css({
         width: $("#crop_w").val(),
         height: $("#crop_h").val(),
@@ -171,41 +205,38 @@ $(document).ready(function() {
         marginLeft: (Math.round(preview_size / 2) - $("#crop_w").val() / 2) + "px",
         marginTop: (Math.round(preview_size / 2) - $("#crop_h").val() / 2) + "px"
       });
-      img_container.appendTo('#upload-preview');
-      $(window).resize(function() {
-        preview_size = $("#upload-preview").height();
-        img_container.css({
-          width: $("#crop_w").val(),
-          height: $("#crop_h").val(),
-          transform: "scale(" + (preview_size / $("#crop_w").val()) +")",
-          marginLeft: (Math.round(preview_size / 2) - $("#crop_w").val() / 2) + "px",
-          marginTop: (Math.round(preview_size / 2) - $("#crop_h").val() / 2) + "px"
-        });
-      });
-      img.css({
-        width: width + "px",
-        height: height + "px",
-        marginLeft: "-" + $("#crop_x").val() + "px",
-        marginTop: "-" + $("#crop_y").val() + "px"
-      });
-      img.appendTo('#preview-img-container');
-    }
-    else {
-      img.css({ 'width': '100%', 'height': '100%', 'position': 'absolute', 'z-index': 0 });
-      img.appendTo('#upload-preview');
-    }
+    });
+    maintain_ratio('#upload-preview');
 
-    $('#upload-preview').removeClass('loading');
+    var img = $('<img />');
+    img.attr('src', '/system/tmp/' + filename);
+    img.css({
+      width: width + "px",
+      height: height + "px",
+      marginLeft: "-" + $("#crop_x").val() + "px",
+      marginTop: "-" + $("#crop_y").val() + "px"
+    });
+    img.appendTo('#preview-img-container');
+    img.load(function () {
+      $('#upload-preview span').hide();
+      $('#upload-preview').removeClass('loading');
+    });
 
     handle_text_change('post_meme_text');
 
     $('.form-item-meme-text, .form-item-meme-position').show();
   };
 
+  //respond when someone picks a new image
   $('#post_image').change(function() {
+    $('#post_meme_text').val("");
+    $(".text-pos").hide();
     $("#preview-img-container").remove();
 
+    //make sure we don't try to crop a nonexistent photo
     if ($(this).val() !== "") {
+      $('#upload-preview span.text').hide();
+      $('#upload-preview').addClass('loading');
       var file_data = $("#post_image").prop("files")[0];
       if (!file_data.type.match(/image\/(jpeg|gif|png)/)) {
         $('#image_error').show();
@@ -227,12 +258,12 @@ $(document).ready(function() {
         complete: function(response) {
           res = $.parseJSON(response.responseText);
           if (res.success === true) {
-            if (!$mobile) {
+            //if (!$mobile) {
               crop_upload(res.filename);
-            }
-            else {
-              change_upload(res.filename, 450, 450);
-            }
+            //}
+            //else {
+            //  change_upload(res.filename, 450, 450);
+            //}
           }
           else {
             $('#image_error').text(res.reason).show();
@@ -245,17 +276,6 @@ $(document).ready(function() {
       $('#upload-preview img').remove();
       $('#upload-preview span.text').show();
       $('#upload-preview').removeClass('loading');
-    }
-  });
-
-  $('#post_meme_position').change(function() {
-    var e = $(this).val();
-    var val = $('#post_meme_text').val();
-
-    $('.text-pos').hide();
-    $('#' + e + '_text').find('.yours').text(val);
-    if (val !== "") {
-      $('#' + e + '_text').show().css('visibility', 'visible');
     }
   });
 });
