@@ -258,12 +258,12 @@ $(document).ready(function() {
         complete: function(response) {
           res = $.parseJSON(response.responseText);
           if (res.success === true) {
-            if (!$mobile) {
+            //if (!$mobile) {
               crop_upload(res.filename);
-            }
-            else {
-              change_upload(res.filename, 450, 450);
-            }
+            //}
+            //else {
+            //  change_upload(res.filename, 450, 450);
+            //}
           }
           else {
             $('#image_error').text(res.reason).show();
