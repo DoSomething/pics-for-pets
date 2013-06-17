@@ -1,7 +1,7 @@
 // CTA
 // ---
-$large: 1000px
-$med: 700px
+$first: 600px
+$second: 400px
 
 .cta
   background: $cta-sbg
@@ -10,22 +10,22 @@ $med: 700px
     width: 550px
     padding: 1em 0
     overflow: hidden
+    @media only screen and (max-width: $second)
+      width: 96% !important
+      padding: 0.5em 0
 
   .btn
     float: left
     clear: none
     padding: 0.35em 0px 0px
-    @media only screen and (max-width: $med)
-      margin: 0 auto
-      float: none
+    @media only screen and (max-width: $first)
+      font-size: em-calc(14)
 
   .btn.secondary
     float: right
-    @media only screen and (max-width: $med)
-      margin: 3% auto 0
-      float: none
 
   .btn.solo
     margin: 0 auto
     display: block
     float: none
+

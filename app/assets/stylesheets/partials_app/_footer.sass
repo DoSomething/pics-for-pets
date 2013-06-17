@@ -1,0 +1,43 @@
+// FOOTER
+// ------
+$first: 500px
+
+.footer-help
+  p
+    color: $footer-help-c
+    text-align: center
+    padding: 0 0 2em 0
+    @media only screen and (max-width: $first)
+      padding: 0 0 1.5em 0
+
+.footer-sponsor
+  background: $footer-sponsor-bg
+  div.sponsor-container
+    width: 33%
+    float: left
+  img.sponsor-logo
+    height: 100px
+    float: left
+    @media only screen and (max-width: $first)
+      height: 75px
+
+  // SECTION CONTAINER
+  .section-container
+    width: $footer-sponsor-width
+    padding: 1em 0
+    overflow: hidden
+
+  // SPONSOR CONTAINERS
+  .sponsor-container.first
+    float: left
+
+  .sponsor-container.second
+    img.sponsor-logo
+      margin: 0 0 0 15%
+      @media only screen and (max-width: $first)
+        margin: 0
+
+  .sponsor-container.third
+    float: right
+    img
+      float: right

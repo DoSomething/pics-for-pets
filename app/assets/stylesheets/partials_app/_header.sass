@@ -1,7 +1,8 @@
 // HEADER
 // ------
 $large: 1000px
-$med: 700px
+$med: 800px
+$small: 400px
 
 .header
   background-color: $header-sbg
@@ -15,35 +16,32 @@ $med: 700px
     width: 960px
     @media only screen and (max-width: $large)
       width: 100% !important
-    @media only screen and (max-width: $med)
-      background-image: none
-      height: auto
-      padding: 5% 0
+    @media only screen and (max-width: $small)
+      background-position: 55% 50%
 
 img.header-pics-logo
   position: absolute
-  height: 150px
+  height: 125px
   right: 0
-  top: 25px
+  top: 30px
+  border: 5px solid #ddd
+  +border-radius(3px)
   @media only screen and (max-width: $large)
     right: 15px
-  @media only screen and (max-width: $med)
-    display: none
-
-img.header-pics-mobile
-  display: none
-  @media only screen and (max-width: $med)
-    display: block
-    margin: 0 auto
-    width: 65%
-    min-width: 250px
+    height: 100px
+  @media only screen and (max-width: $small)
+    right: 10px
+    height: 100px
+    top: 25%
 
 img.header-ds-logo /* additional DS logo for lower screen resolutions */
   position: absolute
   z-index: 2
-  height: 173px
+  height: 125px
   top: -35px
   left: 0
   @media only screen and (max-width: $med)
-    height: 45%
-
+    height: 75px
+  @media only screen and (max-width: $small)
+    height: 50px
+    left: 5px
