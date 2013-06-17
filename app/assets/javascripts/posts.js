@@ -105,8 +105,8 @@ $(function() {
   $err.hide();
   $('#shelter-submit').click(function() {
     var zip = $('#shelter-zip').val();
-    var dest = 'http://www.petfinder.com/awo/index.cgi?location=' + zip + '&keyword=';
-    if( zip.match(/^\d{5}$/)  ) {
+    var dest = 'http://www.adoptapet.com/animal-shelter-search?city_or_zip=' + zip + '&shelter_name=&distance=50&adopts_out=all';
+    if (zip.match(/^\d{5}$/)) {
       $('#shelter-submit').attr('href', dest);
     }
     else {
