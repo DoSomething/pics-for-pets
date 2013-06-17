@@ -16,6 +16,7 @@ Then /I am on the login form/ do
 end
 
 When /I sign in/ do
+  click_link 'log in'
   within '.form-login' do
     find(:id, 'session_username').set 'bohemian_test'
     find(:id, 'login-password').set 'bohemian_test'
@@ -30,6 +31,7 @@ end
 
 Given /I am logged in/ do
   visit '/login'
+  click_link 'log in'
   within '.form-login' do
     find(:id, 'session_username').set 'bohemian_test'
     find(:id, 'login-password').set 'bohemian_test'
