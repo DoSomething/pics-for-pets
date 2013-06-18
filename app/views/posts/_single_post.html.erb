@@ -1,5 +1,4 @@
 <div class="post id-<%= @post.id %><%= @post.promoted ? ' promoted' : '' %>">
-  <% if admin? %><div class="flag-container"><%= link_to 'Flag', flag_path(@post), :confirm => 'Flag this?' %></div><% end %>
   <div class="share-container"><a href="#" class="facebook-share btn share medium" data-id="<%= @post.id %>"><span>Share Me</span></a><span class="share-count"><%= @post.share_count %></span></div>
   <% if @post.promoted %><div class="promoted-container"><%= link_to 'promoted', '/featured', :class => 'promoted-badge'  %></div><% end %>
   <div class="image-container"><%= image_tag @post.image(:gallery) %></div>
