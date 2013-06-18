@@ -72,6 +72,7 @@ module SessionsHelper
     if !email.nil?
       # MailChimp PicsforPets2013
       Services::MailChimp.subscribe(email, 'PicsforPets2013')
+      Mailer.signup(parameters[:email]).deliver
     end
 
     if !mobile.nil?

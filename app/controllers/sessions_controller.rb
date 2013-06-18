@@ -44,14 +44,8 @@ class SessionsController < ApplicationController
       # If the user exists...
       if @user = User.exists?(nil, username)
         # Attempt to log them in.
-        User.login(session, @user['uid'], username, password)
+        @u = User.login(session, @user['uid'], username, password)
         if User.logged_in?
-          # Success!
-          if username.match(/\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i)
-            # We can't send mobile commons if we don't have their cell phone #
-            handle_mc(username, nil)
-          end
-
           flash[:message] = "You've logged in successfully!"
           source = session[:source] || :root
           session[:source] = nil
@@ -68,16 +62,15 @@ class SessionsController < ApplicationController
           :email => username,
           :fbid => 0,
         }, username, password)
-
         # If we succeed there...
         if User.created?
           # Try to log in...
-          User.login(session, @user.uid, username, password)
+          @u = User.login(session, @user.uid, username, password)
           if User.logged_in?
-
-            if username.match(/\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i)
+            uemail = @u.parsed_response['user']['mail'] || ''
+            if uemail.match(/\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i)
               # We can't send mobile commons if we don't have their cell phone #
-              handle_mc(username, nil)
+              handle_mc(uemail, nil)
             end
             # It worked!
             flash[:message] = "You've logged in succesfully!"
