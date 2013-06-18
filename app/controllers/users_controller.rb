@@ -10,6 +10,6 @@ class UsersController < ApplicationController
     user.save
 
     # Bring them to the real submit path.
-    redirect_to :real_submit_path
+    redirect_to :start
   end
 end

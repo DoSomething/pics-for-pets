@@ -1,6 +1,6 @@
 // LOGIN & REG. FORMS
 // ------------------
-#registration-form
+#login-form
   display: none
 
 .gate .form
@@ -101,6 +101,10 @@
         @media only screen and (max-width: 500px)
           width: 90%
 
+  @media only screen and (max-width: $second)
+    .facebook-connect
+      margin: 0
+
 // input fields for both forms
 .gate input[type="text"],
 .gate input[type="email"],
@@ -118,4 +122,6 @@
   padding: 0 0 0 0.5em
   box-shadow: none
   +border-radius(3px)
+  @media only screen and (max-width: $first)
+    height: 1.5em
 

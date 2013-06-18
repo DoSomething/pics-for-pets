@@ -1,9 +1,10 @@
 <section class="start">
   <div class="section-container">
     <p>Sometimes an amazing photo is all that stands between a homeless pet and a new home. Lend a nearby shelter your photo skills and share the pictures with your friends to help animals get adopted!</p>
-    <h2>Step 1: How to take an irresistible photo</h2> 
+    <h2>Step 1: How to take an irresistible photo</h2>
     <p>Which one of these pics tugs at your heartstrings?</p>
-    <%= image_tag '/images/bg-start-guide.png', :alt => 'An example of a good and bad photos' %>
+    <%= image_tag '/images/bg-good.jpg', :class => 'step-one good', :alt => 'An example of a good photo' %>
+    <%= image_tag '/images/bg-bad.jpg', :class => 'step-one', :alt => 'An example of a bad photo' %>
     <p>A good photo makes all the difference for a homeless animal.</p>
     <p>Here's how you make it happen.</p>
     <ul>
@@ -11,7 +12,7 @@
       <li>Ask a shelter rep to handle the animal so you can keep your hands on the camera.</li>
       <li>Remember the formula for a stunning pet pic:</li>
     </ul>
-    <%= image_tag '/images/bg-start-equation.png', :alt => 'flash off + cage free = pro photo' %>
+    <%= image_tag '/images/bg-equation.jpg', :alt => 'flash off + cage free = pro photo' %>
 
     <h2>Step 2: Find a shelter near you</h2>
     <div class="shelter-finder" id="shelter-finder">

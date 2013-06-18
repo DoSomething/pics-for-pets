@@ -51,6 +51,7 @@ class Post < ActiveRecord::Base
 
   # Clears cache after a new post.
   after_save :touch_cache, :update_img
+
   def touch_cache
     # We need to clear all caches -- Every cache depends on the one before it.
     Rails.cache.clear
@@ -62,8 +63,10 @@ class Post < ActiveRecord::Base
     image = @post.image.url(:gallery)
     image = '/public' + image.gsub(/\?.*/, '')
 
-    if File.exists? Rails.root.to_s + image
-      PostsHelper.image_writer(image, @post.meme_text, @post.meme_position)
+    if !@post.meme_text.nil?
+      if File.exists? Rails.root.to_s + image
+        PostsHelper.image_writer(image, @post.meme_text, @post.meme_position)
+      end
     end
   end
 
