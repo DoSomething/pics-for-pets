@@ -12,10 +12,10 @@ body
 .gate
   position: relative
   float: none
-  min-height: 900px
+  min-height: 940px
   width: 800px
-  margin: 2% auto
-  padding: 3% 3% 1% 3%
+  margin: 25px auto
+  padding: 15px
   background-color: $gate-sbg-color
   background-image: url($gate-sbg-image)
   border: 1px solid #ddd
@@ -23,11 +23,13 @@ body
   +box-shadow(#ccc 0px 15px 20px -10px)
 
   @media only screen and (max-width: $first)
-    width: 88%
-    max-width: 400px
+    width: 400px
     border: none
-    margin: 2% auto
-    padding: 3% 3% 10% 3%
+    margin: 5px auto
+    padding: 10px 10px 50px 10px
     overflow: hidden
     min-height: 200px
+
+  @media only screen and (max-width: 460px)
+    width: 88%
 

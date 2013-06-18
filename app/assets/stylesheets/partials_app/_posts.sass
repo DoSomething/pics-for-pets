@@ -10,11 +10,13 @@ $first: 600px
   h2
     +section-header-text
     @media only screen and (max-width: $first)
-      padding: 3% 0 0 0
+      font-size: 1em
+      padding: 0
   p
     +border-bottom-divider
     @media only screen and (max-width: $first)
-      padding: 3% 0 0 0
+      font-size: 0.9em
+      padding: 0.2em 0 0 0
       border-bottom: none
 
   .section-container
@@ -32,7 +34,7 @@ $first: 600px
   border: 20px solid darken($posts-sbg, 5)
   +border-radius(3px)
   @media only screen and (max-width: $first)
-    width: 89%
+    width: 90%
     margin: 20px auto
     padding: 3% 2%
     border: 10px solid darken($posts-sbg, 5)
@@ -68,7 +70,7 @@ $first: 600px
       width: 40%
       top: 4%
       right: 5%
-  
+
   .promoted-badge
     background-image: url('/images/promoted-badge.png')
     background-size: 170px 27px
@@ -78,7 +80,15 @@ $first: 600px
     text-indent: -9999em
     @media only screen and (max-width: $first)
       background-size: 100%
-  
+
+  .story
+    margin: 4% 0 2% 3%
+    p
+      border-bottom: none
+      padding: 0
+      color: #222
+      font-weight: 400
+
   .image-container
     clear: both
     margin: 0 0 5% 0
@@ -88,9 +98,6 @@ $first: 600px
       width: 450px
       @media only screen and (max-width: $first)
         width: 96%
-
-  .story
-    margin: 0 0 5px 15px
 
 .post.promoted /* Flip the background on promoted posts */
   background: $promoted-sbg
