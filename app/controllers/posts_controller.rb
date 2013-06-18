@@ -386,7 +386,8 @@ class PostsController < ApplicationController
     @post = Post
       .joins('LEFT JOIN shares ON shares.post_id = posts.id')
       .select('posts.*, COUNT(shares.*) AS share_count')
-      .where(:name => params[:vanity], :promoted => true, :flagged => false)
+      .where(:promoted => true, :flagged => false)
+      .where('LOWER(name) = ?', params[:vanity])
       .group('posts.id')
       .limit(1)
       .first
