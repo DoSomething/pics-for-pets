@@ -381,4 +381,19 @@ class PostsController < ApplicationController
       format.html { redirect_to request.env["HTTP_REFERER"] }
     end
   end
+
+  def vanity
+    @post = Post
+      .joins('LEFT JOIN shares ON shares.post_id = posts.id')
+      .select('posts.*, COUNT(shares.*) AS share_count')
+      .where(:name => params[:vanity], :promoted => true, :flagged => false)
+      .group('posts.id')
+      .limit(1)
+      .first
+    if @post.nil?
+      redirect_to :root
+    else
+      render :show
+    end
+  end
 end
