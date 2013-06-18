@@ -143,7 +143,12 @@ class PostsController < ApplicationController
       end
     # "My pets" -- pets that I submitted or shared.
     elsif params[:run] == 'my'
-      user_id = session[:drupal_user_id]
+      if request.format.symbol == :json && !params[:userid].nil?
+        user_id = params[:userid]
+      else
+        user_id = session[:drupal_user_id]
+      end
+
       var += 'mypets-' + user_id.to_s
 
       @p = @p.where('shares.uid = ? OR posts.uid = ?', user_id, user_id)
