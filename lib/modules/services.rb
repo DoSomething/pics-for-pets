@@ -35,11 +35,15 @@ module Services
     end
 
     def self.check_exists(email)
-      get('/ruby/users/' + email + '?' + Time.now.to_i.to_s)
+      if !email.nil?
+        get('/ruby/users/' + email + '?' + Time.now.to_i.to_s)
+      end
     end
 
     def self.check_admin(email)
-      get ('/ruby/users/is_admin/' + email + '?' + Time.now.to_i.to_s)
+      if !email.nil?
+        get ('/ruby/users/is_admin/' + email + '?' + Time.now.to_i.to_s)
+      end
     end
   end
 

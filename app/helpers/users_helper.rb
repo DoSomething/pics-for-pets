@@ -18,29 +18,29 @@ module UsersHelper
   def drupal_user_exists(email)
     if email.nil?
       false
-    end
-
-    response = Services::Auth.check_exists(email)
-    if !response.first.nil?
-      if !response.first['uid'].nil?
-        # The user exists.  Are they an admin?
-        is_admin = Services::Auth.check_admin(email)
-        roles = { 1 => 'authenticated user'}
-
-        validates_admin = false
-        if !is_admin.first.nil?
-          validates_admin = true
-          # Fake the admin array.
-          if !is_admin.first['uid'].nil?
-            roles = { 1 => 'administrator', 2 => 'authenticated user' }
-          end
-        end
-
-        Services::Auth.authenticate(session, response.first['uid'], roles)
-        { 'uid' => response.first['uid'], 'is_admin' => validates_admin }
-      end
     else
-      false
+      response = Services::Auth.check_exists(email)
+      if !response.first.nil?
+        if !response.first['uid'].nil?
+          # The user exists.  Are they an admin?
+          is_admin = Services::Auth.check_admin(email)
+          roles = { 1 => 'authenticated user'}
+
+          validates_admin = false
+          if !is_admin.first.nil?
+            validates_admin = true
+            # Fake the admin array.
+            if !is_admin.first['uid'].nil?
+              roles = { 1 => 'administrator', 2 => 'authenticated user' }
+            end
+          end
+
+          Services::Auth.authenticate(session, response.first['uid'], roles)
+          { 'uid' => response.first['uid'], 'is_admin' => validates_admin }
+        end
+      else
+        false
+      end
     end
   end
 
