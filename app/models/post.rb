@@ -70,6 +70,17 @@ class Post < ActiveRecord::Base
     end
   end
 
+  after_create :remove_tmp_image
+  # Remove the temp uploaded image after a post is successfully created.
+  def remove_tmp_image
+    filename = self.image.instance['image_file_name']
+    dir = 'public/system/tmp/'
+
+    if File.exists?(dir + filename)
+      FileUtils.rm(dir + filename)
+    end
+  end
+
   after_save :reprocess_image, :if => :cropping?
   def cropping?
     if self.cropped.nil?

@@ -28,6 +28,7 @@ CreateAndShare::Application.routes.draw do
   match 'flag/:id' => 'posts#flag', :as => :flag
   get 'submit/guide' => 'users#intent', :as => :intent
   match 'sessions' => redirect('/login')
+  match ':vanity' => 'posts#vanity', :constraints => { :vanity => /[A-Za-z]+/ }
 
   # FACEBOOK AUTH
   match 'auth/:provider/callback' => 'sessions#fboauth'

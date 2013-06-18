@@ -11,6 +11,9 @@ class PostsController < ApplicationController
   # GET /posts
   # GET /posts.json
   def index
+    @admin = ''
+    @admin = 'admin-' if admin?
+
     # Get the page and offset
     page = params[:page] || 0
     offset = (page.to_i * Post.per_page)
@@ -25,7 +28,7 @@ class PostsController < ApplicationController
      .limit(Post.per_page)
     if !params[:last].nil?
       # We're on a "page" of the infinite scroll.  Load the cache for that page.
-      @posts = Rails.cache.fetch 'posts-index-before-' + params[:last] do
+      @posts = Rails.cache.fetch @admin + 'posts-index-before-' + params[:last] do
       @p
         .where('posts.id < ?', params[:last])
         .all
@@ -33,20 +36,20 @@ class PostsController < ApplicationController
     else
       # We're on the first "page" of the infinite scroll.  Load the cache for
       # promoted, the posts, and the total count.
-      @promoted = Rails.cache.fetch 'posts-index-promoted' do
+      @promoted = Rails.cache.fetch @admin + 'posts-index-promoted' do
       @p
         .limit(1)
         .where(:promoted => true)
         .all
         .first
       end
-      @posts = Rails.cache.fetch 'posts-index' do
+      @posts = Rails.cache.fetch @admin + 'posts-index' do
       @p
         .where(:promoted => false)
         .limit(Post.per_page - 1)
         .all
       end
-      @count = Rails.cache.fetch 'posts-index-count' do
+      @count = Rails.cache.fetch @admin + 'posts-index-count' do
         Post
           .where(:flagged => false)
           .all
@@ -83,6 +86,9 @@ class PostsController < ApplicationController
   # GET /featured
   # GET /mypics
   def filter
+    @admin = ''
+    @admin = 'admin-' if admin?
+
     if params[:atype].is_a? String
       # Cats isn't a valid filter, but cat is.  Let's chop off
       # the "s" if it exists.
@@ -106,7 +112,7 @@ class PostsController < ApplicationController
       .where(:flagged => false)
 
     # Sets up all of the filters.
-    var = 'posts-filter-'
+    var = @admin + 'posts-filter-'
     # Animal filters e.g. /cats, /dogs, etc.
     if params[:run] == 'animal'
       var += params[:atype]
@@ -137,7 +143,12 @@ class PostsController < ApplicationController
       end
     # "My pets" -- pets that I submitted or shared.
     elsif params[:run] == 'my'
-      user_id = session[:drupal_user_id]
+      if request.format.symbol == :json && !params[:userid].nil?
+        user_id = params[:userid]
+      else
+        user_id = session[:drupal_user_id]
+      end
+
       var += 'mypets-' + user_id.to_s
 
       @p = @p.where('shares.uid = ? OR posts.uid = ?', user_id, user_id)
@@ -368,6 +379,22 @@ class PostsController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to request.env["HTTP_REFERER"] }
+    end
+  end
+
+  def vanity
+    @post = Post
+      .joins('LEFT JOIN shares ON shares.post_id = posts.id')
+      .select('posts.*, COUNT(shares.*) AS share_count')
+      .where(:promoted => true, :flagged => false)
+      .where('LOWER(name) = ?', params[:vanity])
+      .group('posts.id')
+      .limit(1)
+      .first
+    if @post.nil?
+      redirect_to :root
+    else
+      render :show
     end
   end
 end

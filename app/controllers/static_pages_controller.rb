@@ -1,4 +1,6 @@
 class StaticPagesController < ApplicationController
+  before_filter :is_not_authenticated, :verify_api_key
+
   # GET /start
   def guide
   end
