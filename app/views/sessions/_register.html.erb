@@ -4,7 +4,7 @@
   <%= f.input :first, wrapper_html: { class: 'form-item-first-name' } %>
   <%= f.input :last, wrapper_html: { class: 'form-item-last-name' } %>
   <%= f.input :email, wrapper_html: { class: 'form-item-email' } %>
-  <%= f.input :cell, wrapper_html: { class: 'form-item-cell' } %>
+  <%= f.input :cell, required: false, wrapper_html: { class: 'form-item-cell' } %>
   <%= f.input :password, wrapper_html: { class: 'form-item-pass' } %>
   <%= f.label 'birthday' %>
   <%= f.input :month, label: false, placeholder: 'MM', wrapper_html: { class: 'form-item-month' } %>
