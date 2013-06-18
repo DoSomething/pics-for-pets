@@ -1,5 +1,1 @@
-$('.post-list')
-  .append($('<%=raw render('post').gsub(/\n/, '') %>'))
-  .append('<div class="inview"></div>');
-var latest = <%= @posts.last.id %>;
-var returned = <%= @posts.length %>;
+$('.post-list').append($('<%=raw render('post').gsub(/\n/, '') %>')).append('<div class="inview"></div>'); var latest = <%= @posts.last.id %>; var returned = <%= @posts.length %>;
