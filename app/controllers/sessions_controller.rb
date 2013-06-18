@@ -108,7 +108,6 @@ class SessionsController < ApplicationController
           redirect_to source
         else
           # Nope.
-          handle_mc(email, cell)
           flash.now[:error] = 'Oh no! Something went wrong while logging you in.  Try again?'
           redirect_to :login
         end
