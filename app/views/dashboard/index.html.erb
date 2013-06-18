@@ -1,0 +1,25 @@
+<div id="types">
+	<div id="labels">
+		<div class="label">
+			<label>Cats</label>
+			<div class="bar">
+			  <div style="width: <%= (@cats * 100 / @total).to_f.to_s %>%;"></div>
+			  <span><%= @cats %> (<%= (@cats * 100 / @total) %>%)</span>
+			</div>
+		</div>
+		<div class="label">
+			<label>Dogs</label>
+			<div class="bar">
+			  <div style="width: <%= (@dogs * 100 / @total).to_f.to_s %>%;"></div>
+			  <span><%= @dogs %> (<%= (@dogs * 100 / @total) %>%)</span>
+			</div>
+		</div>
+		<div class="label">
+			<label>Others</label>
+			<div class="bar">
+			  <div style="width: <%= (@others * 100 / @total).to_f.to_s %>%;"></div>
+			  <span><%= @others %> (<%= (@others * 100 / @total) %>%)</span>
+			</div>
+		</div>
+	</div>
+</div>

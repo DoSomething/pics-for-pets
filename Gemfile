@@ -11,6 +11,7 @@ gem 'therubyracer'
 gem 'gibbon'
 gem 'omniauth-facebook'
 gem 'newrelic_rpm'
+gem 'chronic'
 
 gem 'dalli'
 
