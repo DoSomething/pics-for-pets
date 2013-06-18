@@ -99,6 +99,7 @@ class User < ActiveRecord::Base
       @user = User.new(parameters)
 
       if @user.save
+        Mailer.signup(parameters[:email]).deliver
         @@created = true
         @user
       else
