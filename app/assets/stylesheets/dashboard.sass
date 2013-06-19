@@ -21,10 +21,11 @@ header
 
 section#graphs
   #types
-    width: 50%
+    width: 48%
     background: #fff
     +box-shadow(0px 0px 3px #808080)
     margin: 10px
+    float: left
 
     .label
       display: block
@@ -45,3 +46,27 @@ section#graphs
         height: 15px
         background: #667eaf
    
+  #users
+    width: 48%
+    background: #fff
+    +box-shadow(0px 0px 3px #808080)
+    margin: 10px
+    float: left
+    height: 400px
+    position: relative
+
+    .bar
+      width: 54px
+      height: 375px
+      position: absolute
+      bottom: 20px
+
+      .up
+        width: 50px
+        height: 300px/*375px*/
+        background: #667eaf
+        margin-left: 2px
+
+      label
+        clear: both
+        font-size: 8pt

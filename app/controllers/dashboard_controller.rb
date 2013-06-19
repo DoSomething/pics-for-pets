@@ -9,5 +9,7 @@ class DashboardController < ApplicationController
   	@total = (@cats + @dogs + @others)
 
 	@dc = ((@dogs * 100) / @total)
+
+	@users_last_week = Post.where('created_at > ?', 1.week.ago.to_date).count
   end
 end
