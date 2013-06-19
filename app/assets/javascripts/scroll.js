@@ -13,12 +13,13 @@ $(document).ready(function() {
       // Page + 1
       page++;
 
-      // Remove the current inview element.
-      $('.inview').remove();
-
       // If we are viewing a filter...
       if (typeof filter != 'undefined') {
           $.getScript('/' + filter + '.js?page=' + page + '&last=' + latest, function() {
+            // Remove the current inview element.  Add a new one.
+            $('.inview').remove();
+            $('<div></div>').addClass('inview').appendTo($('.post-list'));
+
             // Reload Facebook click event
             load_facebook();
             // Running count += returned count
@@ -34,6 +35,10 @@ $(document).ready(function() {
       }
       else {
         $.getScript('/posts.js?page=' + page + '&last=' + latest, function() {
+          // Remove the current inview element.  Add a new one.
+          $('.inview').remove();
+          $('<div></div>').addClass('inview').appendTo($('.post-list'));
+
           // Load Facebook
           load_facebook();
           // Running count += returned count
