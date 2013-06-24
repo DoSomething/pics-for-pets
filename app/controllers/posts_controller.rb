@@ -40,6 +40,7 @@ class PostsController < ApplicationController
       @p
         .limit(1)
         .where(:promoted => true)
+        .order('RANDOM()')
         .all
         .first
       end
@@ -116,21 +117,58 @@ class PostsController < ApplicationController
     # Animal filters e.g. /cats, /dogs, etc.
     if params[:run] == 'animal'
       var += params[:atype]
-      @p = @p.where(:animal_type => params[:atype])
+      @promoted = Rails.cache.fetch var + '-promoted' do
+      @p
+        .limit(1)
+        .where(:promoted => true, :animal_type => params[:atype])
+        .order('RANDOM()')
+        .all
+        .first
+      end
+
+      @p = @p
+        .where(:animal_type => params[:atype])
+        .where('posts.id != ?', (!@promoted.nil? ? @promoted.id : 0))
+
       @count = Rails.cache.fetch var + '-count' do
         @total.where(:animal_type => params[:atype]).count
       end
     # State filters e.g. /PA, /NY, /CA, etc.
     elsif params[:run] == 'state'
       var += params[:state]
-      @p = @p.where(:state => params[:state])
+      @promoted = Rails.cache.fetch var + '-promoted' do
+      @p
+        .limit(1)
+        .where(:promoted => true, :state => params[:state])
+        .order('RANDOM()')
+        .all
+        .first
+      end
+
+      @p = @p
+        .where(:state => params[:state])
+        .where('posts.id != ?', (!@promoted.nil? ? @promoted.id : 0))
+
       @count = Rails.cache.fetch var + '-count' do
         @total.where(:state => params[:state]).count
       end
     # Combined filters e.g. /cats-NY, /dogs-CA, etc.
     elsif params[:run] == 'both'
       var += params[:atype] + '-' + params[:state]
-      @p = @p.where(:animal_type => params[:atype], :state => params[:state])
+
+      @promoted = Rails.cache.fetch var + '-promoted' do
+      @p
+        .limit(1)
+        .where(:promoted => true, :state => params[:state], :animal_type => params[:atype])
+        .order('RANDOM()')
+        .all
+        .first
+      end
+
+      @p = @p
+        .where(:animal_type => params[:atype], :state => params[:state])
+        .where('posts.id != ?', (!@promoted.nil? ? @promoted.id : 0))
+
       @count = Rails.cache.fetch var + '-count' do
         @total.where(:animal_type => params[:atype], :state => params[:state]).count
       end
