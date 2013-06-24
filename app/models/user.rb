@@ -74,11 +74,14 @@ class User < ActiveRecord::Base
         session[:drupal_user_id]   = response['user']['uid']
         session[:drupal_user_role] = response['user']['roles']
         @@logged_in = true
+        response
       else
         @@logged_in = false
+        response
       end
     else
       @@logged_in = false
+      response
     end
   end
 
@@ -99,7 +102,6 @@ class User < ActiveRecord::Base
       @user = User.new(parameters)
 
       if @user.save
-        Mailer.signup(parameters[:email]).deliver
         @@created = true
         @user
       else

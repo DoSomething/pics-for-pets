@@ -46,6 +46,7 @@ module SessionsHelper
           if response.code == 200 && response.kind_of?(Hash)
             # super -- proceed
             if (ruby_add_user(auth['email'], auth['id'], response['user']['uid'], response['user']['roles'].values.include?('administrator')))
+              handle_mc(auth['email'], nil)
               Services::Auth.authenticate(session, response['user']['uid'], response['user']['roles'])
               true
             else
@@ -72,6 +73,7 @@ module SessionsHelper
     if !email.nil?
       # MailChimp PicsforPets2013
       Services::MailChimp.subscribe(email, 'PicsforPets2013')
+      Mailer.signup(email).deliver
     end
 
     if !mobile.nil?
