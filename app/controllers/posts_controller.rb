@@ -26,24 +26,26 @@ class PostsController < ApplicationController
      .group('posts.id')
      .order('posts.created_at DESC')
      .limit(Post.per_page)
+    @sb_promoted = Rails.cache.fetch @admin + 'posts-index-promoted' do
+    @p
+      .limit(1)
+      .where(:promoted => true)
+      .order('RANDOM()')
+      .all
+      .first
+    end
     if !params[:last].nil?
       # We're on a "page" of the infinite scroll.  Load the cache for that page.
       @posts = Rails.cache.fetch @admin + 'posts-index-before-' + params[:last] do
       @p
         .where('posts.id < ?', params[:last])
+        .where('posts.id != ?', (!@sb_promoted.nil? ? @sb_promoted.id : 0))
         .all
       end
     else
       # We're on the first "page" of the infinite scroll.  Load the cache for
       # promoted, the posts, and the total count.
-      @promoted = Rails.cache.fetch @admin + 'posts-index-promoted' do
-      @p
-        .limit(1)
-        .where(:promoted => true)
-        .order('RANDOM()')
-        .all
-        .first
-      end
+      @promoted = @sb_promoted
       @posts = Rails.cache.fetch @admin + 'posts-index' do
       @p
         .where(:promoted => false)
@@ -99,6 +101,7 @@ class PostsController < ApplicationController
     # Page and offset.
     page = params[:page] || 0
     offset = (page.to_i * Post.per_page)
+    @scrolling = !params[:last].nil?
 
     # Preliminary queries.  These are "finished" later.
     @p = Post
@@ -117,18 +120,23 @@ class PostsController < ApplicationController
     # Animal filters e.g. /cats, /dogs, etc.
     if params[:run] == 'animal'
       var += params[:atype]
-      @promoted = Rails.cache.fetch var + '-promoted' do
-      @p
-        .limit(1)
-        .where(:promoted => true, :animal_type => params[:atype])
-        .order('RANDOM()')
-        .all
-        .first
+
+      @sb_promoted = Rails.cache.fetch var + '-promoted' do
+        @p
+          .limit(1)
+          .where(:promoted => true, :animal_type => params[:atype])
+          .order('RANDOM()')
+          .all
+          .first
+      end
+
+      if !@scrolling
+        @promoted = @sb_promoted
       end
 
       @p = @p
         .where(:animal_type => params[:atype])
-        .where('posts.id != ?', (!@promoted.nil? ? @promoted.id : 0))
+        .where('posts.id != ?', (!@sb_promoted.nil? ? @sb_promoted.id : 0))
 
       @count = Rails.cache.fetch var + '-count' do
         @total.where(:animal_type => params[:atype]).count
@@ -136,7 +144,8 @@ class PostsController < ApplicationController
     # State filters e.g. /PA, /NY, /CA, etc.
     elsif params[:run] == 'state'
       var += params[:state]
-      @promoted = Rails.cache.fetch var + '-promoted' do
+
+      @sb_promoted = Rails.cache.fetch var + '-promoted' do
       @p
         .limit(1)
         .where(:promoted => true, :state => params[:state])
@@ -145,9 +154,13 @@ class PostsController < ApplicationController
         .first
       end
 
+      if !@scrolling
+        @promoted = @sb_promoted
+      end
+
       @p = @p
         .where(:state => params[:state])
-        .where('posts.id != ?', (!@promoted.nil? ? @promoted.id : 0))
+        .where('posts.id != ?', (!@sb_promoted.nil? ? @sb_promoted.id : 0))
 
       @count = Rails.cache.fetch var + '-count' do
         @total.where(:state => params[:state]).count
@@ -156,13 +169,17 @@ class PostsController < ApplicationController
     elsif params[:run] == 'both'
       var += params[:atype] + '-' + params[:state]
 
-      @promoted = Rails.cache.fetch var + '-promoted' do
+      @sb_promoted = Rails.cache.fetch var + '-promoted' do
       @p
         .limit(1)
         .where(:promoted => true, :state => params[:state], :animal_type => params[:atype])
         .order('RANDOM()')
         .all
         .first
+      end
+
+      if !@scrolling
+        @promoted = @sb_promoted
       end
 
       @p = @p
@@ -205,7 +222,10 @@ class PostsController < ApplicationController
       end
     else
       @posts = Rails.cache.fetch var do
-        @p.offset(offset).all
+        @p
+          .offset(offset)
+          .limit(Post.per_page - 1)
+          .all
       end
     end
 
