@@ -27,13 +27,17 @@ class PostsController < ApplicationController
      .order('posts.created_at DESC')
      .limit(Post.per_page)
     @sb_promoted = Rails.cache.fetch @admin + 'posts-index-promoted' do
-    @p
-      .limit(1)
-      .where(:promoted => true)
-      .order('RANDOM()')
-      .all
-      .first
+      Post
+        .joins('LEFT JOIN shares ON shares.post_id = posts.id')
+        .select('posts.*, COUNT(shares.*) AS share_count')
+        .group('posts.id')
+        .where(:promoted => true, :flagged => false)
+        .order('RANDOM()')
+        .limit(1)
+        .all
+        .first
     end
+
     if !params[:last].nil?
       # We're on a "page" of the infinite scroll.  Load the cache for that page.
       @posts = Rails.cache.fetch @admin + 'posts-index-before-' + params[:last] do
@@ -109,7 +113,6 @@ class PostsController < ApplicationController
       .select('posts.*, COUNT(shares.*) AS share_count')
       .where(:flagged => false)
       .group('posts.id, shares.post_id')
-      .order('posts.created_at DESC')
       .limit(Post.per_page)
     @total = Post
       .order('posts.created_at DESC')
@@ -137,6 +140,7 @@ class PostsController < ApplicationController
       @p = @p
         .where(:animal_type => params[:atype])
         .where('posts.id != ?', (!@sb_promoted.nil? ? @sb_promoted.id : 0))
+        .order('posts.created_at DESC')
 
       @count = Rails.cache.fetch var + '-count' do
         @total.where(:animal_type => params[:atype]).count
@@ -161,6 +165,7 @@ class PostsController < ApplicationController
       @p = @p
         .where(:state => params[:state])
         .where('posts.id != ?', (!@sb_promoted.nil? ? @sb_promoted.id : 0))
+        .order('posts.created_at DESC')
 
       @count = Rails.cache.fetch var + '-count' do
         @total.where(:state => params[:state]).count
@@ -185,6 +190,7 @@ class PostsController < ApplicationController
       @p = @p
         .where(:animal_type => params[:atype], :state => params[:state])
         .where('posts.id != ?', (!@promoted.nil? ? @promoted.id : 0))
+        .order('posts.created_at DESC')
 
       @count = Rails.cache.fetch var + '-count' do
         @total.where(:animal_type => params[:atype], :state => params[:state]).count
@@ -192,7 +198,10 @@ class PostsController < ApplicationController
     # Featured animals at /featured
     elsif params[:run] == 'featured'
       var += 'featured'
-      @p = @p.where(:promoted => true)
+      @p = @p
+        .where(:promoted => true)
+        .order('posts.created_at DESC')
+
       @count = Rails.cache.fetch var + '-count' do
         @total.where(:promoted => true).count
       end
@@ -206,7 +215,10 @@ class PostsController < ApplicationController
 
       var += 'mypets-' + user_id.to_s
 
-      @p = @p.where('shares.uid = ? OR posts.uid = ?', user_id, user_id)
+      @p = @p
+        .where('shares.uid = ? OR posts.uid = ?', user_id, user_id)
+        .order('posts.created_at DESC')
+
       @count = Rails.cache.fetch var + '-count' do
         @total
           .joins('LEFT JOIN shares ON shares.post_id = posts.id')
