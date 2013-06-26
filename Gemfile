@@ -43,6 +43,7 @@ group :development, :test do
   #gem 'guard-compass'
   gem 'spork'
   gem 'guard-spork'
+  gem 'factory_girl_rails', '~> 4.0'
 end
 
 gem 'jquery-rails'
