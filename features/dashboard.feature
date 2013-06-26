@@ -3,6 +3,9 @@ Feature: Access Dashboard
 	As an admin
 	I want to be able to access the dashboard
 
+	Background:
+		Given there are posts
+
 	Scenario: Visit while not signed in
 		When I visit /dashboard
 		Then the page should show how it works

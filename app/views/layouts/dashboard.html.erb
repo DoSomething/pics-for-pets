@@ -12,7 +12,13 @@
 </head>
 <body class="wrapper">
 
-<header><h1>Pics for Pets - Dashboard</h1></header>
+<header>
+	<h1>Pics for Pets - Dashboard</h1>
+	<span class="links">
+		<%= link_to 'home', "/" %>
+		<%= link_to 'logout', :logout, { :class => 'logout' } %>
+	</span>
+</header>
 
 <section id="graphs">
 <%= yield %>
