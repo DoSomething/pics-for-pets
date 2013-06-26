@@ -1,6 +1,9 @@
 class DashboardController < ApplicationController
   layout 'dashboard'
 
+  # Before everything runs, run an authentication check and an API key check.
+  before_filter :admin, :verify_api_key
+
   def index
   	@cats = Post.where(:animal_type => 'cat').count
   	@dogs = Post.where(:animal_type => 'dog').count

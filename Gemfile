@@ -36,13 +36,18 @@ group :development, :test do
   gem 'cucumber-rails', :require => false
   gem 'database_cleaner'
   gem 'rb-fsevent', :require => false if RUBY_PLATFORM =~ /darwin/i
+  gem 'passenger'
+  gem 'spork'
+  gem 'factory_girl_rails'  
+
+  #guard!
   gem 'guard-rspec'
   gem 'guard-cucumber'
   gem 'guard-livereload'
   gem 'rack-livereload'
   #gem 'guard-compass'
-  gem 'spork'
   gem 'guard-spork'
+  gem 'guard-passenger'
 end
 
 gem 'jquery-rails'

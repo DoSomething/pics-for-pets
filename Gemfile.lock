@@ -38,6 +38,7 @@ GEM
       xpath (~> 2.0)
     childprocess (0.3.9)
       ffi (~> 1.0, >= 1.0.11)
+    chronic (0.9.1)
     chunky_png (1.2.8)
     climate_control (0.0.3)
       activesupport (>= 3.0)
@@ -67,6 +68,7 @@ GEM
       cucumber (>= 1.2.0)
       nokogiri (>= 1.5.0)
       rails (~> 3.0)
+    daemon_controller (1.1.4)
     dalli (2.6.4)
     database_cleaner (1.0.1)
     diff-lcs (1.2.4)
@@ -77,6 +79,11 @@ GEM
     eventmachine (1.0.3)
     execjs (1.4.0)
       multi_json (~> 1.0)
+    factory_girl (4.2.0)
+      activesupport (>= 3.0.0)
+    factory_girl_rails (4.2.1)
+      factory_girl (~> 4.2.0)
+      railties (>= 3.0.0)
     faraday (0.8.7)
       multipart-post (~> 1.1)
     ffi (1.9.0)
@@ -100,6 +107,8 @@ GEM
       em-websocket (>= 0.5.0)
       guard (>= 1.8.0)
       multi_json (~> 1.7)
+    guard-passenger (0.5.1)
+      guard (>= 1.1.0.beta)
     guard-rspec (3.0.2)
       guard (>= 1.8)
       rspec (~> 2.13)
@@ -161,6 +170,10 @@ GEM
       activesupport (>= 3.0.0)
       cocaine (~> 0.5.0)
       mime-types
+    passenger (4.0.5)
+      daemon_controller (>= 1.1.0)
+      rack
+      rake (>= 0.8.1)
     pg (0.15.1)
     polyglot (0.3.3)
     pry (0.9.12.2)
@@ -257,14 +270,17 @@ PLATFORMS
 
 DEPENDENCIES
   capybara
+  chronic
   coffee-rails (~> 3.2.1)
   compass-rails
   cucumber-rails
   dalli
   database_cleaner
+  factory_girl_rails
   gibbon
   guard-cucumber
   guard-livereload
+  guard-passenger
   guard-rspec
   guard-spork
   headless
@@ -273,6 +289,7 @@ DEPENDENCIES
   newrelic_rpm
   omniauth-facebook
   paperclip
+  passenger
   pg
   rack-livereload
   rails (= 3.2.13)
