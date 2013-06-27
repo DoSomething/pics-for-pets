@@ -15,6 +15,10 @@
 //= require jquery.inview.js
 // JQPLOT
 //= require ./dashboard/jquery.jqplot.min.js
+//= require ./dashboard/plugins/jqplot.barRenderer.min.js
+//= require ./dashboard/plugins/jqplot.categoryAxisRenderer.min.js
+//= require ./dashboard/plugins/jqplot.pointLabels.min.js
 //= require ./dashboard/plugins/jqplot.pieRenderer.min.js
+//= require ./dashboard/plugins/jqplot.donutRenderer.min.js
 // Render graphs
 //= require ./dashboard/graphs.js

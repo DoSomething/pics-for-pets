@@ -5,14 +5,35 @@ class DashboardController < ApplicationController
   before_filter :admin, :verify_api_key
 
   def index
+    #post stats
   	@cats = Post.where(:animal_type => 'cat').count
   	@dogs = Post.where(:animal_type => 'dog').count
   	@others = Post.where(:animal_type => 'other').count
+    @pets = (@cats + @dogs + @others)
 
-  	@total = (@cats + @dogs + @others)
+    #user stats
+    @users = User.all.count
 
-	@dc = ((@dogs * 100) / @total)
-
-	@users_last_week = Post.where('created_at > ?', 1.week.ago.to_date).count
+    #share stats
+    @shares = 0
+    @catShares = 0
+    @dogShares = 0
+    @otherShares = 0
+    @posts = Post.all
+    @posts.each do |post|
+      if !post.share_count.nil?
+        @shares += post.share_count
+        if post.animal_type == "cat"
+          @catShares += post.share_count
+        end
+        if post.animal_type == "dog"
+          @dogShares += post.share_count
+        end
+        if post.animal_type == "other"
+          @otherShares += post.share_count
+        end
+      end
+    end
   end
+
 end

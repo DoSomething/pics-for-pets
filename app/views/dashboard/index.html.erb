@@ -1,5 +1,34 @@
 <div id="graph-container">
-	<div class="wrapper left"><section id="chart1"></section></div>
-	<div class="wrapper right"><section id="chart2"></section></div>
-	<div class="wrapper left"><section id="chart3"></section></div>
+	<div class="wrapper left">
+		<%= content_tag "section", id: "petsPie", data: {
+			cats: @cats,
+			dogs: @dogs,
+			others: @others
+		} do %>
+		<% end %>
+	</div>
+	<div class="wrapper right">
+		<%= content_tag "section", id: "petsBar", data: {
+			cats: @cats,
+			dogs: @dogs,
+			others: @others,
+			total: @pets
+		} do %>
+		<% end %>
+	</div>
+	<div class="wrapper left">
+		<%= content_tag "section", id: "usersBar", data: {
+			total: @users,
+		} do %>
+		<% end %>
+	</div>
+	<div class="wrapper right">
+		<%= content_tag "section", id: "sharesBar", data: {
+			total: @shares,
+			cat: @catShares,
+			dog: @dogShares,
+			other: @otherShares
+		} do %>
+		<% end %>
+	</div>
 </div>
