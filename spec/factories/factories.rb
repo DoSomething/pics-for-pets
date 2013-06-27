@@ -19,4 +19,11 @@ FactoryGirl.define do
     story "This is a story"
     animal_type 'cat'
   end
+
+  factory :user do
+    email 'mchitten@gmail.com'
+    fbid nil
+    uid 778374
+    is_admin false
+  end
 end
