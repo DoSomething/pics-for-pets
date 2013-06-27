@@ -1,32 +1,63 @@
-<div id="types">
-	<div id="labels">
-		<div class="label">
-			<label>Cats</label>
-			<div class="bar">
-			  <div style="width: <%= (@cats * 100 / @total).to_f.to_s %>%;"></div>
-			  <span><%= @cats %> (<%= (@cats * 100 / @total) %>%)</span>
-			</div>
-		</div>
-		<div class="label">
-			<label>Dogs</label>
-			<div class="bar">
-			  <div style="width: <%= (@dogs * 100 / @total).to_f.to_s %>%;"></div>
-			  <span><%= @dogs %> (<%= (@dogs * 100 / @total) %>%)</span>
-			</div>
-		</div>
-		<div class="label">
-			<label>Others</label>
-			<div class="bar">
-			  <div style="width: <%= (@others * 100 / @total).to_f.to_s %>%;"></div>
-			  <span><%= @others %> (<%= (@others * 100 / @total) %>%)</span>
-			</div>
-		</div>
-	</div>
+<div id="graph-container">
+	<div class="wrapper left"><section id="chart1"></section></div>
+	<div class="wrapper right"><section id="chart2"></section></div>
+	<div class="wrapper left"><section id="chart3"></section></div>
 </div>
 
-<div id="users">
-	<div class="bar">
-		<div class="up">&nbsp;</div>
-		<label>6/17 - 6/21</label>
-	</div>
-</div>
+<script>
+$(document).ready(function(){
+  var data = [
+    ['Cats', <%= @cats %> ],['Dogs', <%= @dogs %>], ['Other', <%= @others %>]
+  ];
+  var plot1 = jQuery.jqplot ('chart1', [data], 
+    { 
+      seriesDefaults: {
+        // Make this a pie chart.
+        renderer: jQuery.jqplot.PieRenderer, 
+        rendererOptions: {
+          // Put data labels on the pie slices.
+          // By default, labels show the percentage of the slice.
+          showDataLabels: true
+        }
+      }, 
+      legend: { show:true, location: 'e' }
+    }
+  );
+
+  var data = [
+    ['Cats', <%= @cats %> ],['Dogs', <%= @dogs %>], ['Other', <%= @others %>]
+  ];
+  var plot1 = jQuery.jqplot ('chart2', [data], 
+    { 
+      seriesDefaults: {
+        // Make this a pie chart.
+        renderer: jQuery.jqplot.PieRenderer, 
+        rendererOptions: {
+          // Put data labels on the pie slices.
+          // By default, labels show the percentage of the slice.
+          showDataLabels: true
+        }
+      }, 
+      legend: { show:true, location: 'e' }
+    }
+  );
+
+  var data = [
+    ['Cats', <%= @cats %> ],['Dogs', <%= @dogs %>], ['Other', <%= @others %>]
+  ];
+  var plot1 = jQuery.jqplot ('chart3', [data], 
+    { 
+      seriesDefaults: {
+        // Make this a pie chart.
+        renderer: jQuery.jqplot.PieRenderer, 
+        rendererOptions: {
+          // Put data labels on the pie slices.
+          // By default, labels show the percentage of the slice.
+          showDataLabels: true
+        }
+      }, 
+      legend: { show:true, location: 'e' }
+    }
+  );
+});
+</script
