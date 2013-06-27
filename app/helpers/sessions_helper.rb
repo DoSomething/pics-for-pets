@@ -74,7 +74,7 @@ module SessionsHelper
     if !email.nil?
       # MailChimp PicsforPets2013
       Services::MailChimp.subscribe(email, 'PicsforPets2013')
-      Services::Mandrill.email(email, 'PicsforPets_2013_Signup', 'Thanks for signing up for Pics for Pets!')
+      Services::Mandrill.mail(email, 'PicsforPets_2013_Signup', 'Thanks for signing up for Pics for Pets!')
     end
 
     if !mobile.nil?
