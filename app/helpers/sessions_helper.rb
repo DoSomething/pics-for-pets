@@ -74,40 +74,7 @@ module SessionsHelper
     if !email.nil?
       # MailChimp PicsforPets2013
       Services::MailChimp.subscribe(email, 'PicsforPets2013')
-      #@todo: Why doesn't this work?
-      #Services::Mandrill.send(email, 'PicsforPets_2013_Signup')
-      @mandrill = Mailchimp::Mandrill.new(ENV['MANDRILL_APIKEY'])
-      response = @mandrill.messages_send_template({
-       :template_name => 'PicsforPets_2013_Signup',
-       :template_content => [
-         {
-           :name => "Friend",
-         }
-       ],
-       :message => {
-         :from_name=> "Hilary at DoSomething.org",
-         :from_email => "animals@dosomething.org",
-         :subject => "Thanks for signing up for Pics for Pets!",
-         :to => [
-           {
-             :email=> email,
-             :name => "friend"
-           }
-         ],
-         :auto_html => true,
-         :merge_vars => [
-           {
-             :rcpt => email,
-             :vars => [
-                {
-                  :name => "SUBJECT",
-                  :content => "Thanks for signing up for Pics for Pets!"
-                }
-             ]
-           }
-         ]
-        }
-      })
+      Services::Mandrill.mail(email, 'PicsforPets_2013_Signup', 'Thanks for signing up for Pics for Pets!')
     end
 
     if !mobile.nil?
