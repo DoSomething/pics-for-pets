@@ -14,6 +14,7 @@ gem 'newrelic_rpm'
 gem 'chronic'
 
 gem 'dalli'
+gem 'mailchimp'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -48,6 +49,7 @@ group :development, :test do
   #gem 'guard-compass'
   gem 'guard-spork'
   gem 'guard-passenger'
+  gem 'factory_girl_rails', '~> 4.0'
 end
 
 gem 'jquery-rails'

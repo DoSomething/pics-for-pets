@@ -1,6 +1,7 @@
 module SessionsHelper
   include UsersHelper
   include Services
+  include Mailchimp
 
   # Handles Facebook authentication.
   # @param hash auth
@@ -73,7 +74,7 @@ module SessionsHelper
     if !email.nil?
       # MailChimp PicsforPets2013
       Services::MailChimp.subscribe(email, 'PicsforPets2013')
-      Mailer.signup(email).deliver
+      Services::Mandrill.mail(email, 'PicsforPets_2013_Signup', 'Thanks for signing up for Pics for Pets!')
     end
 
     if !mobile.nil?
