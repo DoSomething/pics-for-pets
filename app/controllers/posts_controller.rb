@@ -21,7 +21,7 @@ class PostsController < ApplicationController
     # Basic post query.
     @p = Post
      .joins('LEFT JOIN shares ON shares.post_id = posts.id')
-     .select('posts.*, COUNT(shares.*) AS share_count')
+     .select('posts.*, COUNT(shares.*) AS real_share_count')
      .where(:flagged => false)
      .group('posts.id')
      .order('posts.created_at DESC')
@@ -29,7 +29,7 @@ class PostsController < ApplicationController
     @sb_promoted = Rails.cache.fetch @admin + 'posts-index-promoted' do
       Post
         .joins('LEFT JOIN shares ON shares.post_id = posts.id')
-        .select('posts.*, COUNT(shares.*) AS share_count')
+        .select('posts.*, COUNT(shares.*) AS real_share_count')
         .group('posts.id')
         .where(:promoted => true, :flagged => false)
         .order('RANDOM()')
@@ -110,7 +110,7 @@ class PostsController < ApplicationController
     # Preliminary queries.  These are "finished" later.
     @p = Post
       .joins('LEFT JOIN shares ON shares.post_id = posts.id')
-      .select('posts.*, COUNT(shares.*) AS share_count')
+      .select('posts.*, COUNT(shares.*) AS real_share_count')
       .where(:flagged => false)
       .group('posts.id, shares.post_id')
       .limit(Post.per_page)
@@ -360,7 +360,7 @@ class PostsController < ApplicationController
     @post = Post
       .where(:id => params[:id], :flagged => false)
       .joins('LEFT JOIN shares ON shares.post_id = posts.id')
-      .select('posts.*, COUNT(shares.*) AS share_count')
+      .select('posts.*, COUNT(shares.*) AS real_share_count')
       .group('shares.post_id, posts.id')
       .order('posts.created_at DESC')
       .limit(Post.per_page)
@@ -465,7 +465,7 @@ class PostsController < ApplicationController
   def vanity
     @post = Post
       .joins('LEFT JOIN shares ON shares.post_id = posts.id')
-      .select('posts.*, COUNT(shares.*) AS share_count')
+      .select('posts.*, COUNT(shares.*) AS real_share_count')
       .where(:promoted => true, :flagged => false)
       .where('LOWER(name) = ?', params[:vanity])
       .group('posts.id')

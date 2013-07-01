@@ -1,6 +1,5 @@
 class Post < ActiveRecord::Base
   attr_accessible :uid, :adopted, :creation_time,
-
   	:flagged, :image, :name, :promoted,
   	:share_count, :shelter, :state, :city,
   	:story, :animal_type, :update_time,
