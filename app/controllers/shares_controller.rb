@@ -10,7 +10,7 @@ class SharesController < ApplicationController
     # Note: we can't put this in a model.  Models can't access the session variable.
     @share = Share.new(params[:share])
     @post = Post.find(params[:share][:post_id])
-    if @post.share_count.nil? || @post.share_count != 0
+    if @post.share_count.nil? || @post.share_count == 0
       @post.share_count = params[:new_count]
     else
       @post.share_count = (@post.share_count += 1)
