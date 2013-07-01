@@ -13,7 +13,7 @@ class SharesController < ApplicationController
     if @post.share_count.nil? || @post.share_count == 0
       @post.share_count = params[:new_count]
     else
-      @post.share_count = (@post.share_count += 1)
+      @post.share_count = (@post.share_count + 1)
     end
     @post.save
 
