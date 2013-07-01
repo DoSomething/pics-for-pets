@@ -1,6 +1,9 @@
 CreateAndShare::Application.routes.draw do
   root :to => 'posts#index'
 
+  # DASHBOARD
+  match '/dashboard', to: 'dashboard#index'
+
   # Gate
   resources :sessions, :only => [:new, :create, :destroy]
   match '/login',  to: 'sessions#new',     :as => :login
