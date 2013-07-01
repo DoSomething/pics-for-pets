@@ -205,6 +205,16 @@ class PostsController < ApplicationController
       @count = Rails.cache.fetch var + '-count' do
         @total.where(:promoted => true).count
       end
+    # Adopted pets at /adopted
+    elsif params[:run] == 'adopted'
+      var += 'adopted'
+      @p = @p
+        .where(:adopted => true)
+        .order('posts.created_at DESC')
+
+      @count = Rails.cache.fetch var + '-count' do
+        @total.where(:adopted => true).count
+      end
     # "My pets" -- pets that I submitted or shared.
     elsif params[:run] == 'my'
       if request.format.symbol == :json && !params[:userid].nil?
