@@ -1,5 +1,178 @@
 $(document).ready(function(){
 
+  $(".update").each(function() {
+    var scope = $(this)
+    scope.find("input[type='submit']").click(function(e) {
+      e.preventDefault();
+      var error = [];
+      if(scope.find("input[type='date']").val() == "") {
+        error.push("Please enter a date.");
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth()+1;
+        var yyyy = today.getFullYear();
+        if(dd < 10)
+          dd='0'+dd
+        if(mm < 10)
+          mm='0'+mm
+        today = yyyy+'-'+mm+'-'+dd;
+        scope.find("input[type='date']").val(today);
+      }
+      if(scope.find("input[type='number']").val() % 1 != 0 || scope.find("input[type='number']").val() < 1) {
+        error.push("Unacceptable number. Please enter a positive integer.");
+        scope.find("input[type='number']").val("5")
+      }
+      if(error.length > 0) {
+        alert(error.join("\n\n"));
+      }
+      else {
+        $.ajax({
+          type: "GET",
+          data: scope.find("form").serialize(),
+          dataType: "json",
+          url: "/dashboard",
+          success: function(data) {
+            var title = data["title"];
+            var target = "";
+            var ticks = [], labels = [], points = [];
+
+            if(title == "User Stats") {
+              target = "usersLine";
+              var total = [], totalPoints = [], postsPer = [], sharesPer = [];
+              $.each(data["nUsers"], function(tick, point) {
+                totalPoints.push(point);
+                ticks.push(tick);
+              });
+              $.each(data["totalUsers"], function(tick, point) {
+                total.push(point);
+                if(point == 0) {
+                  postsPer.push(0);
+                  sharesPer.push(0);
+                }
+                else {
+                  postsPer.push(data["totalPosts"][tick] / point);
+                  sharesPer.push(data["totalShares"][tick] / point);
+                }
+              });
+              points = [total, totalPoints, postsPer, sharesPer];
+              labels = [
+                {label: "Total Users"},
+                {label: "New Users"},
+                {label: "Posts per User"},
+                {label: "Shares per User"}
+              ]
+            }
+            else if(title == "Pet Stats") {
+              target = "petsLine";
+              var total = [], totalAdopted = [], newlyAdopted = [], totalPoints = [], catPoints = [], dogPoints = [], otherPoints = [];
+              $.each(data["totalPosts"], function(tick, point) {
+                total.push(point);
+              });
+              $.each(data["totalAdopted"], function(tick, point) {
+                totalAdopted.push(point);
+              });
+              $.each(data["nAdopted"], function(tick, point) {
+                newlyAdopted.push(point);
+              });
+              $.each(data["nPosts"], function(tick, point) {
+                totalPoints.push(point);
+                ticks.push(tick);
+              });
+              $.each(data["nCats"], function(tick, point) {
+                catPoints.push(point);
+              });
+              $.each(data["nDogs"], function(tick, point) {
+                dogPoints.push(point);
+              });
+              $.each(data["nOthers"], function(tick, point) {
+                otherPoints.push(point);
+              });
+              points = [total, totalAdopted, newlyAdopted, totalPoints, catPoints, dogPoints, otherPoints];
+              labels = [
+                {label: "Total Posts"},
+                {label: "Total Adopted Pets"},
+                {label: "Newly Adopted Pets"},
+                {label: "New Posts"},
+                {label: "New Cat Posts"},
+                {label: "New Dog Posts"},
+                {label: "New Other Posts"}
+              ]
+            }
+            else if(title == "Share Stats") {
+              target = "sharesLine";
+              var total = [], totalPoints = [], catPoints = [], dogPoints = [], otherPoints = [], perPost = [];
+              $.each(data["nShares"], function(tick, point) {
+                totalPoints.push(point);
+                ticks.push(tick);
+              });
+              $.each(data["nCatShares"], function(tick, point) {
+                catPoints.push(point);
+              });
+              $.each(data["nDogShares"], function(tick, point) {
+                dogPoints.push(point);
+              });
+              $.each(data["nOtherShares"], function(tick, point) {
+                otherPoints.push(point);
+              });
+              $.each(data["totalShares"], function(tick, point) {
+                total.push(point);
+                var totalPosts = data["totalPosts"][tick];
+                if(totalPosts == 0)
+                  perPost.push(0);
+                else
+                  perPost.push(point / data["totalPosts"][tick]);
+              });
+              console.log(perPost);
+              points = [total, totalPoints, catPoints, dogPoints, otherPoints, perPost];
+              labels = [
+                {label: "Total Shares"},
+                {label: "New Shares"},
+                {label: "New Cat Shares"},
+                {label: "New Dog Shares"},
+                {label: "New Other Shares"},
+                {label: "Shares per Post"}
+              ]
+            }
+
+            $("#" + target).empty();
+            $.jqplot(target, points, {
+              title: title,
+              series: labels,
+              axes: {
+                xaxis: {
+                  ticks: ticks,
+                  renderer: $.jqplot.CategoryAxisRenderer
+                }
+              },
+              axesDefaults: {
+                tickRenderer: $.jqplot.CanvasAxisTickRenderer,
+                tickOptions: {
+                  angle: -30,
+                  fontSize: '10pt'
+                }
+              },
+              legend: {
+                show: true,
+                placement: 'outsideGrid',
+                location: 's'
+              },
+              highlighter: {
+                show: true,
+                sizeAdjust: 7.5,
+                tooltipContentEditor: function (str, seriesIndex, pointIndex, plot) {
+                  return str.substring(str.indexOf(",") + 2);
+                },
+                bringSeriesToFront: true
+              }
+            });
+          }
+        });
+      }
+    });
+  });
+
+  $("input[type='submit']").click();
+
   var nPets = $("#petsBar").data("total");
   var nUsers = $("#usersBar").data("total");
   var nShares = $("#sharesBar").data("total");
@@ -24,6 +197,26 @@ $(document).ready(function(){
     }
   );
 
+  //shares pie
+  var sharesPieData = [
+    ['Cats', $("#sharesPie").data("cat")],['Dogs', $("#sharesPie").data("dog")], ['Other', $("#sharesPie").data("other")]
+  ];
+  var petsPie = jQuery.jqplot ('sharesPie', [sharesPieData], 
+    { 
+      title: "Share Type Percentage",
+      seriesDefaults: {
+        // Make this a pie chart.
+        renderer: jQuery.jqplot.PieRenderer, 
+        rendererOptions: {
+          // Put data labels on the pie slices.
+          // By default, labels show the percentage of the slice.
+          showDataLabels: true
+        }
+      }, 
+      legend: { show:true, location: 'e' }
+    }
+  );
+
   //pets bar
   var total = [$("#petsBar").data("total")];
   var cats = [$("#petsBar").data("cats")];
@@ -33,7 +226,7 @@ $(document).ready(function(){
   // Ticks should match up one for each y value (category) in the series.
   var ticks = ['All time'];
   var petsBar = $.jqplot('petsBar', [total, cats, dogs, others], {
-      title: "Number of Pets",
+      title: "Pets Stats",
       // The "seriesDefaults" option is an options object that will
       // be applied to all series in the chart.
       seriesDefaults:{

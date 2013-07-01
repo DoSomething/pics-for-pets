@@ -17,8 +17,13 @@
 //= require ./dashboard/jquery.jqplot.min.js
 //= require ./dashboard/plugins/jqplot.barRenderer.min.js
 //= require ./dashboard/plugins/jqplot.categoryAxisRenderer.min.js
+//= require ./dashboard/plugins/jqplot.canvasAxisTickRenderer.min.js
 //= require ./dashboard/plugins/jqplot.pointLabels.min.js
 //= require ./dashboard/plugins/jqplot.pieRenderer.min.js
 //= require ./dashboard/plugins/jqplot.donutRenderer.min.js
+//= require ./dashboard/plugins/jqplot.canvasTextRenderer.min.js
+//= require ./dashboard/plugins/jqplot.canvasAxisLabelRenderer.min.js
+//= require ./dashboard/plugins/jqplot.highlighter.min.js
+//= require ./dashboard/plugins/jqplot.cursor.min.js
 // Render graphs
 //= require ./dashboard/graphs.js
