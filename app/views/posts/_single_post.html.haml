@@ -1,0 +1,24 @@
+%div{ :class => "post id-#{@post.id}" + (@post.promoted ? ' promoted' : '') + (@post.adopted? ? ' adopted' : '') }
+  - if admin?
+    .flag-container
+      = link_to 'Flag', flag_path(@post), :confirm => 'Flag this?'
+      |
+      = link_to 'Edit', edit_post_path(@post)
+  .share-container
+    = link_to('#', :class => 'facebook-share btn share medium', 'data-id' => @post.id) do
+      %span Share Me
+    %span.share-count= (@post.share_count ? @post.share_count : @post.real_share_count)
+  - if @post.promoted
+    .promoted-container
+      = link_to 'promoted', '/featured', :class => 'promoted-badge'
+  - if @post.adopted
+    = image_tag '/images/adopted-badge.png', :alt => 'Adopted Pet', :class => 'adopted-badge'
+  .image-container
+    = image_tag @post.image(:gallery)
+  .name-loc
+    = link_to show_post_path(@post) do
+      <span class="name">#{@post.name}</span>, #{@post.state}
+  .story
+    =raw simple_format(@post.story).gsub(/(\r|\n|\r\n)/, '')
+  .adopt-me
+    Adopt #{@post.name} at #{link_to @post.shelter + ', ' + (!@post.city.nil? ? (@post.city + ', ') : '') + @post.state, 'http://www.adoptapet.com/animal-shelter-search?city_or_zip=' + (!@post.city.nil? ? (@post.city + ', ') : '') + @post.state + '&shelter_name=' + @post.shelter + '&distance=50&adopts_out=all', :target => '_blank' }
