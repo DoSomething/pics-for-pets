@@ -82,8 +82,14 @@ $(document).ready(function() {
     img.attr('src', '/system/tmp/' + filename);
     img.appendTo('#crop-img-container');
     //hide until image is loaded and positioned
-    overlay.css("display", "hidden");
-    container.css("display", "hidden");
+    overlay.css({
+      position: "absolute",
+      top: "-10000px"
+    });
+    container.css({
+      position: "absolute",
+      top: "-10000px"
+    });
     img.hide();
     img.load(function() {
       //scale image to always fit in the window
@@ -98,8 +104,6 @@ $(document).ready(function() {
       });
       //show once everything is loaded
       img.show();
-      overlay.css("display", "block");
-      container.css("display", "block");
       //set the crop_dim_w used to calculate the ratio to crop correctly with paperclip
       $("#crop_dim_w").val(img.width());
       var cropbox_dim = img.width() > img.height() ? img.height() : img.width();
@@ -154,6 +158,14 @@ $(document).ready(function() {
         }, function() {
           jcrop_api = this;
         });
+      });
+      overlay.css({
+        position: "fixed",
+        top: 0
+      });
+      container.css({
+        position: "fixed",
+        top: "50%"
       });
     });
     var crop_button = $("<a href='#' class='btn primary'>Crop</a>");
