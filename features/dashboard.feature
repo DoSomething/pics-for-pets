@@ -15,6 +15,7 @@ Feature: Access Dashboard
 	Scenario: Visit while signed in but not admin
 		When I visit /dashboard
 		And I log in as a regular user
+		When I visit /dashboard
 		Then the page should show how it works
 		And the page should show please login as admin
 		And the page should show you have been logged out
@@ -22,4 +23,5 @@ Feature: Access Dashboard
 	Scenario: Visit while signed in as admin
 		When I visit /dashboard
 		And I log in as an admin
+		When I visit /dashboard
 		Then the page should show Pics for Pets - Dashboard

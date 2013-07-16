@@ -74,7 +74,7 @@ class SessionsController < ApplicationController
             end
             # It worked!
             flash[:message] = "You've logged in succesfully!"
-            source = session[:source] || :root
+            source = featured_path
             session[:source] = nil
             redirect_to source
           else
@@ -103,7 +103,7 @@ class SessionsController < ApplicationController
           # Yep!
           handle_mc(email, cell)
           flash.now[:message] = 'Super! You\'ve registered successfully' + " #{response}"
-          source = session[:source] || :root
+          source = featured_path
           session[:source] = nil
           redirect_to source
         else

@@ -12,8 +12,8 @@ describe SessionsController, :type => :controller do
         }
       }
 
-      # Make sure it redirects us to root
-      expect(response).to redirect_to :root
+      # Make sure it redirects us to /featured
+      expect(response).to redirect_to :featured
 
       # Make sure the user is in our database.
       user = User.last
@@ -44,7 +44,7 @@ describe SessionsController, :type => :controller do
         }
       }
 
-      expect(response).to redirect_to :root
+      expect(response).to redirect_to :featured
 
       user = User.last
       user.uid.should_not eq nil
