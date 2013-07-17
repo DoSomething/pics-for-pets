@@ -72,17 +72,10 @@ class PostsController < ApplicationController
     # The page.
     @page = page.to_s
 
-    # Fixes an issue with the JSON export -- shows gallery pics.
-    if request.format.symbol == :json
-      @posts.each do |post|
-        post.image.options[:default_style] = :gallery
-      end
-    end
-
     respond_to do |format|
       format.js
       format.html # index.html.erb
-      format.json { render json: @posts }
+      format.json { render json: @posts, root: false }
       format.csv { send_data Post.as_csv }
     end
   end
@@ -251,13 +244,6 @@ class PostsController < ApplicationController
       end
     end
 
-    # Fixes the gallery URL bug.
-    if request.format.symbol == :json
-      @posts.each do |post|
-        post.image.options[:default_style] = :gallery
-      end
-    end
-
     # Basic variables.
     @last = 0
     if !@posts.last.nil?
@@ -270,7 +256,7 @@ class PostsController < ApplicationController
     respond_to do |format|
       format.js
       format.html
-      format.json { render json: @posts }
+      format.json { render json: @posts, root: false }
       format.csv { send_data @posts.as_csv }
     end
   end
@@ -368,7 +354,7 @@ class PostsController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: @post }
+      format.json { render json: @post, root: false }
       format.csv { send_data @post.as_csv }
     end
   end
