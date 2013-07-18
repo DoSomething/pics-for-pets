@@ -7,12 +7,17 @@
 -->
 </script>
 
-<div class="post-list">
-<% if @posts.length > 0 %>
-<%=raw render('filter_posts').gsub(/\n/, '') %>
-<div class="inview"></div>
-<% else %>
-<%= render 'not_found' %>
-<% end %>
+<section class="posts">
+  <div class="section-container">
+    <div class="post-list">
+      <% if params[:run] == 'featured' %><h2>These animals needy our help finding a home.  If you can't adopt any, share them with your friends.</h2><% end %>
+      <% if @posts.length > 0 %>
+        <%=raw render('filter_posts').gsub(/\n/, '') %>
+        <div class="inview"></div>
+      <% else %>
+        <%= render 'not_found' %>
+      <% end %>
+    </div>
+  </div>
 </div>
 <% end %>
