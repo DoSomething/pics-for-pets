@@ -2,7 +2,10 @@ class UsersController < ApplicationController
   # GET /submit/guide
   # Saves if a user is going into the submit form.
   def intent
-    render :status => :forbidden unless authenticated?
+    if !authenticated?
+      redirect_to :login
+      return false
+    end
 
     # Save the intent to submit.
     user = User.find_by_uid(session[:drupal_user_id])
