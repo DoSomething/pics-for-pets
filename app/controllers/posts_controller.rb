@@ -4,7 +4,7 @@ class PostsController < ApplicationController
 
   # Before everything runs, run an authentication check and an API key check.
   before_filter :is_not_authenticated, :verify_api_key
-  skip_before_filter :is_not_authenticated, :only => [:index, :vanity, :show]
+  skip_before_filter :is_not_authenticated, :only => [:index, :vanity, :show, :filter]
 
   # Ignores xsrf in favor of API keys for JSON requests.
   skip_before_filter :verify_authenticity_token, :if => Proc.new { |c| c.request.format == 'application/json' }
