@@ -5,10 +5,7 @@ Feature: Test pages
     When I visit /start
     Then the page should redirect to /login
 
-    When I visit /submit
-    Then the page should redirect to /login
-
-    When I visit /cats
+    When I visit /mypets
     Then the page should redirect to /login
 
   @javascript

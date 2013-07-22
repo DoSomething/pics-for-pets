@@ -12,11 +12,6 @@ describe PostsController, :type => :controller do
   end
 
   describe 'GET #filter' do
-    it 'redirects to login' do
-      get :filter, :run => 'my'
-      expect(response).to redirect_to :login
-    end
-
     it 'show filter' do
       get :filter, :run => 'animal', :atype => 'cats', :bypass => true
       expect(response).to be_success
