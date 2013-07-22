@@ -2,7 +2,7 @@ Feature: Home run
   We need to check the basic flow works.
 
   Scenario: Show the login form
-    When I visit /
+    When I visit /start
     Then the page should show Need an account?
     When I click on register
     Then the page should show Already have an account?

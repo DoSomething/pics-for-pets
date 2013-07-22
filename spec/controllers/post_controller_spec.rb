@@ -2,13 +2,8 @@ require 'spec_helper'
 
 describe PostsController, :type => :controller do
   describe 'GET #index' do
-    it 'redirects to login' do
-      get :index
-      expect(response).to redirect_to :login
-    end
-
     it 'shows index' do
-      get :index, :bypass => true
+      get :index
 
       expect(response).to be_success
       expect(response.status).to eq 200

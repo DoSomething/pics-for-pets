@@ -2,7 +2,7 @@ Feature: Test pages
   We need to check basic routes
 
   Scenario: Routes
-    When I visit /
+    When I visit /start
     Then the page should redirect to /login
 
     When I visit /submit
