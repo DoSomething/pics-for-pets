@@ -76,7 +76,8 @@ $(function() {
       if ($fbid == "") {
         FB.login(function(response) {
           if (response.authResponse) {
-            self.handle_facebook_click($(this), e);
+            // Log them in to make sure we can get all of their data.
+            document.location.href = '/auth/facebook';
           }
         }, { 'scope': 'email,user_birthday' });
 
