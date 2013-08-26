@@ -3,6 +3,16 @@ class ApplicationController < ActionController::Base
 
   include ApplicationHelper
 
+  before_filter :close_campaign, unless: :admin?
+  def close_campaign
+    unless params[:controller] == 'sessions'
+      if File.exists? Rails.root.to_s + '/app/views/static_pages/gallery.html.erb'
+        render 'static_pages/gallery'
+        return
+      end
+    end
+  end
+
   # Handy little method that renders the "not found" message, instead of an error.
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
 
